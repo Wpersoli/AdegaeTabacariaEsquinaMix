@@ -257,12 +257,29 @@
 
   /* ---------- OFFERS CAROUSEL ---------- */
   function produtosPromocionais() {
-    return produtos.filter(prod => prod.promocao && Number(prod.precoDe) > prod.preco);
+    return produtos.filter(prod => {
+      const atual = Number(prod.preco);
+      const anterior = Number(prod.precoDe);
+      return prod.promocao === true &&
+        Number.isFinite(atual) &&
+        Number.isFinite(anterior) &&
+        atual > 0 &&
+        anterior > atual &&
+        prod.imagem &&
+        prod.nome;
+    });
   }
 
   function renderizarOfertas() {
     if (!els.offersTrack) return;
     const ofertas = produtosPromocionais();
+    if (!ofertas.length) {
+      els.offersTrack.innerHTML = '<div class="offers-empty" role="status">Nenhuma promoção ativa neste momento.</div>';
+      if (els.offersUpdated) els.offersUpdated.textContent = 'Ofertas indisponíveis • tente novamente em instantes';
+      if (els.offersPrev) els.offersPrev.disabled = true;
+      if (els.offersNext) els.offersNext.disabled = true;
+      return;
+    }
     els.offersTrack.innerHTML = ofertas.map(prod => {
       const desconto = Math.round((1 - prod.preco / prod.precoDe) * 100);
       const podeComprar = verificarAcesso('CLIENTE');
@@ -523,7 +540,23 @@
   els.offersPrev?.addEventListener('click', () => moverOfertas(-1));
   els.offersNext?.addEventListener('click', () => moverOfertas(1));
   els.offersViewport?.addEventListener('scroll', atualizarSetasOfertas, { passive: true });
-  window.addEventListener('resize', atualizarSetasOfertas, { passive: true });
+  let offersResizeFrame = 0;
+  window.addEventListener('resize', () => {
+    cancelAnimationFrame(offersResizeFrame);
+    offersResizeFrame = requestAnimationFrame(atualizarSetasOfertas);
+  }, { passive: true });
+
+  if ('ResizeObserver' in window && els.offersViewport) {
+    const offersResizeObserver = new ResizeObserver(() => atualizarSetasOfertas());
+    offersResizeObserver.observe(els.offersViewport);
+  }
+
+  els.offersViewport?.addEventListener('keydown', event => {
+    if (event.key === 'ArrowLeft') { event.preventDefault(); moverOfertas(-1); }
+    if (event.key === 'ArrowRight') { event.preventDefault(); moverOfertas(1); }
+    if (event.key === 'Home') { event.preventDefault(); els.offersViewport.scrollTo({ left: 0, behavior: 'smooth' }); }
+    if (event.key === 'End') { event.preventDefault(); els.offersViewport.scrollTo({ left: els.offersViewport.scrollWidth, behavior: 'smooth' }); }
+  });
 
   els.searchForm?.addEventListener('submit', event => {
     event.preventDefault();
