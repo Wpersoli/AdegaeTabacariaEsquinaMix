@@ -40,6 +40,7 @@
     cartCount: qs('#cartCount'), cartButton: qs('#cartButton'), orderButton: qs('#orderButton'), toast: qs('#toast'),
     searchForm: qs('#searchForm'), searchInput: qs('#searchInput'), productGrid: qs('#lista-produtos'), categoryFilters: qs('#categoryFilters'),
     offersTrack: qs('#offersTrack'), offersViewport: qs('#offersViewport'), offersPrev: qs('#offersPrev'), offersNext: qs('#offersNext'), offersUpdated: qs('#offersUpdated'),
+    faqChatButton: qs('#faqChatButton'), footerChatButton: qs('#footerChatButton'), footerYear: qs('#footerYear'),
     accessLabel: qs('#accessLabel'), drawerRole: qs('#drawerRole'), demoLogin: qs('#demoLogin'), demoLogout: qs('#demoLogout'),
     profileButton: qs('#profileButton'), accountDialog: qs('#accountDialog'), accountClose: qs('#accountClose'), accountLogin: qs('#accountLogin'), accountLogout: qs('#accountLogout'), accountTitle: qs('#accountTitle'), accountText: qs('#accountText'),
     cartDrawer: qs('#cartDrawer'), cartBackdrop: qs('#cartBackdrop'), cartClose: qs('#cartClose'), cartItems: qs('#cartItems'), cartEmpty: qs('#cartEmpty'), cartSubtotal: qs('#cartSubtotal'), checkoutButton: qs('#checkoutButton'), cartShopLink: qs('#cartShopLink'),
@@ -584,6 +585,8 @@
   els.accountLogout?.addEventListener('click', logoutDemo);
 
   els.chatLauncher?.addEventListener('click', () => els.chatPanel?.hidden ? abrirChat() : fecharChat());
+  els.faqChatButton?.addEventListener('click', abrirChat);
+  els.footerChatButton?.addEventListener('click', abrirChat);
   els.chatClose?.addEventListener('click', fecharChat);
   qsa('[data-chat-topic]').forEach(button => button.addEventListener('click', () => {
     const topic = button.dataset.chatTopic;
@@ -647,6 +650,7 @@
     }
   });
 
+  if (els.footerYear) els.footerYear.textContent = String(new Date().getFullYear());
   renderizarFiltros();
   renderizarOfertas();
   requestAnimationFrame(atualizarSetasOfertas);
