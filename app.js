@@ -5,14 +5,30 @@
   const qsa = (s, root = document) => [...root.querySelectorAll(s)];
 
   const produtos = [
-    { id: 1, nome: 'Whisky Premium', preco: 89.90, precoDe: 109.90, promocao: true, categoria: 'Bebidas', imagem: 'assets/products/whisky.svg', descricao: 'Seleção de destilados para pedidos e combos.' },
-    { id: 2, nome: 'Cerveja Long Neck', preco: 9.90, precoDe: 12.90, promocao: true, categoria: 'Bebidas', imagem: 'assets/products/beer.svg', descricao: 'Long neck gelada pronta para entrega.' },
-    { id: 3, nome: 'Energético Gelado', preco: 12.90, precoDe: 15.90, promocao: true, categoria: 'Energéticos', imagem: 'assets/products/energy.svg', descricao: 'Lata gelada para completar seu combo.' },
-    { id: 4, nome: 'Gelo Premium', preco: 14.90, categoria: 'Gelo', imagem: 'assets/products/ice.svg', descricao: 'Gelo para bebidas e festas, entrega rápida.' },
-    { id: 5, nome: 'Combo Esquina', preco: 59.90, precoDe: 69.90, promocao: true, categoria: 'Combos', imagem: 'assets/products/combo.svg', descricao: 'Combo especial pronto para personalização.' },
-    { id: 6, nome: 'Kit Festa', preco: 99.90, precoDe: 119.90, promocao: true, categoria: 'Combos', imagem: 'assets/products/party.svg', descricao: 'Seleção para encontros e comemorações.' },
-    { id: 7, nome: 'Conveniência 24h', preco: 19.90, precoDe: 24.90, promocao: true, categoria: 'Conveniência', imagem: 'assets/products/snack.svg', descricao: 'Itens rápidos para complementar o pedido.' },
-    { id: 8, nome: 'Artigos de Tabacaria', preco: 24.90, categoria: 'Tabacaria', imagem: 'assets/products/tabacaria.svg', descricao: 'Linha de conveniência da tabacaria.' }
+    { id: 1, nome: 'Heineken Long Neck', volume:'330ml', preco: 7.49, precoDe: 8.99, promocao: true, categoria: 'Bebidas', imagem: 'https://cdn.irmaospatrocinio.com.br/img/p/1/5/7/4/9/7/157497-thickbox_default.jpg', descricao: 'Cerveja lager puro malte, gelada.', estoque: 18, destaque: true },
+    { id: 2, nome: 'Red Bull Energy Drink', volume:'250ml', preco: 10.90, precoDe: 12.90, promocao: true, categoria: 'Energéticos', imagem: 'https://toppng.com/uploads/preview/red-bull-1152606041778170rzdws.png', descricao: 'Energético clássico em lata.', estoque: 24, destaque: true },
+    { id: 3, nome: 'Coca-Cola Original', volume:'2 Litros', preco: 12.99, precoDe: 15.00, promocao: true, categoria: 'Bebidas', imagem: 'https://www.vhv.rs/dpng/d/436-4362440_coca-cola-bottle-2l-coca-cola-bottle-2l.png', descricao: 'Refrigerante Coca-Cola Original.', estoque: 12 },
+    { id: 4, nome: 'Gelo em Cubos', volume:'5kg', preco: 14.90, categoria: 'Gelo', imagem: 'assets/products/ice.svg', descricao: 'Saco de gelo para bebidas e festas.', estoque: 30 },
+    { id: 5, nome: 'Combo Esquina Mix', volume:'6 Heineken + Gelo 5kg', preco: 59.90, precoDe: 69.90, promocao: true, categoria: 'Combos', imagem: 'assets/products/combo.svg', descricao: 'Combo especial para receber gelado.', estoque: 8, destaque: true },
+    { id: 6, nome: 'Doritos Nacho Cheese', volume:'120g', preco: 8.90, categoria: 'Conveniência', imagem: 'https://io.convertiez.com.br/m/drogariaveracruz/shop/products/images/22672/large/salgadinho-de-milho-doritos-sabor-queijo-nacho-120g_23292.jpg', descricao: 'Salgadinho sabor queijo nacho.', estoque: 14 },
+    { id: 7, nome: 'Isqueiro Premium', volume:'Unidade', preco: 19.90, categoria: 'Tabacaria', imagem: 'assets/products/tabacaria.svg', descricao: 'Acessório de tabacaria para maiores de 18 anos.', estoque: 4 },
+    { id: 8, nome: 'Amstel Lager', volume:'350ml', preco: 4.99, precoDe: 5.99, promocao: true, categoria: 'Bebidas', imagem: 'assets/products/beer.svg', descricao: 'Cerveja lager em lata, sempre gelada.', estoque: 22 },
+    { id: 9, nome: 'Água Mineral', volume:'500ml', preco: 3.49, categoria: 'Bebidas', imagem: 'assets/products/beer.svg', descricao: 'Água mineral gelada.', estoque: 36 },
+    { id: 10, nome: 'Monster Energy', volume:'473ml', preco: 11.90, categoria: 'Energéticos', imagem: 'assets/products/energy.svg', descricao: 'Energético em lata grande.', estoque: 15 },
+    { id: 11, nome: 'Gelo em Cubos', volume:'3kg', preco: 9.90, categoria: 'Gelo', imagem: 'assets/products/ice.svg', descricao: 'Gelo em cubos para consumo.', estoque: 20 },
+    { id: 12, nome: 'Combo Gin', volume:'Gin + energético + gelo', preco: 79.90, precoDe: 89.90, promocao: true, categoria: 'Combos', imagem: 'assets/products/party.svg', descricao: 'Kit demonstrativo para seu momento.', estoque: 6 },
+    { id: 13, nome: 'Chocolate', volume:'90g', preco: 7.90, categoria: 'Conveniência', imagem: 'assets/products/snack.svg', descricao: 'Chocolate para complementar o pedido.', estoque: 11 },
+    { id: 14, nome: 'Amendoim Crocante', volume:'100g', preco: 5.90, categoria: 'Conveniência', imagem: 'assets/products/snack.svg', descricao: 'Petisco crocante.', estoque: 16 },
+    { id: 15, nome: 'Carvão Premium', volume:'3kg', preco: 18.90, categoria: 'Conveniência', imagem: 'assets/products/party.svg', descricao: 'Carvão para churrasco.', estoque: 9 },
+    { id: 16, nome: 'Seda Premium', volume:'Unidade', preco: 6.90, categoria: 'Tabacaria', imagem: 'assets/products/tabacaria.svg', descricao: 'Acessório de tabacaria para maiores de 18 anos.', estoque: 13 },
+    { id: 17, nome: 'Água Tônica', volume:'350ml', preco: 4.90, categoria: 'Bebidas', imagem: 'assets/products/beer.svg', descricao: 'Água tônica gelada.', estoque: 19 },
+    { id: 18, nome: 'Guaraná', volume:'2 Litros', preco: 10.90, categoria: 'Bebidas', imagem: 'assets/products/beer.svg', descricao: 'Refrigerante gelado.', estoque: 17 },
+    { id: 19, nome: 'Combo Churrasco', volume:'Bebidas + gelo + carvão', preco: 109.90, categoria: 'Combos', imagem: 'assets/products/party.svg', descricao: 'Kit demonstrativo para churrasco.', estoque: 5 },
+    { id: 20, nome: 'Gelo de Coco', volume:'1kg', preco: 16.90, categoria: 'Gelo', imagem: 'assets/products/ice.svg', descricao: 'Gelo saborizado demonstrativo.', estoque: 7 },
+    { id: 21, nome: 'Energético Tropical', volume:'269ml', preco: 8.90, categoria: 'Energéticos', imagem: 'assets/products/energy.svg', descricao: 'Energético gelado sabor tropical.', estoque: 12 },
+    { id: 22, nome: 'Salgadinho Mix', volume:'100g', preco: 6.90, categoria: 'Conveniência', imagem: 'assets/products/snack.svg', descricao: 'Snack para acompanhar bebidas.', estoque: 18 },
+    { id: 23, nome: 'Combo Madrugada', volume:'Bebidas + energético + gelo', preco: 64.90, categoria: 'Combos', imagem: 'assets/products/combo.svg', descricao: 'Combo demonstrativo 24h.', estoque: 7 },
+    { id: 24, nome: 'Acessório Tabacaria', volume:'Unidade', preco: 12.90, categoria: 'Tabacaria', imagem: 'assets/products/tabacaria.svg', descricao: 'Item demonstrativo de tabacaria, venda 18+.', estoque: 10 }
   ];
 
   const niveis = { GUEST: 0, CLIENTE: 1, ADMIN: 2 };
@@ -30,6 +46,7 @@
 
   let filtroAtual = 'Todos';
   let buscaAtual = '';
+  let ordenacaoAtual = 'destaques';
   let toastTimer = null;
   let carrinho = carregarCarrinho();
 
@@ -38,7 +55,7 @@
     ageGate: qs('#ageGate'), ageConfirm: qs('#ageConfirm'), ageDeny: qs('#ageDeny'), ageDeniedPanel: qs('#ageDeniedPanel'), ageDeniedBack: qs('#ageDeniedBack'),
     drawer: qs('#drawer'), drawerBackdrop: qs('#drawerBackdrop'), drawerClose: qs('#drawerClose'), menuTrigger: qs('#menuTrigger'),
     cartCount: qs('#cartCount'), cartButton: qs('#cartButton'), orderButton: qs('#orderButton'), toast: qs('#toast'),
-    searchForm: qs('#searchForm'), searchInput: qs('#searchInput'), productGrid: qs('#lista-produtos'), categoryFilters: qs('#categoryFilters'),
+    searchForm: qs('#searchForm'), searchInput: qs('#searchInput'), catalogSearch: qs('#catalogSearch'), catalogSort: qs('#catalogSort'), catalogCount: qs('#catalogCount'), productGrid: qs('#lista-produtos'), categoryFilters: qs('#categoryFilters'),
     offersTrack: qs('#offersTrack'), offersViewport: qs('#offersViewport'), offersPrev: qs('#offersPrev'), offersNext: qs('#offersNext'), offersUpdated: qs('#offersUpdated'),
     faqChatButton: qs('#faqChatButton'), footerChatButton: qs('#footerChatButton'), footerYear: qs('#footerYear'),
     accessLabel: qs('#accessLabel'), drawerRole: qs('#drawerRole'), demoLogin: qs('#demoLogin'), demoLogout: qs('#demoLogout'),
@@ -221,16 +238,23 @@
 
   function produtosFiltrados() {
     const termo = buscaAtual.trim().toLocaleLowerCase('pt-BR');
-    return produtos.filter(prod => {
+    const lista = produtos.filter(prod => {
       const categoriaOk = filtroAtual === 'Todos' || prod.categoria === filtroAtual;
-      const buscaOk = !termo || `${prod.nome} ${prod.categoria} ${prod.descricao}`.toLocaleLowerCase('pt-BR').includes(termo);
+      const buscaOk = !termo || `${prod.nome} ${prod.volume || ''} ${prod.categoria} ${prod.descricao}`.toLocaleLowerCase('pt-BR').includes(termo);
       return categoriaOk && buscaOk;
+    });
+    return lista.sort((a,b) => {
+      if (ordenacaoAtual === 'menor-preco') return a.preco - b.preco;
+      if (ordenacaoAtual === 'maior-preco') return b.preco - a.preco;
+      if (ordenacaoAtual === 'nome') return a.nome.localeCompare(b.nome, 'pt-BR');
+      return Number(Boolean(b.destaque)) - Number(Boolean(a.destaque)) || Number(Boolean(b.promocao)) - Number(Boolean(a.promocao)) || a.id - b.id;
     });
   }
 
   function renderizarProdutos() {
     if (!els.productGrid) return;
     const lista = produtosFiltrados();
+    if (els.catalogCount) els.catalogCount.textContent = String(lista.length);
     if (!lista.length) {
       els.productGrid.innerHTML = '<div class="empty-state">Nenhum produto encontrado para este filtro.</div>';
       return;
@@ -242,13 +266,17 @@
       return `
         <article class="product-card" data-product-id="${prod.id}">
           ${admin ? '<span class="admin-badge">ADMIN</span>' : ''}
+          <button class="product-favorite" type="button" aria-label="Favoritar ${escapeHTML(prod.nome)}">♡</button>
           <div class="product-media"><img src="${prod.imagem}" alt="${escapeHTML(prod.nome)}" loading="lazy"></div>
           <div class="product-body">
             <span class="product-category">${escapeHTML(prod.categoria.toUpperCase())}</span>
             <h3>${escapeHTML(prod.nome)}</h3>
+            <p class="product-volume">${escapeHTML(prod.volume || '')}</p>
             <p class="product-desc">${escapeHTML(prod.descricao)}</p>
+            <strong class="product-price">${moeda(prod.preco)}</strong>
+            <div class="stock-line ${prod.estoque <= 5 ? 'is-low' : ''}"><span></span>${prod.estoque <= 5 ? 'Últimas unidades' : 'Em estoque'}</div>
             <div class="product-footer">
-              <strong class="product-price">${moeda(prod.preco)}</strong>
+              <div class="card-qty" aria-label="Quantidade"><button type="button" tabindex="-1">−</button><span>1</span><button type="button" tabindex="-1">+</button></div>
               <button class="product-action${podeComprar ? '' : ' login-required'}" type="button" data-add="${prod.id}">${podeComprar ? 'ADICIONAR' : 'ENTRAR'}</button>
             </div>
           </div>
@@ -533,6 +561,9 @@
     renderizarFiltros();
     renderizarProdutos();
   });
+
+  els.catalogSearch?.addEventListener('input', event => { buscaAtual = event.target.value || ''; renderizarProdutos(); });
+  els.catalogSort?.addEventListener('change', event => { ordenacaoAtual = event.target.value; renderizarProdutos(); });
 
   els.productGrid?.addEventListener('click', event => {
     const button = event.target.closest('[data-add]');
