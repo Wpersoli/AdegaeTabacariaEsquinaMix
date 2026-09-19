@@ -5921,3 +5921,82 @@ body.age-locked, body.age-denied, body.cart-open {
  .footer-links>div:last-child{grid-column:1/-1}
  .footer-bottom{flex-direction:column}
 }
+
+
+/* ==========================================================
+   V21 — UI polish: spacing rhythm, cards, controls & motion
+   Keeps the approved hero composition intact.
+   ========================================================== */
+:root{
+  --space-section:clamp(52px,6.2vw,96px);
+  --space-inline:clamp(16px,4vw,68px);
+  --content-max:1480px;
+  --surface-radius:18px;
+  --control-h:44px;
+}
+html{scroll-padding-top:110px}
+main>section:not(.hero-banner):not(.benefit-strip):not(.offers-rail):not(.faq-section){
+  scroll-margin-top:105px;
+}
+.catalog-section,.feature-panels{
+  padding-left:var(--space-inline)!important;
+  padding-right:var(--space-inline)!important;
+}
+.catalog-section{padding-top:var(--space-section)!important;padding-bottom:var(--space-section)!important}
+.feature-panels{margin-top:0!important;margin-bottom:0!important}
+.section-heading,.catalog-toolbar,.product-grid,.feature-panels{
+  width:min(100%,var(--content-max));margin-left:auto!important;margin-right:auto!important;
+}
+.product-grid{align-items:stretch}
+.product-card,.offer-card{
+  overflow:hidden;
+  transform:translateZ(0);
+  transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease;
+}
+.product-card:hover,.offer-card:hover{
+  transform:translateY(-3px);
+  border-color:rgba(255,0,127,.38);
+  box-shadow:0 18px 40px rgba(0,0,0,.22),0 0 20px rgba(255,0,127,.07);
+}
+.product-card{display:flex;flex-direction:column;height:100%}
+.product-body{display:flex;flex:1;flex-direction:column}
+.product-desc{line-height:1.5}
+.product-footer{margin-top:auto;padding-top:14px}
+.product-action,.offer-add,.cta,.faq-chat-button,.faq-catalog-link,.checkout-button{
+  min-height:var(--control-h);
+  transition:transform .18s ease,box-shadow .18s ease,background-color .18s ease,border-color .18s ease,color .18s ease;
+}
+.product-action:hover:not(:disabled),.offer-add:hover:not(:disabled),.cta:hover,.faq-chat-button:hover,.faq-catalog-link:hover{
+  transform:translateY(-1px);
+}
+button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{
+  outline:2px solid #00f0ff!important;outline-offset:3px;
+}
+button:disabled{cursor:not-allowed;filter:saturate(.55)}
+.offers-rail{padding-top:clamp(26px,3vw,42px)!important;padding-bottom:clamp(30px,3.5vw,50px)!important}
+.offers-head{margin-bottom:clamp(16px,2vw,26px)!important}
+.offer-copy{display:flex;flex-direction:column}
+.offer-add{margin-top:auto}
+.faq-section{padding-top:var(--space-section);padding-bottom:var(--space-section)}
+.faq-heading{margin-bottom:clamp(30px,3.5vw,46px)}
+.faq-item summary{min-height:64px}
+.faq-answer p{max-width:850px}
+.site-footer{padding-top:clamp(48px,5vw,72px)}
+.chat-launcher,.back-to-top{will-change:transform}
+@media (hover:hover){
+  .round-btn:hover,.chat-launcher:hover,.back-to-top:hover{transform:translateY(-2px)}
+}
+@media(max-width:760px){
+  :root{--space-section:clamp(42px,11vw,64px);--space-inline:14px;--control-h:44px}
+  html{scroll-padding-top:92px}
+  .catalog-section,.feature-panels{padding-left:var(--space-inline)!important;padding-right:var(--space-inline)!important}
+  .section-heading{gap:12px}
+  .product-card:hover,.offer-card:hover{transform:none}
+  .faq-heading{margin-bottom:26px}
+  .faq-item summary{min-height:58px}
+  .footer-main{gap:30px}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto!important}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
