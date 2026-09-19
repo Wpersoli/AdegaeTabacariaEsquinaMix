@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#040108">
+  <meta name="color-scheme" content="dark">
+  <title>Esquina Mix — Adega & Tabacaria 24h</title>
+  <meta name="description" content="Esquina Mix — bebidas geladas, combos especiais e delivery 24h.">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- AGE GATE: bloqueio visual obrigatório antes da navegação. A validação jurídica/servidor deve ser integrada em produção. -->
+  <div class="age-gate" id="ageGate" role="dialog" aria-modal="true" aria-labelledby="ageGateTitle" aria-describedby="ageGateDesc">
+    <div class="age-gate-card">
+      <img class="age-gate-logo" src="assets/logo-transparent.png" alt="Esquina Mix">
+      <span class="age-gate-kicker">ACESSO RESTRITO</span>
+      <h1 id="ageGateTitle">Você tem 18 anos ou mais?</h1>
+      <p id="ageGateDesc">Produtos alcoólicos e de tabacaria são destinados exclusivamente a maiores de 18 anos.</p>
+      <div class="age-gate-actions">
+        <button class="age-confirm" id="ageConfirm" type="button">Sim, tenho 18+</button>
+        <button class="age-deny" id="ageDeny" type="button">Não</button>
+      </div>
+      <small>Ao continuar, você confirma que atende ao requisito de idade aplicável.</small>
+    </div>
+    <div class="age-denied-panel" id="ageDeniedPanel" hidden>
+      <div class="age-denied-icon">18+</div>
+      <h2>Acesso não permitido</h2>
+      <p>Este conteúdo é destinado exclusivamente a pessoas com 18 anos ou mais.</p>
+      <button id="ageDeniedBack" type="button">Voltar</button>
+    </div>
+  </div>
+  <noscript><div class="noscript">Ative o JavaScript para usar busca, menu, catálogo e carrinho.</div></noscript>
+
+  <div class="site-shell" id="inicio">
+    <header class="topbar" id="siteHeader">
+      <a class="brand-mini" href="#inicio" aria-label="Esquina Mix — início">
+        <img src="assets/logo-header.png" alt="Adega e Tabacaria Esquina Mix">
+      </a>
+
+      <nav class="desktop-nav" aria-label="Navegação principal">
+        <a class="nav-link is-active" href="#inicio">INÍCIO</a>
+        <a class="nav-link" href="#produtos">PRODUTOS</a>
+        <a class="nav-link" href="#promocoes">PROMOÇÕES</a>
+        <a class="nav-link" href="#combos">COMBOS</a>
+        <a class="nav-link" href="#sobre">SOBRE NÓS</a>
+        <a class="nav-link" href="#contato">CONTATO</a>
+      </nav>
+
+      <form class="search-box" id="searchForm" role="search">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.5-4.5m2.5-5A7.5 7.5 0 1 1 4 11.5a7.5 7.5 0 0 1 15 0Z"/></svg>
+        <label class="sr-only" for="searchInput">O que você procura?</label>
+        <input id="searchInput" type="search" autocomplete="off" placeholder="O que você procura?">
+      </form>
+
+      <div class="header-actions">
+        <button class="round-btn menu-trigger" id="menuTrigger" type="button" aria-label="Abrir menu" aria-controls="drawer" aria-expanded="false"><span></span><span></span><span></span></button>
+        <button class="round-btn" id="profileButton" type="button" aria-label="Minha conta">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm7.5 8a7.5 7.5 0 0 0-15 0"/></svg>
+        </button>
+        <button class="round-btn cart-button" id="cartButton" type="button" aria-label="Carrinho, 0 itens">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.1 10.1a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 2-1.6L20 7H6m4 12a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm8 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/></svg>
+          <span class="cart-count" id="cartCount" aria-live="polite">0</span>
+        </button>
+      </div>
+    </header>
+
+    <section class="ticker" aria-label="Status e destaques">
+      <div class="ticker-status"><span class="status-dot"></span><strong>ABERTO</strong></div>
+      <div class="ticker-viewport" aria-hidden="true">
+        <div class="ticker-track">
+          <span>SUA SEXTA COMEÇA NO ESQUINA MIX • BEBIDAS GELADAS 24H • COMBOS ESPECIAIS • ENTREGA ULTRA RÁPIDA • </span>
+          <span>SUA SEXTA COMEÇA NO ESQUINA MIX • BEBIDAS GELADAS 24H • COMBOS ESPECIAIS • ENTREGA ULTRA RÁPIDA • </span>
+        </div>
+      </div>
+    </section>
+
+    <main>
+      <section class="hero-banner" aria-labelledby="heroTitle">
+        <div class="hero-bg" aria-hidden="true"></div>
+        <div class="neon-rain" aria-hidden="true"></div>
+        <div class="corner-leaves corner-leaves-left" aria-hidden="true"></div>
+        <div class="corner-leaves corner-leaves-right" aria-hidden="true"></div>
+
+        <aside class="left-sign neon-frame neon-contained" aria-label="Aqui tem tudo">
+          <span>AQUI</span><span>TEM</span><strong>TUDO!</strong><b>♛</b>
+        </aside>
+
+        <div class="brand-panel neon-contained" data-reveal>
+          <img class="hero-logo" src="assets/logo-transparent.png" alt="Adega e Tabacaria Esquina Mix">
+          <p class="brand-copy">BEBIDAS GELADAS, COMBOS ESPECIAIS<br>E ENTREGA RÁPIDA</p>
+          <p class="brand-slogan"><span>♛</span> SEMPRE COM VOCÊ</p>
+        </div>
+
+        <div class="hero-copy neon-contained" data-reveal>
+          <div class="hero-crown" aria-hidden="true">♛</div>
+          <p class="script-white"><span>Sua Bebida</span></p>
+          <h1 class="headline-pink neon-flicker" id="heroTitle">GELADA</h1>
+          <p class="headline-cyan">A QUALQUER HORA</p>
+
+          <div class="service-badges" aria-label="Destaques do serviço">
+            <article><span class="cyan">❄</span><b>DELIVERY<br>24H</b></article>
+            <article><span class="pink">▣</span><b>COMBOS<br>ESPECIAIS</b></article>
+            <article><span class="yellow">ϟ</span><b>ATENDIMENTO<br>RÁPIDO</b></article>
+          </div>
+
+          <div class="hero-actions">
+            <button class="cta cta-primary" id="orderButton" type="button"><span>🛵</span> PEDIR AGORA <b>➜</b></button>
+            <a class="cta cta-outline" href="#promocoes"><span>◇</span> VER PROMOÇÕES</a>
+          </div>
+        </div>
+
+        <div class="right-stage" data-reveal>
+          <p class="sr-only">Bebidas Geladas Tabacaria ♛ 24h — GELO | BEBIDAS | TABACARIA | COMBOS E MUITO MAIS</p>
+          <div class="right-neon-copy neon-contained" aria-label="Bebidas Geladas Tabacaria">
+            <span class="pink">Bebidas</span><span class="pink">Geladas</span><span class="cyan">Tabacaria</span><b>♛</b>
+          </div>
+          <div class="sign24 neon-frame neon-contained neon-flicker" aria-label="Aberto 24 horas">
+            <strong>24h</strong><small>GELO<br>BEBIDAS<br>TABACARIA<br>COMBOS<br>E MUITO MAIS</small>
+          </div>
+          <img class="right-visual" src="assets/right-bucket-cutout.png" alt="Balde de gelo com bebidas geladas">
+        </div>
+      </section>
+
+      <section class="benefit-strip" aria-label="Benefícios Esquina Mix">
+        <article><span>◇</span><p>PRODUTOS<br><b>DE QUALIDADE</b></p></article>
+        <article><span>❄</span><p>SEMPRE<br><b>GELADO</b></p></article>
+        <article><span>▰</span><p>ENTREGA<br><b>EM TODA A REGIÃO</b></p></article>
+        <article><span>⬡</span><p>COMPRA<br><b>SEGURA</b></p></article>
+        <article><span>♡</span><p>CLIENTES<br><b>SATISFEITOS</b></p></article>
+        <p class="benefit-slogan">Mais que bebidas,<br>conectamos momentos! <span>♛</span></p>
+      </section>
+
+      <section class="catalog-section" id="produtos" aria-labelledby="catalogTitle">
+        <div class="section-heading">
+          <div><span class="eyebrow-label">CATÁLOGO 24H</span><h2 id="catalogTitle">ESCOLHA, PEÇA E RECEBA <em>GELADO</em></h2></div>
+          <p>Catálogo dinâmico pronto para integração com estoque, autenticação e checkout.</p>
+        </div>
+
+        <div class="catalog-toolbar">
+          <div class="category-filters" id="categoryFilters" aria-label="Categorias"></div>
+          <div class="access-status"><span class="status-dot"></span><span id="accessLabel">Visitante</span></div>
+        </div>
+
+        <div class="product-grid" id="lista-produtos" aria-live="polite"></div>
+      </section>
+
+      <section class="feature-panels" id="promocoes">
+        <article class="feature-panel pink-panel"><span>OFERTAS</span><h2>PROMOÇÕES DA NOITE</h2><p>Área preparada para campanhas, cupons e preços promocionais vindos da API.</p></article>
+        <article class="feature-panel cyan-panel" id="combos"><span>COMBOS</span><h2>COMBOS ESPECIAIS</h2><p>Monte kits, regras de quantidade, descontos e disponibilidade por horário.</p></article>
+      </section>
+
+      <section class="about-contact" id="sobre">
+        <article><span class="eyebrow-label">ESQUINA MIX</span><h2>Adega & Tabacaria 24h</h2><p>Identidade neon de alto contraste, navegação rápida e componentes prontos para crescer com o e-commerce.</p></article>
+        <article id="contato"><span class="eyebrow-label">ATENDIMENTO</span><h2>Contato e delivery</h2><p>Botões e eventos estão preparados para integração posterior com WhatsApp, pagamento e sistema de pedidos.</p></article>
+      </section>
+    </main>
+  </div>
+
+  <!-- CARRINHO LATERAL -->
+  <div class="cart-backdrop" id="cartBackdrop" hidden></div>
+  <aside class="cart-drawer" id="cartDrawer" aria-hidden="true" aria-label="Seu Pedido - Carrinho">
+    <div class="cart-drawer-head">
+      <div><span class="eyebrow-label">SEU PEDIDO</span><h2>Carrinho</h2></div>
+      <button class="panel-close" id="cartClose" type="button" aria-label="Fechar carrinho">×</button>
+    </div>
+    <div class="cart-items" id="cartItems" aria-live="polite"></div>
+    <div class="cart-empty" id="cartEmpty">
+      <span>🧊</span>
+      <strong>Seu carrinho está vazio</strong>
+      <p>Escolha seus produtos e monte o pedido.</p>
+      <a href="#produtos" id="cartShopLink">VER PRODUTOS</a>
+    </div>
+    <div class="cart-drawer-footer">
+      <div class="cart-subtotal"><span>Subtotal</span><strong id="cartSubtotal">R$ 0,00</strong></div>
+      <button class="checkout-button" id="checkoutButton" type="button">Finalizar pedido <span>➜</span></button>
+      <div class="cart-shortcuts">
+        <a href="#promocoes">Promoções</a><a href="#combos">Combos</a><a href="#contato">Atendimento</a>
+      </div>
+      <small>O valor final e a disponibilidade devem ser confirmados no atendimento/checkout.</small>
+    </div>
+  </aside>
+
+  <!-- ESQUINA MIX IA -->
+  <section class="chat-widget" id="chatWidget" aria-label="Esquina Mix IA" aria-live="polite">
+    <button class="chat-launcher" id="chatLauncher" type="button" aria-expanded="false" aria-controls="chatPanel" aria-label="Abrir Esquina Mix IA">
+      <span class="chat-launcher-icon">♛</span><span class="chat-launcher-dot"></span>
+    </button>
+    <div class="chat-panel" id="chatPanel" hidden>
+      <header class="chat-head">
+        <div class="chat-avatar">♛</div>
+        <div><strong>Esquina Mix IA</strong><span><i></i> resposta rápida</span></div>
+        <button class="panel-close chat-close" id="chatClose" type="button" aria-label="Fechar chat">×</button>
+      </header>
+      <div class="chat-messages" id="chatMessages">
+        <div class="chat-bubble bot">Olá! Posso ajudar com entrega, pagamento, horário e dúvidas sobre produtos.</div>
+      </div>
+      <div class="chat-chips" aria-label="Respostas rápidas">
+        <button type="button" data-chat-topic="taxa">Taxa</button>
+        <button type="button" data-chat-topic="pagamento">Pagamento</button>
+        <button type="button" data-chat-topic="horario">Horário</button>
+      </div>
+      <form class="chat-form" id="chatForm">
+        <label class="sr-only" for="chatInput">Digite sua dúvida</label>
+        <input id="chatInput" type="text" autocomplete="off" placeholder="Digite sua dúvida..." maxlength="220">
+        <button type="submit" aria-label="Enviar mensagem">➤</button>
+      </form>
+    </div>
+  </section>
+
+  <button class="back-to-top" id="backToTop" type="button" aria-label="Voltar ao topo"><span>♛</span><small>TOPO</small></button>
+
+  <div class="drawer-backdrop" id="drawerBackdrop" hidden></div>
+  <aside class="drawer" id="drawer" aria-hidden="true" aria-label="Menu lateral">
+    <div class="drawer-head"><img src="assets/logo-transparent.png" alt="Esquina Mix"><button id="drawerClose" type="button" aria-label="Fechar menu">×</button></div>
+    <nav>
+      <a href="#inicio">INÍCIO</a><a href="#produtos">PRODUTOS</a><a href="#promocoes">PROMOÇÕES</a><a href="#combos">COMBOS</a><a href="#sobre">SOBRE NÓS</a><a href="#contato">CONTATO</a>
+    </nav>
+    <div class="drawer-account">
+      <span class="eyebrow-label">ACESSO</span>
+      <strong id="drawerRole">GUEST</strong>
+      <p>O controle visual de perfil está pronto para ser conectado à autenticação do backend.</p>
+      <button id="demoLogin" type="button">ENTRAR COMO CLIENTE (DEMO)</button>
+      <button id="demoLogout" class="ghost-button" type="button" hidden>SAIR</button>
+    </div>
+    <div class="drawer-open"><span class="status-dot"></span> ABERTO 24H</div>
+  </aside>
+
+  <dialog class="account-dialog" id="accountDialog">
+    <button class="dialog-close" id="accountClose" type="button" aria-label="Fechar">×</button>
+    <img src="assets/logo-transparent.png" alt="Esquina Mix">
+    <span class="eyebrow-label">MINHA CONTA</span>
+    <h2 id="accountTitle">Acesso de visitante</h2>
+    <p id="accountText">Entre para habilitar ações de compra no catálogo.</p>
+    <button class="cta cta-primary dialog-login" id="accountLogin" type="button">ENTRAR COMO CLIENTE (DEMO)</button>
+    <button class="ghost-button dialog-logout" id="accountLogout" type="button" hidden>SAIR</button>
+    <small>Demo frontend: permissões reais de CLIENTE/ADMIN devem ser validadas também no servidor.</small>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+  <script src="app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+[
+  {
+    "test": "8 produtos renderizados",
+    "ok": true,
+    "detail": "8"
+  },
+  {
+    "test": "perfil inicial GUEST",
+    "ok": true,
+    "detail": "GUEST"
+  },
+  {
+    "test": "drawer abre",
+    "ok": true,
+    "detail": ""
+  },
+  {
+    "test": "drawer fecha",
+    "ok": true,
+    "detail": ""
+  },
+  {
+    "test": "dialog conta abre",
+    "ok": true,
+    "detail": ""
+  },
+  {
+    "test": "login demo CLIENTE",
+    "ok": true,
+    "detail": "Cliente"
+  },
+  {
+    "test": "adicionar produto incrementa carrinho",
+    "ok": true,
+    "detail": "0->1"
+  },
+  {
+    "test": "busca filtra catálogo",
+    "ok": true,
+    "detail": "1"
+  },
+  {
+    "test": "API setRole ADMIN",
+    "ok": true,
+    "detail": "ADMIN"
+  },
+  {
+    "test": "badge ADMIN aparece",
+    "ok": true,
+    "detail": "1"
+  },
+  {
+    "test": "sem page errors",
+    "ok": true,
+    "detail": "[]"
+  }
+]

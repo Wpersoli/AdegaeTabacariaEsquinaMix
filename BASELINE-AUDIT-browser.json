@@ -1,0 +1,68 @@
+[
+  {
+    "name": "AUDIT-desktop-1999x787.png",
+    "info": {
+      "iw": 1999,
+      "ih": 787,
+      "sw": 1999,
+      "sh": 2708,
+      "hero": {
+        "x": 0,
+        "y": 116,
+        "width": 1999,
+        "height": 563,
+        "top": 116,
+        "right": 1999,
+        "bottom": 679,
+        "left": 0
+      },
+      "productCount": 8,
+      "drawerHidden": "true"
+    },
+    "errors": []
+  },
+  {
+    "name": "AUDIT-desktop-1366x768.png",
+    "info": {
+      "iw": 1366,
+      "ih": 768,
+      "sw": 1366,
+      "sh": 2487,
+      "hero": {
+        "x": 0,
+        "y": 116,
+        "width": 1366,
+        "height": 540,
+        "top": 116,
+        "right": 1366,
+        "bottom": 656,
+        "left": 0
+      },
+      "productCount": 8,
+      "drawerHidden": "true"
+    },
+    "errors": []
+  },
+  {
+    "name": "AUDIT-mobile-390x844.png",
+    "info": {
+      "iw": 390,
+      "ih": 844,
+      "sw": 390,
+      "sh": 6108,
+      "hero": {
+        "x": 0,
+        "y": 104,
+        "width": 390,
+        "height": 989.734375,
+        "top": 104,
+        "right": 390,
+        "bottom": 1093.734375,
+        "left": 0
+      },
+      "productCount": 8,
+      "drawerHidden": "true"
+    },
+    "errors": []
+  }
+]

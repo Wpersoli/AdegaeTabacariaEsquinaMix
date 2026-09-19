@@ -1,0 +1,13 @@
+{
+  "missing_asset_refs": [],
+  "duplicate_ids": [],
+  "features": {
+    "age_gate": true,
+    "cart_drawer": true,
+    "chat_widget": true,
+    "back_to_top": true,
+    "whatsapp_checkout": true
+  },
+  "node_check_ok": true,
+  "node_stderr": ""
+}
