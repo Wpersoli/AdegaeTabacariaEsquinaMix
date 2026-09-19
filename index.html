@@ -7,7 +7,7 @@
   <meta name="color-scheme" content="dark">
   <title>Esquina Mix — Adega & Tabacaria 24h</title>
   <meta name="description" content="Esquina Mix — bebidas geladas, combos especiais e delivery 24h.">
-  <link rel="icon" type="image/png" href="assets/favicon.png">\n  <link rel="preconnect" href="https://fonts.googleapis.com">\n  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,700;0,800;0,900;1,700;1,800;1,900&family=Kaushan+Script&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="assets/favicon.png">\n  <link rel="preconnect" href="https://fonts.googleapis.com">\n  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,700;0,800;0,900;1,700;1,800;1,900&family=Kalam:wght@400;700&family=Kaushan+Script&family=Permanent+Marker&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -83,8 +83,34 @@
         <div class="corner-leaves corner-leaves-left" aria-hidden="true"></div>
         <div class="corner-leaves corner-leaves-right" aria-hidden="true"></div>
 
-        <aside class="left-sign neon-frame neon-contained" aria-label="Aqui tem tudo">
-          <span>AQUI</span><span>TEM</span><strong>TUDO!</strong><b>♛</b>
+        <aside class="left-sign neon-contained" aria-label="Aqui tem tudo">
+          <svg class="left-sign-svg" viewBox="0 0 230 510" role="img" aria-label="Aqui tem tudo">
+            <defs>
+              <filter id="leftBlueGlow" x="-80%" y="-80%" width="260%" height="260%">
+                <feGaussianBlur stdDeviation="5" result="b1"/><feGaussianBlur stdDeviation="11" result="b2"/>
+                <feMerge><feMergeNode in="b2"/><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+              <filter id="leftPinkGlow" x="-80%" y="-80%" width="260%" height="260%">
+                <feGaussianBlur stdDeviation="4" result="p1"/><feGaussianBlur stdDeviation="9" result="p2"/>
+                <feMerge><feMergeNode in="p2"/><feMergeNode in="p1"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+              <filter id="leftGoldGlow" x="-80%" y="-80%" width="260%" height="260%">
+                <feGaussianBlur stdDeviation="4" result="g1"/>
+                <feMerge><feMergeNode in="g1"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <rect x="13" y="9" width="204" height="488" rx="7" fill="rgba(2,2,8,.28)" stroke="#ff0a8d" stroke-width="5" filter="url(#leftPinkGlow)"/>
+            <rect x="21" y="17" width="188" height="472" rx="4" fill="none" stroke="#00d9ff" stroke-width="2.2" opacity=".75"/>
+            <g fill="#55e9ff" stroke="#dbfbff" stroke-width=".65" text-anchor="middle" filter="url(#leftBlueGlow)" font-family="Kalam, 'Segoe Print', cursive" font-weight="700">
+              <text x="115" y="144" font-size="58">AQUI</text>
+              <text x="115" y="234" font-size="58">TEM</text>
+              <text x="115" y="326" font-size="66">TUDO!</text>
+            </g>
+            <g fill="none" stroke="#ffe600" stroke-width="8" stroke-linejoin="round" filter="url(#leftGoldGlow)">
+              <path d="M74 382 88 423 115 400 142 423 156 382 136 394 115 370 94 394Z"/>
+              <path d="M84 438h62"/>
+            </g>
+          </svg>
         </aside>
 
         <div class="brand-panel neon-contained" data-reveal>
@@ -98,6 +124,36 @@
           <p class="script-white"><span>Sua Bebida</span></p>
           <h1 class="headline-pink neon-flicker" id="heroTitle">GELADA</h1>
           <p class="headline-cyan">A QUALQUER HORA</p>
+
+          <svg class="hero-title-svg" viewBox="0 0 1000 650" role="img" aria-label="Sua Bebida Gelada a qualquer hora">
+            <defs>
+              <filter id="heroPinkGlow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="6" result="a"/><feGaussianBlur stdDeviation="13" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="a"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+              <filter id="heroCyanGlow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="5" result="a"/><feGaussianBlur stdDeviation="11" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="a"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+              <filter id="heroGoldGlow" x="-60%" y="-60%" width="220%" height="220%">
+                <feGaussianBlur stdDeviation="4" result="a"/>
+                <feMerge><feMergeNode in="a"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <g transform="rotate(-4 500 250)">
+              <g fill="none" stroke="#ffe600" stroke-width="13" stroke-linejoin="round" filter="url(#heroGoldGlow)">
+                <path d="M170 88 183 126 207 106 230 126 244 88 225 99 207 79 189 99Z"/>
+                <path d="M182 139h51"/>
+              </g>
+              <text x="500" y="180" text-anchor="middle" fill="#fff" stroke="#fff" stroke-width="1.5" paint-order="stroke"
+                    font-family="Permanent Marker, cursive" font-size="128" letter-spacing="-4">SUA BEBIDA</text>
+              <text x="500" y="395" text-anchor="middle" fill="#ff0789" stroke="#ff4fb2" stroke-width="3" paint-order="stroke"
+                    font-family="Permanent Marker, cursive" font-size="250" letter-spacing="-12" filter="url(#heroPinkGlow)">GELADA</text>
+              <path d="M330 425 Q520 385 732 412" fill="none" stroke="#ffe600" stroke-width="17" stroke-linecap="round" filter="url(#heroGoldGlow)"/>
+              <text x="500" y="540" text-anchor="middle" fill="#13eaff" stroke="#9affff" stroke-width="1.3" paint-order="stroke"
+                    font-family="Permanent Marker, cursive" font-size="96" letter-spacing="-5" filter="url(#heroCyanGlow)">A QUALQUER HORA</text>
+            </g>
+          </svg>
 
           <div class="service-badges" aria-label="Destaques do serviço">
             <article>
@@ -130,6 +186,31 @@
           <p class="sr-only">Bebidas Geladas Tabacaria ♛ 24h — GELO | BEBIDAS | TABACARIA | COMBOS E MUITO MAIS</p>
           <div class="right-neon-copy neon-contained" aria-label="Bebidas Geladas Tabacaria">
             <span class="pink">Bebidas</span><span class="pink">Geladas</span><span class="cyan">Tabacaria</span><b>♛</b>
+            <svg class="right-neon-svg" viewBox="0 0 440 330" aria-hidden="true">
+              <defs>
+                <filter id="rightPinkGlow" x="-80%" y="-80%" width="260%" height="260%">
+                  <feGaussianBlur stdDeviation="5" result="a"/><feGaussianBlur stdDeviation="12" result="b"/>
+                  <feMerge><feMergeNode in="b"/><feMergeNode in="a"/><feMergeNode in="SourceGraphic"/></feMerge>
+                </filter>
+                <filter id="rightCyanGlow" x="-80%" y="-80%" width="260%" height="260%">
+                  <feGaussianBlur stdDeviation="5" result="a"/><feGaussianBlur stdDeviation="11" result="b"/>
+                  <feMerge><feMergeNode in="b"/><feMergeNode in="a"/><feMergeNode in="SourceGraphic"/></feMerge>
+                </filter>
+                <filter id="rightGoldGlow" x="-80%" y="-80%" width="260%" height="260%">
+                  <feGaussianBlur stdDeviation="4" result="a"/>
+                  <feMerge><feMergeNode in="a"/><feMergeNode in="SourceGraphic"/></feMerge>
+                </filter>
+              </defs>
+              <g transform="rotate(-5 220 160)" font-family="Kaushan Script, cursive">
+                <text x="26" y="102" fill="#ff31a9" font-size="86" filter="url(#rightPinkGlow)">Bebidas</text>
+                <text x="40" y="180" fill="#ff31a9" font-size="86" filter="url(#rightPinkGlow)">Geladas</text>
+                <text x="61" y="260" fill="#1cecff" font-size="88" filter="url(#rightCyanGlow)">Tabacaria</text>
+                <g fill="none" stroke="#ffe600" stroke-width="9" stroke-linejoin="round" filter="url(#rightGoldGlow)">
+                  <path d="M330 35 342 70 365 52 388 70 400 35 382 45 365 26 348 45Z"/>
+                  <path d="M341 84h49"/>
+                </g>
+              </g>
+            </svg>
           </div>
           <div class="sign24 neon-frame neon-contained neon-flicker" aria-label="Aberto 24 horas">
             <strong>24h</strong><small>GELO<br>BEBIDAS<br>TABACARIA<br>COMBOS<br>E MUITO MAIS</small>
@@ -159,7 +240,26 @@
           <span class="benefit-svg" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M32 55 9 34C-2 22 6 8 19 10c6 1 10 5 13 10 3-5 7-9 13-10 13-2 21 12 10 24L32 55Z"/></svg></span>
           <p>CLIENTES<br><b>SATISFEITOS</b></p>
         </article>
-        <p class="benefit-slogan">Mais que bebidas,<br>conectamos momentos! <span>♛</span></p>
+        <p class="benefit-slogan" aria-label="Mais que bebidas, conectamos momentos!">
+          <span class="benefit-slogan-text">Mais que bebidas,<br>conectamos momentos! <span>♛</span></span>
+          <svg class="benefit-slogan-svg" viewBox="0 0 560 220" aria-hidden="true">
+            <defs>
+              <filter id="sloganGlow" x="-40%" y="-40%" width="180%" height="180%">
+                <feGaussianBlur stdDeviation="3.5" result="a"/>
+                <feMerge><feMergeNode in="a"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <g transform="rotate(-6 280 95)" filter="url(#sloganGlow)">
+              <text x="18" y="73" fill="#ffe600" font-family="Kaushan Script, cursive" font-size="56">Mais que bebidas,</text>
+              <text x="18" y="132" fill="#ffe600" font-family="Kaushan Script, cursive" font-size="56">conectamos momentos!</text>
+              <path d="M180 151 Q360 126 512 143" fill="none" stroke="#ff0a8d" stroke-width="9" stroke-linecap="round"/>
+              <g transform="translate(264 154)" fill="none" stroke="#ffe600" stroke-width="7" stroke-linejoin="round">
+                <path d="M0 6 10 34 29 19 48 34 58 6 43 14 29 0 15 14Z"/>
+                <path d="M8 45h42"/>
+              </g>
+            </g>
+          </svg>
+        </p>
       </section>
 
       <section class="catalog-section" id="produtos" aria-labelledby="catalogTitle">
