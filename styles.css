@@ -4878,3 +4878,264 @@ body.age-locked, body.age-denied, body.cart-open {
     font-family: "Barlow Condensed",Arial,sans-serif !important;
   }
 }
+
+
+/* ==========================================================
+   V14 — reference-element artwork pass
+   ========================================================== */
+@media (min-width: 761px) {
+  /* Replace approximate CSS lettering with the calibrated inline SVG artwork. */
+  .hero-crown,
+  .script-white,
+  .headline-pink,
+  .headline-cyan {
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  .hero-title-svg {
+    position: absolute;
+    left: -3.7%;
+    top: 4.2%;
+    width: 108%;
+    height: 61.5%;
+    overflow: visible;
+    z-index: 9;
+    pointer-events: none;
+    filter: drop-shadow(0 6px 5px rgba(0,0,0,.42));
+  }
+
+  .service-badges {
+    bottom: 20.2% !important;
+    height: 16.6% !important;
+  }
+
+  .hero-actions {
+    bottom: 3.7% !important;
+  }
+
+  /* Left sign uses the inline vector artwork; old textual CSS is suppressed. */
+  .left-sign {
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .left-sign > span,
+  .left-sign > strong,
+  .left-sign > b {
+    display: none !important;
+  }
+
+  .left-sign-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    overflow: visible;
+    filter: drop-shadow(0 6px 8px rgba(0,0,0,.38));
+  }
+
+  /* Right neon exact lettering layer. */
+  .right-neon-copy {
+    width: 47% !important;
+    left: -1.7% !important;
+    top: 1.8% !important;
+    height: 34% !important;
+    transform: none !important;
+    overflow: visible !important;
+  }
+
+  .right-neon-copy > span,
+  .right-neon-copy > b {
+    display: none !important;
+  }
+
+  .right-neon-svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    filter: drop-shadow(0 5px 8px rgba(0,0,0,.34));
+  }
+
+  /* Reference signature block. */
+  .benefit-slogan {
+    position: relative !important;
+    padding: 0 !important;
+    transform: none !important;
+    overflow: visible !important;
+  }
+
+  .benefit-slogan-text {
+    position: absolute !important;
+    inline-size: 1px !important;
+    block-size: 1px !important;
+    overflow: hidden !important;
+    clip: rect(0,0,0,0) !important;
+    white-space: nowrap !important;
+  }
+
+  .benefit-slogan-svg {
+    display: block;
+    width: 112%;
+    height: auto;
+    max-height: 88px;
+    margin-left: -5%;
+    overflow: visible;
+  }
+
+  /* Refine the approved center icon row and CTA relation. */
+  .service-badges article {
+    justify-content: flex-start !important;
+    padding-top: 2.4% !important;
+  }
+
+  .service-badges b {
+    margin-top: 1px !important;
+  }
+
+  .hero-icon {
+    width: clamp(25px,2.05cqw,40px) !important;
+    height: clamp(25px,2.05cqw,40px) !important;
+  }
+
+  .hero-actions .cta {
+    font-size: clamp(.88rem,1.08cqw,1.22rem) !important;
+    min-height: clamp(45px,3.25cqw,61px) !important;
+  }
+
+  /* Match the right-hand 24h sign closer to the reference. */
+  .sign24 {
+    top: 1.5% !important;
+    right: .55% !important;
+    width: 40.5% !important;
+    padding: 2.2% 2.1% 3.2% !important;
+  }
+
+  .sign24 strong {
+    font-size: clamp(2.65rem,4.65cqw,5.5rem) !important;
+  }
+
+  .sign24 small {
+    font-size: clamp(.62rem,.86cqw,.95rem) !important;
+  }
+
+  /* Reference bucket is large and visually anchored into the bottom edge. */
+  .right-visual {
+    width: 131% !important;
+    right: -7.3% !important;
+    bottom: -7.6% !important;
+  }
+
+  /* Keep exact reference anchors from V13. */
+  .left-sign {
+    left: 1.35% !important;
+    top: 5.8% !important;
+    width: 11.25% !important;
+    height: 66.5% !important;
+  }
+
+  .brand-panel {
+    left: 12.8% !important;
+    top: 1.5% !important;
+    width: 25.9% !important;
+    height: 96.5% !important;
+  }
+
+  .hero-copy {
+    left: 39.6% !important;
+    top: 1.8% !important;
+    width: 31.6% !important;
+    height: 96.8% !important;
+  }
+
+  .right-stage {
+    left: 70.8% !important;
+    width: 29.2% !important;
+  }
+
+  .hero-logo {
+    height: 83.5% !important;
+    transform: scale(1.035) !important;
+  }
+
+  .brand-copy {
+    margin-top: -1.4% !important;
+  }
+
+  .brand-slogan {
+    margin-top: .65% !important;
+  }
+}
+
+/* Large desktop fidelity: preserve reference proportions exactly. */
+@media (min-width: 1501px) {
+  .hero-title-svg {
+    left: -3.2%;
+    top: 3.6%;
+    width: 107%;
+    height: 61%;
+  }
+
+  .service-badges {
+    bottom: 20.4% !important;
+  }
+
+  .hero-actions {
+    bottom: 3.8% !important;
+  }
+
+  .right-neon-copy {
+    left: -1.2% !important;
+    top: 1.3% !important;
+    width: 46% !important;
+  }
+
+  .benefit-slogan-svg {
+    width: 108%;
+    margin-left: -3%;
+  }
+}
+
+/* Laptop / browser zoom: keep artwork aspect rather than restyling each line. */
+@media (min-width: 981px) and (max-width: 1280px) {
+  .hero-title-svg {
+    left: -4.5%;
+    top: 6%;
+    width: 110%;
+    height: 59%;
+  }
+
+  .left-sign {
+    top: 8% !important;
+    height: 61% !important;
+  }
+
+  .right-neon-copy {
+    top: 3% !important;
+    width: 52% !important;
+  }
+
+  .service-badges {
+    bottom: 19% !important;
+  }
+
+  .hero-actions {
+    bottom: 2.8% !important;
+  }
+}
+
+/* Mobile keeps semantic HTML lettering for readability and fluidity. */
+@media (max-width: 760px) {
+  .hero-title-svg,
+  .left-sign-svg,
+  .right-neon-svg,
+  .benefit-slogan-svg {
+    display: none !important;
+  }
+
+  .benefit-slogan-text {
+    display: inline !important;
+  }
+}
