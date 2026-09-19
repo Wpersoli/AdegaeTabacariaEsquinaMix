@@ -235,7 +235,7 @@
         </p>
       </section>
 
-      <section class="offers-rail" id="ofertas" aria-labelledby="offersTitle">
+      <section class="offers-rail" id="ofertas" aria-labelledby="offersTitle" data-promotions-section>
         <div class="offers-head">
           <div>
             <span class="eyebrow-label">OFERTAS 24H</span>
@@ -243,12 +243,12 @@
           </div>
           <div class="offers-live" aria-live="polite"><span class="status-dot"></span><span id="offersUpdated">Atualizando ofertas…</span></div>
         </div>
-        <div class="offers-carousel" aria-label="Carrossel de produtos promocionais">
-          <button class="offers-arrow offers-prev" id="offersPrev" type="button" aria-label="Ofertas anteriores">‹</button>
+        <div class="offers-carousel" aria-label="Carrossel de produtos promocionais" role="region">
+          <button class="offers-arrow offers-prev" id="offersPrev" type="button" aria-label="Ofertas anteriores" aria-controls="offersViewport">‹</button>
           <div class="offers-viewport" id="offersViewport" tabindex="0">
             <div class="offers-track" id="offersTrack"></div>
           </div>
-          <button class="offers-arrow offers-next" id="offersNext" type="button" aria-label="Próximas ofertas">›</button>
+          <button class="offers-arrow offers-next" id="offersNext" type="button" aria-label="Próximas ofertas" aria-controls="offersViewport">›</button>
         </div>
       </section>
 
