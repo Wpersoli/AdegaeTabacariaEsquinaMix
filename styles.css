@@ -4016,3 +4016,156 @@ body.age-locked, body.age-denied, body.cart-open {
   .sign24 { right:.4cqw; width:12cqw; }
   .right-visual { width:48cqw; right:-13cqw; }
 }
+
+
+/* V12 — pixel-calibrated desktop pass from side-by-side reference/current capture.
+   Calibration basis: same 1112px rendered site width in both supplied captures. */
+@media (min-width: 1181px) {
+  /* Reference: header ~65px, hero ~340px, benefits ~52px at 1112px site width. */
+  .hero-banner {
+    aspect-ratio: 3.270588 / 1 !important;
+    grid-template-columns: 39% 35% 26% !important;
+    min-height: 0 !important;
+    height: auto !important;
+  }
+
+  .hero-bg {
+    transform: scale(1.01) !important;
+    background-position: center 52% !important;
+  }
+
+  /* LEFT SIGN — target x≈0–132 within hero, full readable neon panel. */
+  .left-sign {
+    left: 0 !important;
+    top: 5% !important;
+    width: 13.1% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    height: 67% !important;
+    padding: .65cqw .25cqw !important;
+    overflow: visible !important;
+    transform: none !important;
+  }
+
+  /* BRAND — target x≈138–414, materially larger than previous pass. */
+  .brand-panel {
+    padding: .35cqw 0 .3cqw 12.2cqw !important;
+    overflow: visible !important;
+  }
+
+  .hero-logo {
+    width: 28.8cqw !important;
+    max-width: none !important;
+    height: 88% !important;
+    max-height: none !important;
+    margin: -.2cqw 0 -1.05cqw 0 !important;
+    transform: translateX(-.7cqw) scale(1.08) !important;
+  }
+
+  .brand-copy {
+    width: 26cqw !important;
+    margin-left: -.7cqw !important;
+    font-size: clamp(.7rem,.78cqw,1rem) !important;
+  }
+
+  .brand-slogan {
+    width: 25cqw !important;
+    margin-left: -.45cqw !important;
+  }
+
+  /* CENTER — target starts ~39.3% of hero, not ~45% as in prior render. */
+  .hero-copy {
+    transform: translateX(-2.9cqw) !important;
+    padding: .1cqw 0 .25cqw !important;
+    overflow: visible !important;
+  }
+
+  .hero-crown {
+    font-size: clamp(1.65rem,1.72cqw,2.55rem) !important;
+    margin-bottom: -.62cqw !important;
+  }
+
+  .script-white {
+    font-size: clamp(2.8rem,3.45cqw,5.1rem) !important;
+    margin-bottom: -1.12cqw !important;
+  }
+
+  .headline-pink {
+    font-size: clamp(5.7rem,6.55cqw,9.55rem) !important;
+    line-height: .78 !important;
+  }
+
+  .headline-cyan {
+    font-size: clamp(1.72rem,2.13cqw,3.1rem) !important;
+    margin: .32cqw auto .45cqw !important;
+  }
+
+  .service-badges {
+    width: 31.5cqw !important;
+    transform: none !important;
+  }
+
+  .service-badges span {
+    font-size: clamp(1.35rem,1.62cqw,2.35rem) !important;
+  }
+
+  .service-badges b {
+    font-size: clamp(.62rem,.69cqw,.9rem) !important;
+  }
+
+  /* CTA — reference is slimmer and slightly higher. */
+  .hero-actions {
+    width: 32.7cqw !important;
+    margin-top: .42cqw !important;
+    gap: .65cqw !important;
+  }
+
+  .hero-actions .cta {
+    min-height: clamp(42px,3.05cqw,60px) !important;
+    font-size: clamp(.8rem,.9cqw,1.14rem) !important;
+  }
+
+  /* RIGHT NEON — reference target x≈72.5%, y≈3%. */
+  .right-neon-copy {
+    left: -1.1cqw !important;
+    top: 2.5% !important;
+    max-width: 14.2cqw !important;
+    font-size: clamp(1rem,1.42cqw,1.9rem) !important;
+  }
+
+  /* 24H — target begins ~87%, wider and further left than current. */
+  .sign24 {
+    top: 2% !important;
+    right: 0 !important;
+    width: 13.1cqw !important;
+    min-width: 0 !important;
+    max-width: none !important;
+  }
+
+  /* BUCKET — target begins ~70%, substantially larger/taller. */
+  .right-visual {
+    width: 39.5cqw !important;
+    right: -1.4cqw !important;
+    bottom: -5.5% !important;
+    max-width: none !important;
+    max-height: 104% !important;
+  }
+
+  /* Benefits reference: compact 52px strip, six balanced cells. */
+  .benefit-strip {
+    min-height: clamp(76px,4.72vw,94px) !important;
+    padding-inline: 13.2cqw 5.2cqw !important;
+  }
+
+  .benefit-icon { font-size: clamp(1.35rem,1.7cqw,2.35rem) !important; }
+  .benefit-text { font-size: clamp(.58rem,.66cqw,.84rem) !important; }
+}
+
+/* At common 1366/1440 desktop widths keep the same calibrated scene,
+   only relaxing minimum text sizes enough to prevent overlap. */
+@media (min-width: 1181px) and (max-width: 1500px) {
+  .left-sign { width: 12.2% !important; }
+  .hero-logo { width: 29.4cqw !important; }
+  .hero-copy { transform: translateX(-2.4cqw) !important; }
+  .right-visual { width: 40.5cqw !important; right: -2.2cqw !important; }
+}
