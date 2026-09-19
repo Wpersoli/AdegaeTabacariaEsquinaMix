@@ -5139,3 +5139,157 @@ body.age-locked, body.age-denied, body.cart-open {
     display: inline !important;
   }
 }
+
+
+/* ==========================================================
+   V15 — final desktop alignment pass against approved master
+   ========================================================== */
+@media (min-width: 1281px) {
+  /* left composition */
+  .left-sign {
+    left: 1.35% !important;
+    top: 7.2% !important;
+    width: 10.3% !important;
+    height: 61.5% !important;
+  }
+
+  .brand-panel {
+    left: 9.7% !important;
+    top: 1.8% !important;
+    width: 29.4% !important;
+    height: 95.8% !important;
+  }
+
+  .hero-logo {
+    width: 96% !important;
+    height: 82.2% !important;
+    transform: translateX(-1.2%) scale(1.01) !important;
+  }
+
+  .brand-copy {
+    width: 88% !important;
+    font-size: clamp(.7rem,.91cqw,1.02rem) !important;
+    letter-spacing: .105em !important;
+  }
+
+  .brand-slogan {
+    width: 84% !important;
+    font-size: clamp(.8rem,1.08cqw,1.24rem) !important;
+  }
+
+  /* center block moved left and slightly reduced */
+  .hero-copy {
+    left: 36.2% !important;
+    top: 2.2% !important;
+    width: 33.2% !important;
+    height: 95.5% !important;
+  }
+
+  .hero-title-svg {
+    left: 0 !important;
+    top: 3.2% !important;
+    width: 91% !important;
+    height: 60% !important;
+  }
+
+  .service-badges {
+    left: 2.2% !important;
+    width: 87.5% !important;
+    bottom: 21.5% !important;
+    height: 14.5% !important;
+  }
+
+  .hero-actions {
+    left: 0 !important;
+    width: 92.5% !important;
+    bottom: 4.6% !important;
+    gap: 2.1% !important;
+  }
+
+  .hero-actions .cta {
+    min-height: clamp(46px,3.05cqw,58px) !important;
+    font-size: clamp(.86rem,1cqw,1.15rem) !important;
+  }
+
+  /* right composition */
+  .right-stage {
+    left: 69.1% !important;
+    width: 30.9% !important;
+  }
+
+  .right-neon-copy {
+    left: .9% !important;
+    top: 3.2% !important;
+    width: 51% !important;
+    height: 35.5% !important;
+  }
+
+  .sign24 {
+    top: 2.2% !important;
+    right: .55% !important;
+    width: 36.8% !important;
+    padding: 1.8% 1.8% 2.8% !important;
+  }
+
+  .sign24 strong {
+    font-size: clamp(2.55rem,4.15cqw,4.95rem) !important;
+  }
+
+  .sign24 small {
+    font-size: clamp(.6rem,.77cqw,.88rem) !important;
+    line-height: 1.05 !important;
+  }
+
+  .right-visual {
+    width: 120.5% !important;
+    right: -2.5% !important;
+    bottom: -5.8% !important;
+  }
+
+  /* bottom strip */
+  .benefit-strip {
+    min-height: clamp(78px,4.75vw,88px) !important;
+    padding-left: 13.6% !important;
+    padding-right: 4.4% !important;
+  }
+
+  .benefit-strip article {
+    min-height: 54px !important;
+  }
+
+  .benefit-svg {
+    width: clamp(28px,2.2cqw,42px) !important;
+    height: clamp(28px,2.2cqw,42px) !important;
+  }
+
+  .benefit-strip p:not(.benefit-slogan) {
+    font-size: clamp(.6rem,.68cqw,.8rem) !important;
+  }
+
+  .benefit-slogan-svg {
+    width: 121% !important;
+    max-height: 82px !important;
+    margin-left: -8% !important;
+  }
+
+  /* header reference proportions */
+  .topbar {
+    grid-template-columns: clamp(90px,7.9vw,140px) minmax(610px,1fr) minmax(360px,24vw) auto !important;
+    padding-left: clamp(30px,2.9vw,54px) !important;
+    padding-right: clamp(24px,2vw,38px) !important;
+  }
+
+  .desktop-nav {
+    gap: clamp(24px,2vw,38px) !important;
+  }
+}
+
+@media (min-width: 981px) and (max-width: 1280px) {
+  .brand-panel { left: 9.5% !important; width: 30.5% !important; }
+  .hero-copy { left: 36.5% !important; width: 35% !important; }
+  .hero-title-svg { left: 0 !important; width: 92% !important; top: 4.5% !important; }
+  .right-stage { left: 69.8% !important; width: 30.2% !important; }
+  .right-neon-copy { left: 0 !important; width: 53% !important; }
+  .right-visual { width: 126% !important; right: -7% !important; }
+  .sign24 { width: 39% !important; }
+}
