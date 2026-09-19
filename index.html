@@ -252,23 +252,27 @@
         </div>
       </section>
 
-      <section class="catalog-section" id="produtos" aria-labelledby="catalogTitle">
-        <div class="section-heading">
-          <div><span class="eyebrow-label">CATÁLOGO 24H</span><h2 id="catalogTitle">ESCOLHA, PEÇA E RECEBA <em>GELADO</em></h2></div>
-          <p>Catálogo dinâmico pronto para integração com estoque, autenticação e checkout.</p>
+      <section class="catalog-section catalog-v23" id="produtos" aria-labelledby="catalogTitle">
+        <div class="catalog-hero">
+          <div><span class="eyebrow-label">CATÁLOGO 24H</span><h2 id="catalogTitle">CATÁLOGO</h2><p>Tudo gelado, rápido e do seu jeito.</p></div>
+          <div class="catalog-promises"><span>⚡ <b>ENTREGA RÁPIDA</b></span><span>❄ <b>SEMPRE GELADO</b></span><span>▣ <b>COMPRA SEGURA</b></span></div>
         </div>
-
         <div class="catalog-toolbar">
           <div class="category-filters" id="categoryFilters" aria-label="Categorias"></div>
-          <div class="access-status"><span class="status-dot"></span><span id="accessLabel">Visitante</span></div>
+          <div class="catalog-tools">
+            <label class="catalog-search"><span>⌕</span><input id="catalogSearch" type="search" placeholder="Buscar no catálogo..." aria-label="Buscar no catálogo"></label>
+            <label class="catalog-sort">Ordenar:<select id="catalogSort"><option value="destaques">Mais vendidos</option><option value="menor-preco">Menor preço</option><option value="maior-preco">Maior preço</option><option value="nome">Nome A–Z</option></select></label>
+          </div>
         </div>
-
+        <div class="catalog-resultbar"><p><strong id="catalogCount">24</strong> produtos encontrados</p><span class="stock-live"><i></i><b>ESTOQUE ATUALIZADO</b><small> em tempo real</small></span></div>
         <div class="product-grid" id="lista-produtos" aria-live="polite"></div>
       </section>
 
-      <section class="feature-panels" id="promocoes">
-        <article class="feature-panel pink-panel"><span>OFERTAS</span><h2>PROMOÇÕES DA NOITE</h2><p>Área preparada para campanhas, cupons e preços promocionais vindos da API.</p></article>
-        <article class="feature-panel cyan-panel" id="combos"><span>COMBOS</span><h2>COMBOS ESPECIAIS</h2><p>Monte kits, regras de quantidade, descontos e disponibilidade por horário.</p></article>
+      <section class="catalog-showcase" id="promocoes" aria-label="Destaques do catálogo">
+        <article class="showcase-card showcase-combo" id="combos"><span>COMBOS</span><h2>ESPECIAIS</h2><p>Mais economia para seus momentos.</p><a href="#produtos">VER COMBOS →</a></article>
+        <article class="showcase-card showcase-sale"><span>PROMOÇÕES</span><h2>DA SEMANA</h2><p>Descontos demonstrativos em bebidas, combos e muito mais.</p><a href="#ofertas">APROVEITAR →</a></article>
+        <article class="showcase-card showcase-detail"><span>DETALHES</span><h2>DO PRODUTO</h2><p>Veja informações, valores e adicione direto na sua sacola.</p><a href="#produtos">VER PRODUTOS →</a></article>
+        <article class="showcase-card showcase-bag"><span>MINHA SACOLA</span><h2>PEDIDO RÁPIDO</h2><p>Adicione produtos e acompanhe o subtotal no carrinho.</p><button type="button" onclick="document.getElementById('cartButton')?.click()">ABRIR SACOLA →</button></article>
       </section>
 
       <section class="faq-section" id="faq" aria-labelledby="faqTitle">
