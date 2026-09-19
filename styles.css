@@ -3237,3 +3237,184 @@ body.age-locked, body.age-denied, body.cart-open {
         text-shadow: 0 0 5px #00f0ff,0 0 12px rgba(0,240,255,.9),0 0 25px rgba(0,240,255,.5) !important;
     }
 }
+
+
+/* V8 — fluid desktop hero/header geometry. Keeps the banner edge-to-edge under browser zoom. */
+@media (min-width: 761px) {
+    html, body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: clip;
+    }
+
+    .topbar {
+        width: 100%;
+        max-width: none;
+        grid-template-columns:
+            clamp(82px,6.2vw,118px)
+            minmax(430px,1fr)
+            minmax(220px,25vw)
+            max-content;
+        gap: clamp(8px,1vw,18px);
+        padding-inline: clamp(12px,2.35vw,46px);
+    }
+
+    .header-actions {
+        justify-self: end;
+        flex: 0 0 auto;
+        gap: clamp(5px,.55vw,10px);
+        padding-right: 2px;
+    }
+
+    .hero-banner {
+        width: 100%;
+        max-width: none;
+        margin-inline: 0;
+        height: clamp(520px,29.2vw,610px);
+        min-height: clamp(520px,29.2vw,610px);
+        grid-template-columns:
+            minmax(300px,34%)
+            minmax(390px,38%)
+            minmax(245px,28%);
+        padding-inline: 0;
+        align-items: center;
+        overflow: hidden;
+    }
+
+    .brand-panel,
+    .hero-copy,
+    .right-stage {
+        min-width: 0;
+        width: 100%;
+    }
+
+    .brand-panel {
+        padding-inline: clamp(18px,3vw,58px);
+    }
+
+    .hero-logo {
+        width: min(100%,clamp(330px,25vw,500px));
+        max-height: calc(clamp(520px,29.2vw,610px) - 60px);
+        object-fit: contain;
+    }
+
+    .hero-copy {
+        padding-inline: clamp(4px,.65vw,14px);
+        transform-origin: center center;
+    }
+
+    .left-sign {
+        display: block;
+        left: clamp(10px,1.15vw,24px);
+        top: 16%;
+        width: clamp(92px,6.8vw,132px);
+        padding-inline: 6px;
+    }
+
+    .right-stage {
+        height: 100%;
+        overflow: visible;
+    }
+
+    .right-neon-copy {
+        left: clamp(8px,2vw,34px) !important;
+        top: 7% !important;
+        max-width: 48%;
+        font-size: clamp(1rem,1.4vw,1.7rem) !important;
+    }
+
+    .sign24 {
+        right: clamp(10px,1.2vw,24px);
+        width: clamp(128px,9vw,178px);
+        min-width: 0;
+    }
+
+    .right-visual {
+        right: clamp(-70px,-3vw,-20px);
+        bottom: -4%;
+        width: clamp(430px,36vw,700px);
+        max-width: none;
+    }
+
+    .benefit-strip {
+        width: 100%;
+        max-width: none;
+        margin-inline: 0;
+    }
+}
+
+/* Intermediate desktop / browser-zoom range: compress composition instead of creating side gaps. */
+@media (min-width: 761px) and (max-width: 1180px) {
+    .topbar {
+        grid-template-columns: 82px 1fr auto;
+        padding-inline: 12px;
+    }
+
+    .search-wrap {
+        display: none;
+    }
+
+    .desktop-nav {
+        gap: clamp(7px,1.05vw,13px);
+    }
+
+    .nav-link {
+        font-size: clamp(.72rem,1.18vw,.86rem);
+    }
+
+    .hero-banner {
+        height: clamp(500px,48vw,565px);
+        min-height: clamp(500px,48vw,565px);
+        grid-template-columns: 32% 43% 25%;
+    }
+
+    .brand-panel {
+        padding-inline: 12px;
+    }
+
+    .hero-logo {
+        width: min(115%,390px);
+        margin-left: -5%;
+    }
+
+    .left-sign {
+        width: clamp(78px,8vw,98px);
+        left: 7px;
+    }
+
+    .right-neon-copy {
+        left: 4px !important;
+        max-width: 64%;
+        font-size: clamp(.9rem,1.65vw,1.2rem) !important;
+    }
+
+    .sign24 {
+        right: 6px;
+        width: clamp(112px,12vw,142px);
+    }
+
+    .right-visual {
+        width: clamp(390px,48vw,555px);
+        right: clamp(-145px,-9vw,-65px);
+    }
+
+    .hero-crown {
+        font-size: clamp(1.65rem,2.8vw,2.2rem);
+    }
+
+    .script-white {
+        font-size: clamp(2.55rem,5vw,3.8rem) !important;
+    }
+
+    .headline-pink {
+        font-size: clamp(4.6rem,9.6vw,7.15rem) !important;
+    }
+
+    .headline-cyan {
+        font-size: clamp(1.55rem,3.35vw,2.35rem) !important;
+    }
+
+    .hero-actions {
+        width: min(100%,520px);
+    }
+}
