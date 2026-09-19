@@ -5,13 +5,13 @@
   const qsa = (s, root = document) => [...root.querySelectorAll(s)];
 
   const produtos = [
-    { id: 1, nome: 'Whisky Premium', preco: 89.90, categoria: 'Bebidas', imagem: 'assets/products/whisky.svg', descricao: 'Seleção de destilados para pedidos e combos.' },
-    { id: 2, nome: 'Cerveja Long Neck', preco: 9.90, categoria: 'Bebidas', imagem: 'assets/products/beer.svg', descricao: 'Long neck gelada pronta para entrega.' },
-    { id: 3, nome: 'Energético Gelado', preco: 12.90, categoria: 'Energéticos', imagem: 'assets/products/energy.svg', descricao: 'Lata gelada para completar seu combo.' },
+    { id: 1, nome: 'Whisky Premium', preco: 89.90, precoDe: 109.90, promocao: true, categoria: 'Bebidas', imagem: 'assets/products/whisky.svg', descricao: 'Seleção de destilados para pedidos e combos.' },
+    { id: 2, nome: 'Cerveja Long Neck', preco: 9.90, precoDe: 12.90, promocao: true, categoria: 'Bebidas', imagem: 'assets/products/beer.svg', descricao: 'Long neck gelada pronta para entrega.' },
+    { id: 3, nome: 'Energético Gelado', preco: 12.90, precoDe: 15.90, promocao: true, categoria: 'Energéticos', imagem: 'assets/products/energy.svg', descricao: 'Lata gelada para completar seu combo.' },
     { id: 4, nome: 'Gelo Premium', preco: 14.90, categoria: 'Gelo', imagem: 'assets/products/ice.svg', descricao: 'Gelo para bebidas e festas, entrega rápida.' },
-    { id: 5, nome: 'Combo Esquina', preco: 59.90, categoria: 'Combos', imagem: 'assets/products/combo.svg', descricao: 'Combo especial pronto para personalização.' },
-    { id: 6, nome: 'Kit Festa', preco: 99.90, categoria: 'Combos', imagem: 'assets/products/party.svg', descricao: 'Seleção para encontros e comemorações.' },
-    { id: 7, nome: 'Conveniência 24h', preco: 19.90, categoria: 'Conveniência', imagem: 'assets/products/snack.svg', descricao: 'Itens rápidos para complementar o pedido.' },
+    { id: 5, nome: 'Combo Esquina', preco: 59.90, precoDe: 69.90, promocao: true, categoria: 'Combos', imagem: 'assets/products/combo.svg', descricao: 'Combo especial pronto para personalização.' },
+    { id: 6, nome: 'Kit Festa', preco: 99.90, precoDe: 119.90, promocao: true, categoria: 'Combos', imagem: 'assets/products/party.svg', descricao: 'Seleção para encontros e comemorações.' },
+    { id: 7, nome: 'Conveniência 24h', preco: 19.90, precoDe: 24.90, promocao: true, categoria: 'Conveniência', imagem: 'assets/products/snack.svg', descricao: 'Itens rápidos para complementar o pedido.' },
     { id: 8, nome: 'Artigos de Tabacaria', preco: 24.90, categoria: 'Tabacaria', imagem: 'assets/products/tabacaria.svg', descricao: 'Linha de conveniência da tabacaria.' }
   ];
 
@@ -39,6 +39,7 @@
     drawer: qs('#drawer'), drawerBackdrop: qs('#drawerBackdrop'), drawerClose: qs('#drawerClose'), menuTrigger: qs('#menuTrigger'),
     cartCount: qs('#cartCount'), cartButton: qs('#cartButton'), orderButton: qs('#orderButton'), toast: qs('#toast'),
     searchForm: qs('#searchForm'), searchInput: qs('#searchInput'), productGrid: qs('#lista-produtos'), categoryFilters: qs('#categoryFilters'),
+    offersTrack: qs('#offersTrack'), offersViewport: qs('#offersViewport'), offersPrev: qs('#offersPrev'), offersNext: qs('#offersNext'), offersUpdated: qs('#offersUpdated'),
     accessLabel: qs('#accessLabel'), drawerRole: qs('#drawerRole'), demoLogin: qs('#demoLogin'), demoLogout: qs('#demoLogout'),
     profileButton: qs('#profileButton'), accountDialog: qs('#accountDialog'), accountClose: qs('#accountClose'), accountLogin: qs('#accountLogin'), accountLogout: qs('#accountLogout'), accountTitle: qs('#accountTitle'), accountText: qs('#accountText'),
     cartDrawer: qs('#cartDrawer'), cartBackdrop: qs('#cartBackdrop'), cartClose: qs('#cartClose'), cartItems: qs('#cartItems'), cartEmpty: qs('#cartEmpty'), cartSubtotal: qs('#cartSubtotal'), checkoutButton: qs('#checkoutButton'), cartShopLink: qs('#cartShopLink'),
@@ -254,6 +255,53 @@
     }).join('');
   }
 
+  /* ---------- OFFERS CAROUSEL ---------- */
+  function produtosPromocionais() {
+    return produtos.filter(prod => prod.promocao && Number(prod.precoDe) > prod.preco);
+  }
+
+  function renderizarOfertas() {
+    if (!els.offersTrack) return;
+    const ofertas = produtosPromocionais();
+    els.offersTrack.innerHTML = ofertas.map(prod => {
+      const desconto = Math.round((1 - prod.preco / prod.precoDe) * 100);
+      const podeComprar = verificarAcesso('CLIENTE');
+      return `
+        <article class="offer-card" data-product-id="${prod.id}">
+          <span class="offer-badge">-${desconto}%</span>
+          <div class="offer-media"><img src="${prod.imagem}" alt="${escapeHTML(prod.nome)}" loading="lazy"></div>
+          <div class="offer-copy">
+            <span>${escapeHTML(prod.categoria.toUpperCase())}</span>
+            <h3>${escapeHTML(prod.nome)}</h3>
+            <div class="offer-price"><del>${moeda(prod.precoDe)}</del><strong>${moeda(prod.preco)}</strong></div>
+            <button class="offer-add${podeComprar ? '' : ' login-required'}" type="button" data-add="${prod.id}">${podeComprar ? 'ADICIONAR' : 'ENTRAR'}</button>
+          </div>
+        </article>`;
+    }).join('');
+    if (els.offersUpdated) {
+      els.offersUpdated.textContent = `Ofertas ativas • atualizado ${new Intl.DateTimeFormat('pt-BR',{hour:'2-digit',minute:'2-digit'}).format(new Date())}`;
+    }
+    atualizarSetasOfertas();
+  }
+
+  function passoOfertas() {
+    const card = els.offersTrack?.querySelector('.offer-card');
+    if (!card || !els.offersViewport) return 320;
+    const gap = parseFloat(getComputedStyle(els.offersTrack).gap) || 16;
+    return card.getBoundingClientRect().width + gap;
+  }
+
+  function moverOfertas(direcao) {
+    els.offersViewport?.scrollBy({ left: passoOfertas() * direcao, behavior: 'smooth' });
+  }
+
+  function atualizarSetasOfertas() {
+    if (!els.offersViewport) return;
+    const max = Math.max(0, els.offersViewport.scrollWidth - els.offersViewport.clientWidth - 2);
+    if (els.offersPrev) els.offersPrev.disabled = els.offersViewport.scrollLeft <= 2;
+    if (els.offersNext) els.offersNext.disabled = els.offersViewport.scrollLeft >= max;
+  }
+
   /* ---------- CART ---------- */
   function carregarCarrinho() {
     try {
@@ -467,6 +515,16 @@
     adicionarAoCarrinho(button.dataset.add);
   });
 
+  els.offersTrack?.addEventListener('click', event => {
+    const button = event.target.closest('[data-add]');
+    if (!button) return;
+    adicionarAoCarrinho(button.dataset.add);
+  });
+  els.offersPrev?.addEventListener('click', () => moverOfertas(-1));
+  els.offersNext?.addEventListener('click', () => moverOfertas(1));
+  els.offersViewport?.addEventListener('scroll', atualizarSetasOfertas, { passive: true });
+  window.addEventListener('resize', atualizarSetasOfertas, { passive: true });
+
   els.searchForm?.addEventListener('submit', event => {
     event.preventDefault();
     buscaAtual = els.searchInput?.value || '';
@@ -532,6 +590,7 @@
     produtos: () => produtos.map(p => ({ ...p })),
     verificarAcesso,
     renderizarProdutos,
+    renderizarOfertas,
     abrirCarrinho,
     setRole(role) {
       if (!Object.hasOwn(niveis, role)) return false;
@@ -549,6 +608,7 @@
   });
 
   renderizarFiltros();
+  renderizarOfertas();
   atualizarAcesso();
   renderizarCarrinho();
   iniciarAgeGate();
