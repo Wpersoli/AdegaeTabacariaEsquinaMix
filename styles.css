@@ -5507,3 +5507,60 @@ body.age-locked, body.age-denied, body.cart-open {
 .left-sign {
   display: none !important;
 }
+
+
+/* ==========================================================
+   V19 — surgical clarity + live offers rail
+   ========================================================== */
+.script-white,.headline-pink,.headline-cyan,.brand-slogan,.right-neon-copy span,.sign24 strong,.benefit-slogan-text{filter:none!important}
+.headline-pink{text-shadow:0 0 3px rgba(255,0,127,.82),0 0 11px rgba(255,0,127,.30)!important}
+.headline-cyan{text-shadow:0 0 3px rgba(0,240,255,.75),0 0 10px rgba(0,240,255,.24)!important}
+.script-white{text-shadow:0 2px 2px rgba(0,0,0,.8),0 0 5px rgba(255,255,255,.14)!important}
+.brand-slogan,.benefit-slogan-text{text-shadow:0 0 4px rgba(255,215,0,.40)!important}
+.right-neon-copy .pink{text-shadow:0 0 4px rgba(255,0,127,.52),0 0 10px rgba(255,0,127,.22)!important}
+.right-neon-copy .cyan{text-shadow:0 0 4px rgba(0,240,255,.52),0 0 10px rgba(0,240,255,.20)!important}
+.sign24 strong{text-shadow:0 0 5px rgba(255,215,0,.58),0 0 12px rgba(255,215,0,.22)!important}
+
+@media (min-width:981px){
+  .brand-panel{overflow:visible!important}
+  .hero-logo{object-fit:contain!important}
+  .brand-copy,.brand-slogan{position:relative!important;z-index:3!important}
+}
+
+.offers-rail{position:relative;background:#06030a;border-top:1px solid rgba(255,0,127,.34);border-bottom:1px solid rgba(0,240,255,.16);padding:clamp(22px,2.4vw,34px) clamp(18px,3.2vw,54px) clamp(26px,2.8vw,40px);overflow:hidden}
+.offers-head{display:flex;align-items:end;justify-content:space-between;gap:20px;max-width:1540px;margin:0 auto 16px}
+.offers-head h2{margin:3px 0 0;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:clamp(1.45rem,2.2vw,2.35rem);line-height:.95;letter-spacing:.015em;text-transform:uppercase;text-shadow:0 0 8px rgba(255,0,127,.16)}
+.offers-live{display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.72);font-size:.74rem;white-space:nowrap}
+.offers-live .status-dot{box-shadow:0 0 7px rgba(0,255,0,.7)}
+.offers-carousel{position:relative;max-width:1600px;margin:0 auto;padding:0 46px}
+.offers-viewport{overflow-x:auto;overflow-y:hidden;scrollbar-width:none;scroll-snap-type:x mandatory;overscroll-behavior-inline:contain;border-radius:16px}
+.offers-viewport::-webkit-scrollbar{display:none}
+.offers-track{display:flex;gap:clamp(12px,1.2vw,18px);width:max-content;padding:2px 2px 8px}
+.offer-card{position:relative;flex:0 0 clamp(190px,15vw,236px);min-height:278px;scroll-snap-align:start;overflow:hidden;border:1px solid rgba(255,255,255,.10);border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.028));box-shadow:0 12px 26px rgba(0,0,0,.25);transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease}
+.offer-card:hover{transform:translateY(-3px);border-color:rgba(255,0,127,.42);box-shadow:0 14px 28px rgba(0,0,0,.32),0 0 16px rgba(255,0,127,.09)}
+.offer-badge{position:absolute;z-index:2;top:10px;left:10px;padding:5px 8px;border-radius:999px;background:#ff007f;color:#fff;font-weight:900;font-size:.72rem;letter-spacing:.03em}
+.offer-media{height:138px;display:grid;place-items:center;padding:18px;background:radial-gradient(circle at 50% 70%,rgba(0,240,255,.08),transparent 58%)}
+.offer-media img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 8px 12px rgba(0,0,0,.30))}
+.offer-copy{padding:12px 14px 15px}
+.offer-copy>span{color:#00f0ff;font-size:.62rem;font-weight:800;letter-spacing:.11em}
+.offer-copy h3{margin:4px 0 8px;color:#fff;font-size:1rem;line-height:1.05}
+.offer-price{display:flex;align-items:baseline;gap:8px;margin-bottom:11px}
+.offer-price del{color:rgba(255,255,255,.43);font-size:.72rem}
+.offer-price strong{color:#ffea00;font-size:1.12rem}
+.offer-add{width:100%;min-height:36px;border:1px solid #ff007f;border-radius:999px;background:rgba(255,0,127,.13);color:#fff;font:800 .72rem/1 'Barlow Condensed',sans-serif;letter-spacing:.06em;cursor:pointer;transition:background .2s ease,transform .2s ease}
+.offer-add:hover{background:#ff007f;transform:translateY(-1px)}
+.offers-arrow{position:absolute;z-index:5;top:50%;width:38px;height:52px;transform:translateY(-50%);border:1px solid rgba(255,255,255,.20);border-radius:12px;background:rgba(4,1,8,.88);color:#fff;font-size:2rem;line-height:1;cursor:pointer;box-shadow:0 0 12px rgba(255,0,127,.12);transition:border-color .2s ease,color .2s ease,opacity .2s ease}
+.offers-arrow:hover:not(:disabled){border-color:#ff007f;color:#ffea00}
+.offers-arrow:disabled{opacity:.25;cursor:default}
+.offers-prev{left:0}.offers-next{right:0}
+
+@media (max-width:760px){
+  .offers-rail{padding:20px 12px 26px}
+  .offers-head{align-items:flex-start;flex-direction:column;gap:8px;margin-bottom:13px}
+  .offers-live{font-size:.68rem}
+  .offers-carousel{padding:0 34px}
+  .offers-arrow{width:30px;height:46px;font-size:1.6rem}
+  .offer-card{flex-basis:min(72vw,230px);min-height:264px}
+  .offer-media{height:128px}
+}
+@media (prefers-reduced-motion:reduce){.offers-viewport{scroll-behavior:auto}.offer-card,.offer-add{transition:none}}
