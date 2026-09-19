@@ -3064,3 +3064,77 @@ body.age-locked, body.age-denied, body.cart-open {
     from { transform: translate3d(0,0,0); }
     to { transform: translate3d(-50%,0,0); }
 }
+
+
+/* V6 — unified hero typography across desktop/mobile */
+.hero-crown {
+    margin-bottom: 2px;
+    animation: heroCrownGlow 2.4s ease-in-out infinite;
+}
+
+.script-white {
+    color: #fff !important;
+    font-family: "Segoe Print","Bradley Hand","Brush Script MT",cursive !important;
+    font-style: italic;
+    font-weight: 700;
+    letter-spacing: -.055em;
+    text-shadow:
+        0 3px 0 #12000a,
+        0 0 5px rgba(255,255,255,.82),
+        0 0 12px rgba(255,255,255,.38) !important;
+}
+
+.headline-pink {
+    color: #fff !important;
+    -webkit-text-stroke: 1px rgba(255,255,255,.24);
+    text-shadow:
+        0 4px 0 #16000c,
+        0 8px 0 #420023,
+        0 0 8px rgba(255,0,127,.92),
+        0 0 20px rgba(255,0,127,.72),
+        0 0 34px rgba(255,0,127,.34) !important;
+    animation: heroPinkGlow 3.2s ease-in-out infinite;
+}
+
+.headline-cyan {
+    color: #00f0ff !important;
+    -webkit-text-stroke: .45px rgba(190,255,255,.35);
+    text-shadow:
+        0 2px 0 rgba(0,30,40,.9),
+        0 0 6px rgba(0,240,255,.95),
+        0 0 16px rgba(0,240,255,.72),
+        0 0 28px rgba(0,240,255,.34) !important;
+    animation: heroCyanGlow 3s ease-in-out infinite;
+}
+
+@keyframes heroCrownGlow {
+    0%,100% { filter: brightness(.95) drop-shadow(0 0 5px rgba(255,215,0,.65)); }
+    50% { filter: brightness(1.18) drop-shadow(0 0 12px rgba(255,215,0,.95)); }
+}
+
+@keyframes heroPinkGlow {
+    0%,100% { filter: brightness(.98) drop-shadow(0 7px 7px rgba(0,0,0,.28)); }
+    50% { filter: brightness(1.08) drop-shadow(0 0 8px rgba(255,0,127,.42)); }
+}
+
+@keyframes heroCyanGlow {
+    0%,100% { filter: brightness(.96); }
+    50% { filter: brightness(1.13); }
+}
+
+/* Same visual language at every breakpoint; only size/spacing scales. */
+@media (max-width: 760px) {
+    .script-white {
+        color: #fff !important;
+        font-family: "Segoe Print","Bradley Hand","Brush Script MT",cursive !important;
+        text-shadow: 0 3px 0 #12000a,0 0 5px rgba(255,255,255,.82),0 0 12px rgba(255,255,255,.38) !important;
+    }
+    .headline-pink {
+        color: #fff !important;
+        text-shadow: 0 4px 0 #16000c,0 7px 0 #420023,0 0 8px rgba(255,0,127,.92),0 0 20px rgba(255,0,127,.72) !important;
+    }
+    .headline-cyan {
+        color: #00f0ff !important;
+        text-shadow: 0 2px 0 rgba(0,30,40,.9),0 0 6px rgba(0,240,255,.95),0 0 16px rgba(0,240,255,.72) !important;
+    }
+}
