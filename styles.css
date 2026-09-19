@@ -3856,3 +3856,163 @@ body.age-locked, body.age-denied, body.cart-open {
     max-height: 620px;
   }
 }
+
+
+/* V11 — SNIPER visual calibration against supplied 1994px reference.
+   Desktop reference anchors: sign 3.4–10.7%, logo 13.7–36.1%,
+   headline 41.1–66.4%, beverage stage 69–100%. */
+@media (min-width: 1181px) {
+  .hero-banner {
+    aspect-ratio: 1994 / 605;
+    grid-template-columns: 36.5% 33.5% 30%;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    transform: scale(1.01);
+    filter: saturate(1.12) contrast(1.07) brightness(.92);
+    background-position: 50% 52%;
+  }
+
+  .left-sign {
+    left: 3.35cqw;
+    top: 10.5%;
+    width: 7.45cqw;
+    min-width: 0;
+    max-width: none;
+    height: 58%;
+    transform: none;
+  }
+
+  .brand-panel {
+    padding: .8cqw .2cqw .45cqw 10.6cqw;
+    overflow: visible;
+    z-index: 5;
+  }
+
+  .hero-logo {
+    width: 26.2cqw;
+    max-width: none;
+    height: 82%;
+    max-height: none;
+    margin: -.15cqw 0 -1.05cqw 0;
+    transform: translateX(-1.2cqw) scale(1.08);
+    transform-origin: center;
+  }
+
+  .brand-copy {
+    width: 24cqw;
+    margin-left: -1.25cqw;
+    font-size: clamp(.72rem,.78cqw,1rem);
+  }
+
+  .brand-slogan {
+    width: 23cqw;
+    margin-left: -1cqw;
+    font-size: clamp(.78rem,.88cqw,1.12rem);
+  }
+
+  .hero-copy {
+    z-index: 8;
+    padding: .25cqw 0 .55cqw;
+    transform: translateX(-.5cqw);
+  }
+
+  .hero-crown {
+    font-size: clamp(1.8rem,1.9cqw,2.8rem);
+    margin-bottom: -.55cqw;
+  }
+
+  .script-white {
+    font-size: clamp(3rem,3.75cqw,5.45rem) !important;
+    margin-bottom: -1.18cqw !important;
+  }
+
+  .headline-pink {
+    font-size: clamp(6.1rem,7.05cqw,10.2rem) !important;
+    line-height: .77 !important;
+  }
+
+  .headline-cyan {
+    font-size: clamp(1.9rem,2.35cqw,3.45rem) !important;
+    margin: .42cqw auto .55cqw !important;
+  }
+
+  .service-badges {
+    width: 32cqw;
+    transform: translateX(.15cqw);
+  }
+
+  .service-badges span {
+    font-size: clamp(1.55rem,1.85cqw,2.7rem);
+  }
+
+  .service-badges b {
+    font-size: clamp(.68rem,.76cqw,.98rem);
+  }
+
+  .hero-actions {
+    width: 34cqw;
+    margin-top: .55cqw;
+    gap: .8cqw;
+  }
+
+  .hero-actions .cta {
+    min-height: clamp(50px,3.55cqw,70px);
+    font-size: clamp(.86rem,.98cqw,1.26rem);
+  }
+
+  .right-neon-copy {
+    left: 1.25cqw !important;
+    top: 6.5% !important;
+    max-width: 13.2cqw;
+    font-size: clamp(1.1rem,1.55cqw,2.05rem) !important;
+  }
+
+  .sign24 {
+    top: 3.2%;
+    right: 1.15cqw;
+    width: 10.4cqw;
+    min-width: 0;
+    max-width: none;
+  }
+
+  .right-visual {
+    width: 37.5cqw;
+    right: -2.7cqw;
+    bottom: -8.5%;
+    max-height: 100%;
+    filter: saturate(1.08) contrast(1.04);
+  }
+
+  .benefit-strip {
+    min-height: clamp(88px,5.55vw,112px);
+    padding-inline: 12.8cqw 5.4cqw;
+    gap: 0;
+  }
+
+  .benefit-strip article {
+    min-width: 0;
+  }
+}
+
+/* Keep the calibrated composition stable on common laptop widths/zoom.
+   It scales down as a scene instead of independently shrinking each object. */
+@media (min-width: 981px) and (max-width: 1180px) {
+  .hero-banner {
+    aspect-ratio: 2.42 / 1;
+    grid-template-columns: 35% 39% 26%;
+  }
+  .left-sign { left: 2.1cqw; top: 13%; width: 8.2cqw; }
+  .brand-panel { padding-left: 7.5cqw; }
+  .hero-logo { width: 29cqw; max-width:none; height:80%; max-height:none; transform:scale(1.06); }
+  .hero-copy { transform: translateX(-.8cqw); }
+  .script-white { font-size: clamp(2.5rem,4.25cqw,4rem)!important; }
+  .headline-pink { font-size: clamp(4.9rem,8.2cqw,7.7rem)!important; }
+  .headline-cyan { font-size: clamp(1.55rem,2.85cqw,2.55rem)!important; }
+  .service-badges { width:38cqw; }
+  .hero-actions { width:40cqw; }
+  .right-neon-copy { left:.4cqw!important; }
+  .sign24 { right:.4cqw; width:12cqw; }
+  .right-visual { width:48cqw; right:-13cqw; }
+}
