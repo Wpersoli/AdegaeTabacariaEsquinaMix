@@ -3418,3 +3418,237 @@ body.age-locked, body.age-denied, body.cart-open {
         width: min(100%,520px);
     }
 }
+
+
+/* V9 — viewport-driven hero composition.
+   Browser zoom changes CSS viewport width; these rules reflow the composition
+   instead of shrinking the whole banner and leaving unused space. */
+@media (min-width: 761px) {
+    :root {
+        --hero-fluid-h: clamp(500px, calc(100svh - var(--header-h) - 120px), 650px);
+    }
+
+    .hero-banner {
+        box-sizing: border-box;
+        inline-size: 100vw;
+        max-inline-size: 100%;
+        min-height: var(--hero-fluid-h);
+        height: var(--hero-fluid-h);
+        margin: 0;
+        grid-template-columns:
+            minmax(280px, 33.5fr)
+            minmax(390px, 39fr)
+            minmax(235px, 27.5fr);
+        column-gap: 0;
+        background-size: cover;
+        background-position: center center;
+    }
+
+    .brand-panel,
+    .hero-copy,
+    .right-stage {
+        height: 100%;
+        align-self: stretch;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .brand-panel {
+        position: relative;
+        padding: clamp(8px,1vw,18px) clamp(14px,2.6vw,50px);
+    }
+
+    .hero-copy {
+        position: relative;
+        justify-content: center;
+        padding: clamp(8px,1vh,14px) clamp(4px,.7vw,14px);
+    }
+
+    .right-stage {
+        display: block;
+        position: relative;
+    }
+
+    .hero-logo {
+        width: min(100%, clamp(310px, 26vw, 510px));
+        height: min(88%, 510px);
+        margin: 0 auto clamp(-28px,-1.4vw,-14px);
+        flex: 0 1 auto;
+    }
+
+    .brand-copy,
+    .brand-slogan {
+        flex: 0 0 auto;
+    }
+
+    .service-badges,
+    .hero-actions {
+        flex: 0 0 auto;
+    }
+
+    .right-visual {
+        max-height: 92%;
+        object-fit: contain;
+        object-position: right bottom;
+    }
+}
+
+/* Normal laptop / moderate zoom: preserve all three visual zones. */
+@media (min-width: 981px) and (max-width: 1360px) {
+    :root {
+        --hero-fluid-h: clamp(500px, 53vw, 600px);
+    }
+
+    .hero-banner {
+        grid-template-columns: 32% 43% 25%;
+    }
+
+    .brand-panel {
+        padding-inline: clamp(10px,1.5vw,22px);
+    }
+
+    .hero-logo {
+        width: min(108%, 430px);
+    }
+
+    .left-sign {
+        left: 8px;
+        width: clamp(82px,7.6vw,104px);
+    }
+
+    .right-neon-copy {
+        left: 5px !important;
+    }
+
+    .right-visual {
+        width: clamp(410px,43vw,575px);
+        right: clamp(-130px,-7vw,-55px);
+    }
+}
+
+/* High browser zoom / narrow desktop viewport: switch layout before clipping occurs. */
+@media (min-width: 761px) and (max-width: 980px) {
+    :root {
+        --hero-fluid-h: clamp(560px, 69vw, 650px);
+    }
+
+    .topbar {
+        grid-template-columns: 76px 1fr auto;
+        padding-inline: 10px;
+        gap: 7px;
+    }
+
+    .desktop-nav {
+        gap: clamp(5px,.8vw,8px);
+    }
+
+    .nav-link {
+        font-size: clamp(.68rem,1.35vw,.78rem);
+        padding-inline: 2px;
+    }
+
+    .hero-banner {
+        grid-template-columns: 31% 48% 21%;
+    }
+
+    .brand-panel {
+        padding-inline: 7px;
+    }
+
+    .hero-logo {
+        width: min(122%, 355px);
+        margin-left: -9%;
+    }
+
+    .brand-copy {
+        font-size: clamp(.68rem,1.5vw,.84rem);
+    }
+
+    .brand-slogan {
+        font-size: clamp(.72rem,1.6vw,.9rem);
+    }
+
+    .left-sign {
+        left: 5px;
+        top: 17%;
+        width: clamp(72px,9vw,88px);
+    }
+
+    .hero-copy {
+        z-index: 8;
+    }
+
+    .script-white {
+        font-size: clamp(2.35rem,5.6vw,3.3rem) !important;
+    }
+
+    .headline-pink {
+        font-size: clamp(4.25rem,10.7vw,6.15rem) !important;
+    }
+
+    .headline-cyan {
+        font-size: clamp(1.45rem,3.65vw,2.05rem) !important;
+    }
+
+    .service-badges {
+        width: min(100%,440px);
+    }
+
+    .service-badges b {
+        font-size: clamp(.58rem,1.25vw,.7rem);
+    }
+
+    .hero-actions {
+        width: min(100%,455px);
+        gap: 8px;
+    }
+
+    .hero-actions .cta {
+        min-width: 0;
+        padding-inline: 10px;
+        font-size: clamp(.78rem,1.6vw,.94rem);
+    }
+
+    .right-neon-copy {
+        left: 2px !important;
+        top: 8% !important;
+        max-width: 90%;
+        font-size: clamp(.82rem,1.8vw,1.05rem) !important;
+    }
+
+    .sign24 {
+        top: 5%;
+        right: 4px;
+        width: clamp(100px,13vw,122px);
+    }
+
+    .right-visual {
+        width: clamp(370px,53vw,480px);
+        right: clamp(-190px,-15vw,-105px);
+    }
+
+    .benefit-strip {
+        min-height: 94px;
+        padding-inline: 12px;
+    }
+}
+
+/* Large/ultrawide displays: grow composition instead of leaving a small centered hero. */
+@media (min-width: 1700px) {
+    :root {
+        --hero-fluid-h: clamp(570px, 32vw, 690px);
+    }
+
+    .hero-banner {
+        grid-template-columns: 34% 37% 29%;
+    }
+
+    .hero-logo {
+        width: min(100%,540px);
+    }
+
+    .right-visual {
+        width: clamp(620px,35vw,760px);
+    }
+}
