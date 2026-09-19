@@ -298,7 +298,7 @@ button,input {
     display: flex;
     width: max-content;
     will-change: transform;
-    animation: marqueeScroll 22s linear infinite
+    animation: marqueeScroll 55s linear infinite
 }
 
 .ticker-track span {
@@ -2647,7 +2647,7 @@ body.age-locked, body.age-denied, body.cart-open {
 }
 
 .ticker-track {
-    animation-duration: 38s
+    animation-duration: 55s
 }
 
 .ticker-track span {
@@ -2783,7 +2783,7 @@ body.age-locked, body.age-denied, body.cart-open {
     }
 
     .ticker-track {
-        animation-duration: 44s
+        animation-duration: 60s
     }
 
     .ticker-track span {
