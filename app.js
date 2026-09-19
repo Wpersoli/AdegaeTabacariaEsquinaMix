@@ -280,7 +280,8 @@
       if (els.offersNext) els.offersNext.disabled = true;
       return;
     }
-    els.offersTrack.innerHTML = ofertas.map(prod => {
+    const ofertasVisiveis = ofertas.slice(0, 6);
+    els.offersTrack.innerHTML = ofertasVisiveis.map(prod => {
       const desconto = Math.round((1 - prod.preco / prod.precoDe) * 100);
       const podeComprar = verificarAcesso('CLIENTE');
       return `
@@ -309,7 +310,9 @@
   }
 
   function moverOfertas(direcao) {
-    els.offersViewport?.scrollBy({ left: passoOfertas() * direcao, behavior: 'smooth' });
+    if (!els.offersViewport) return;
+    const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    els.offersViewport.scrollBy({ left: passoOfertas() * direcao, behavior: reducedMotion ? 'auto' : 'smooth' });
   }
 
   function atualizarSetasOfertas() {
@@ -539,7 +542,11 @@
   });
   els.offersPrev?.addEventListener('click', () => moverOfertas(-1));
   els.offersNext?.addEventListener('click', () => moverOfertas(1));
-  els.offersViewport?.addEventListener('scroll', atualizarSetasOfertas, { passive: true });
+  let offersScrollFrame = 0;
+  els.offersViewport?.addEventListener('scroll', () => {
+    cancelAnimationFrame(offersScrollFrame);
+    offersScrollFrame = requestAnimationFrame(atualizarSetasOfertas);
+  }, { passive: true });
   let offersResizeFrame = 0;
   window.addEventListener('resize', () => {
     cancelAnimationFrame(offersResizeFrame);
@@ -642,6 +649,7 @@
 
   renderizarFiltros();
   renderizarOfertas();
+  requestAnimationFrame(atualizarSetasOfertas);
   atualizarAcesso();
   renderizarCarrinho();
   iniciarAgeGate();
