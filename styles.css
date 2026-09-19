@@ -5293,3 +5293,200 @@ body.age-locked, body.age-denied, body.cart-open {
   .right-visual { width: 126% !important; right: -7% !important; }
   .sign24 { width: 39% !important; }
 }
+
+
+/* ==========================================================
+   V16 — close-up fidelity pass from latest approved crops
+   ========================================================== */
+@media (min-width: 1281px) {
+  /* hero overall */
+  .hero-banner {
+    aspect-ratio: 3.31 / 1 !important;
+  }
+
+  /* left sign: slimmer, taller, closer to the approved crop */
+  .left-sign {
+    left: 1.7% !important;
+    top: 7.8% !important;
+    width: 9.15% !important;
+    height: 62.8% !important;
+  }
+
+  /* logo block: larger and more dominant, matching the reference balance */
+  .brand-panel {
+    left: 10.6% !important;
+    top: 1.2% !important;
+    width: 29.7% !important;
+    height: 96.8% !important;
+  }
+
+  .hero-logo {
+    width: 100% !important;
+    height: 84.5% !important;
+    transform: translateX(-.7%) scale(1.055) !important;
+  }
+
+  .brand-copy {
+    width: 87% !important;
+    margin-top: -1.1% !important;
+  }
+
+  .brand-slogan {
+    margin-top: .5% !important;
+  }
+
+  /* title: substantially larger like the approved close-up */
+  .hero-copy {
+    left: 38.8% !important;
+    top: .6% !important;
+    width: 32.8% !important;
+    height: 98% !important;
+  }
+
+  .hero-title-svg {
+    left: -7.2% !important;
+    top: -.5% !important;
+    width: 112.5% !important;
+    height: 67.5% !important;
+  }
+
+  /* push the information row and CTAs to match the reference crop */
+  .service-badges {
+    left: .5% !important;
+    width: 98% !important;
+    bottom: 17.8% !important;
+    height: 16.8% !important;
+  }
+
+  .hero-actions {
+    left: -2.5% !important;
+    width: 105% !important;
+    bottom: 1.5% !important;
+    grid-template-columns: 1.12fr .9fr !important;
+    gap: 2.1% !important;
+  }
+
+  .hero-actions .cta {
+    min-height: clamp(50px,3.35cqw,64px) !important;
+    font-size: clamp(.92rem,1.13cqw,1.28rem) !important;
+  }
+
+  /* right neon: bigger and closer to the top edge */
+  .right-stage {
+    left: 70.2% !important;
+    width: 29.8% !important;
+  }
+
+  .right-neon-copy {
+    left: -.4% !important;
+    top: 1.1% !important;
+    width: 53.5% !important;
+    height: 37.5% !important;
+  }
+
+  .sign24 {
+    top: 1.4% !important;
+    right: .25% !important;
+    width: 38.7% !important;
+  }
+
+  /* bucket slightly reduced and moved down/right so it no longer dominates */
+  .right-visual {
+    width: 117.5% !important;
+    right: -1.2% !important;
+    bottom: -7.2% !important;
+  }
+
+  /* benefits and signature */
+  .benefit-strip {
+    min-height: clamp(80px,4.82vw,90px) !important;
+    padding-left: 13.3% !important;
+    padding-right: 3.7% !important;
+  }
+
+  .benefit-slogan-svg {
+    width: 128% !important;
+    max-height: 86px !important;
+    margin-left: -11% !important;
+  }
+
+  /* header matching the compact approved framing */
+  .topbar {
+    height: clamp(60px,3.8vw,70px) !important;
+    grid-template-columns: clamp(82px,7.2vw,128px) minmax(620px,1fr) minmax(330px,23vw) auto !important;
+    padding-left: clamp(28px,2.6vw,48px) !important;
+    padding-right: clamp(22px,1.7vw,32px) !important;
+  }
+
+  .brand-mini {
+    width: clamp(82px,6.7vw,118px) !important;
+    height: calc(var(--header-h) - 10px) !important;
+  }
+
+  .desktop-nav {
+    gap: clamp(22px,1.85vw,34px) !important;
+  }
+
+  .nav-link {
+    font-size: clamp(.88rem,.96vw,1.05rem) !important;
+  }
+
+  .search-box {
+    height: clamp(40px,2.55vw,48px) !important;
+  }
+
+  .round-btn {
+    width: clamp(39px,2.45vw,46px) !important;
+    height: clamp(39px,2.45vw,46px) !important;
+  }
+}
+
+@media (min-width: 981px) and (max-width: 1280px) {
+  .left-sign {
+    left: 1.1% !important;
+    width: 9.9% !important;
+    height: 60% !important;
+  }
+
+  .brand-panel {
+    left: 10.2% !important;
+    width: 30.7% !important;
+  }
+
+  .hero-copy {
+    left: 38.8% !important;
+    width: 34% !important;
+  }
+
+  .hero-title-svg {
+    left: -7% !important;
+    width: 113% !important;
+    top: .8% !important;
+    height: 65% !important;
+  }
+
+  .service-badges {
+    bottom: 17% !important;
+  }
+
+  .hero-actions {
+    left: -2% !important;
+    width: 104% !important;
+    bottom: 1.1% !important;
+  }
+
+  .right-stage {
+    left: 70.5% !important;
+    width: 29.5% !important;
+  }
+
+  .right-neon-copy {
+    width: 55% !important;
+    top: 1.5% !important;
+  }
+
+  .right-visual {
+    width: 121% !important;
+    right: -4% !important;
+  }
+}
