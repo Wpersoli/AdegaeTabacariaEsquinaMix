@@ -5,30 +5,54 @@
   const qsa = (s, root = document) => [...root.querySelectorAll(s)];
 
   const produtos = [
-    { id: 1, nome: 'Heineken Long Neck', volume:'330ml', preco: 7.49, precoDe: 8.99, promocao: true, categoria: 'Bebidas', imagem: 'https://cdn.irmaospatrocinio.com.br/img/p/1/5/7/4/9/7/157497-thickbox_default.jpg', descricao: 'Cerveja lager puro malte, gelada.', estoque: 18, destaque: true },
-    { id: 2, nome: 'Red Bull Energy Drink', volume:'250ml', preco: 10.90, precoDe: 12.90, promocao: true, categoria: 'Energéticos', imagem: 'https://toppng.com/uploads/preview/red-bull-1152606041778170rzdws.png', descricao: 'Energético clássico em lata.', estoque: 24, destaque: true },
-    { id: 3, nome: 'Coca-Cola Original', volume:'2 Litros', preco: 12.99, precoDe: 15.00, promocao: true, categoria: 'Bebidas', imagem: 'https://www.vhv.rs/dpng/d/436-4362440_coca-cola-bottle-2l-coca-cola-bottle-2l.png', descricao: 'Refrigerante Coca-Cola Original.', estoque: 12 },
-    { id: 4, nome: 'Gelo em Cubos', volume:'5kg', preco: 14.90, categoria: 'Gelo', imagem: 'assets/products/ice.svg', descricao: 'Saco de gelo para bebidas e festas.', estoque: 30 },
-    { id: 5, nome: 'Combo Esquina Mix', volume:'6 Heineken + Gelo 5kg', preco: 59.90, precoDe: 69.90, promocao: true, categoria: 'Combos', imagem: 'assets/products/combo.svg', descricao: 'Combo especial para receber gelado.', estoque: 8, destaque: true },
-    { id: 6, nome: 'Doritos Nacho Cheese', volume:'120g', preco: 8.90, categoria: 'Conveniência', imagem: 'https://io.convertiez.com.br/m/drogariaveracruz/shop/products/images/22672/large/salgadinho-de-milho-doritos-sabor-queijo-nacho-120g_23292.jpg', descricao: 'Salgadinho sabor queijo nacho.', estoque: 14 },
-    { id: 7, nome: 'Isqueiro Premium', volume:'Unidade', preco: 19.90, categoria: 'Tabacaria', imagem: 'assets/products/tabacaria.svg', descricao: 'Acessório de tabacaria para maiores de 18 anos.', estoque: 4 },
-    { id: 8, nome: 'Amstel Lager', volume:'350ml', preco: 4.99, precoDe: 5.99, promocao: true, categoria: 'Bebidas', imagem: 'assets/products/beer.svg', descricao: 'Cerveja lager em lata, sempre gelada.', estoque: 22 },
-    { id: 9, nome: 'Água Mineral', volume:'500ml', preco: 3.49, categoria: 'Bebidas', imagem: 'assets/products/beer.svg', descricao: 'Água mineral gelada.', estoque: 36 },
-    { id: 10, nome: 'Monster Energy', volume:'473ml', preco: 11.90, categoria: 'Energéticos', imagem: 'assets/products/energy.svg', descricao: 'Energético em lata grande.', estoque: 15 },
-    { id: 11, nome: 'Gelo em Cubos', volume:'3kg', preco: 9.90, categoria: 'Gelo', imagem: 'assets/products/ice.svg', descricao: 'Gelo em cubos para consumo.', estoque: 20 },
-    { id: 12, nome: 'Combo Gin', volume:'Gin + energético + gelo', preco: 79.90, precoDe: 89.90, promocao: true, categoria: 'Combos', imagem: 'assets/products/party.svg', descricao: 'Kit demonstrativo para seu momento.', estoque: 6 },
-    { id: 13, nome: 'Chocolate', volume:'90g', preco: 7.90, categoria: 'Conveniência', imagem: 'assets/products/snack.svg', descricao: 'Chocolate para complementar o pedido.', estoque: 11 },
-    { id: 14, nome: 'Amendoim Crocante', volume:'100g', preco: 5.90, categoria: 'Conveniência', imagem: 'assets/products/snack.svg', descricao: 'Petisco crocante.', estoque: 16 },
-    { id: 15, nome: 'Carvão Premium', volume:'3kg', preco: 18.90, categoria: 'Conveniência', imagem: 'assets/products/party.svg', descricao: 'Carvão para churrasco.', estoque: 9 },
-    { id: 16, nome: 'Seda Premium', volume:'Unidade', preco: 6.90, categoria: 'Tabacaria', imagem: 'assets/products/tabacaria.svg', descricao: 'Acessório de tabacaria para maiores de 18 anos.', estoque: 13 },
-    { id: 17, nome: 'Água Tônica', volume:'350ml', preco: 4.90, categoria: 'Bebidas', imagem: 'assets/products/beer.svg', descricao: 'Água tônica gelada.', estoque: 19 },
-    { id: 18, nome: 'Guaraná', volume:'2 Litros', preco: 10.90, categoria: 'Bebidas', imagem: 'assets/products/beer.svg', descricao: 'Refrigerante gelado.', estoque: 17 },
-    { id: 19, nome: 'Combo Churrasco', volume:'Bebidas + gelo + carvão', preco: 109.90, categoria: 'Combos', imagem: 'assets/products/party.svg', descricao: 'Kit demonstrativo para churrasco.', estoque: 5 },
-    { id: 20, nome: 'Gelo de Coco', volume:'1kg', preco: 16.90, categoria: 'Gelo', imagem: 'assets/products/ice.svg', descricao: 'Gelo saborizado demonstrativo.', estoque: 7 },
-    { id: 21, nome: 'Energético Tropical', volume:'269ml', preco: 8.90, categoria: 'Energéticos', imagem: 'assets/products/energy.svg', descricao: 'Energético gelado sabor tropical.', estoque: 12 },
-    { id: 22, nome: 'Salgadinho Mix', volume:'100g', preco: 6.90, categoria: 'Conveniência', imagem: 'assets/products/snack.svg', descricao: 'Snack para acompanhar bebidas.', estoque: 18 },
-    { id: 23, nome: 'Combo Madrugada', volume:'Bebidas + energético + gelo', preco: 64.90, categoria: 'Combos', imagem: 'assets/products/combo.svg', descricao: 'Combo demonstrativo 24h.', estoque: 7 },
-    { id: 24, nome: 'Acessório Tabacaria', volume:'Unidade', preco: 12.90, categoria: 'Tabacaria', imagem: 'assets/products/tabacaria.svg', descricao: 'Item demonstrativo de tabacaria, venda 18+.', estoque: 10 }
+    { id:1,nome:'Heineken Long Neck',volume:'330ml',preco:7.49,precoDe:8.99,promocao:true,categoria:'Cervejas',imagem:'https://www.kakuyasu.co.jp/images/commodityExtention/00401113/00401113-main.jpg',descricao:'Puro malte, refrescante e pronta para chegar trincando.',estoque:24,destaque:true },
+    { id:2,nome:'Red Bull Energy Drink',volume:'250ml',preco:10.90,precoDe:12.90,promocao:true,categoria:'Energéticos',imagem:'https://toppng.com/uploads/preview/red-bull-1152606041778170rzdws.png',descricao:'Energia clássica para virar a noite no ritmo da Esquina.',estoque:24,destaque:true },
+    { id:3,nome:'Coca-Cola Original',volume:'2L',preco:12.99,precoDe:15.00,promocao:true,categoria:'Refrigerantes',imagem:'https://www.vhv.rs/dpng/d/436-4362440_coca-cola-bottle-2l-coca-cola-bottle-2l.png',descricao:'O clássico gelado para completar qualquer pedido.',estoque:18,destaque:true },
+    { id:4,nome:'Gelo em Cubos',volume:'5kg',preco:14.90,categoria:'Gelo',imagem:'assets/products/ice.svg',descricao:'Gelo de sobra para manter o rolê inteiro no ponto.',estoque:30 },
+    { id:5,nome:'Combo Esquina Mix',volume:'6 Heineken + Gelo 5kg',preco:59.90,precoDe:69.90,promocao:true,categoria:'Combos',imagem:'assets/products/combo.svg',descricao:'Cerveja gelada + gelo: o combo que salva a resenha.',estoque:8,destaque:true },
+    { id:6,nome:'Doritos Nacho Cheese',volume:'120g',preco:8.90,categoria:'Conveniência',imagem:'https://io.convertiez.com.br/m/drogariaveracruz/shop/products/images/22672/large/salgadinho-de-milho-doritos-sabor-queijo-nacho-120g_23292.jpg',descricao:'Crocância e sabor para acompanhar sua bebida favorita.',estoque:14 },
+    { id:7,nome:'Budweiser Long Neck',volume:'330ml',preco:6.90,categoria:'Cervejas',imagem:'https://www.gojumbo.co.uk/user/products/large/Budweiser-Lager-bottles.jpg',descricao:'Lager leve, refrescante e pronta para servir bem gelada.',estoque:20 },
+    { id:8,nome:'Amstel Lager',volume:'350ml',preco:4.99,precoDe:5.99,promocao:true,categoria:'Cervejas',imagem:'assets/products/beer.svg',descricao:'Lager equilibrada para pedir sem erro, sempre gelada.',estoque:22 },
+    { id:9,nome:'Corona Extra',volume:'330ml',preco:8.90,categoria:'Cervejas',imagem:'https://toppng.com/uploads/preview/corona-beer-corona-extra-710-11562961013wpedmqnrky.png',descricao:'Leve e refrescante, perfeita para momentos descontraídos.',estoque:16,destaque:true },
+    { id:10,nome:'Stella Artois',volume:'330ml',preco:7.90,categoria:'Cervejas',imagem:'assets/products/beer.svg',descricao:'Lager premium com sabor equilibrado e final refrescante.',estoque:18 },
+    { id:11,nome:'Brahma Duplo Malte',volume:'350ml',preco:4.79,categoria:'Cervejas',imagem:'assets/products/beer.svg',descricao:'Duplo malte, corpo macio e aquela temperatura de respeito.',estoque:28 },
+    { id:12,nome:'Skol Pilsen',volume:'350ml',preco:4.29,categoria:'Cervejas',imagem:'assets/products/beer.svg',descricao:'Leve, gelada e pronta para acompanhar a sua madrugada.',estoque:30 },
+    { id:13,nome:'Antarctica Original',volume:'600ml',preco:12.90,categoria:'Cervejas',imagem:'assets/products/beer.svg',descricao:'Garrafa para compartilhar, com sabor clássico de boteco.',estoque:12 },
+    { id:14,nome:'Eisenbahn Pilsen',volume:'355ml',preco:6.90,categoria:'Cervejas',imagem:'assets/products/beer.svg',descricao:'Pilsen puro malte com perfil leve e refrescante.',estoque:14 },
+    { id:15,nome:'Itaipava Pilsen',volume:'350ml',preco:3.69,categoria:'Cervejas',imagem:'assets/products/beer.svg',descricao:'Opção gelada e econômica para abastecer a resenha.',estoque:32 },
+    { id:16,nome:'Heineken Zero',volume:'330ml',preco:7.49,categoria:'Cervejas',imagem:'https://www.kakuyasu.co.jp/images/commodityExtention/00401113/00401113-main.jpg',descricao:'Versão zero álcool para curtir o sabor com outra proposta.',estoque:12 },
+    { id:17,nome:'Smirnoff Nº21',volume:'998ml',preco:39.90,precoDe:44.90,promocao:true,categoria:'Destilados',imagem:'https://acdn-us.mitiendanube.com/stores/005/108/528/products/smirnoff-f350176998a1c1855d17253688063382-1024-1024.webp',descricao:'Vodka versátil para drinks, combos e aquela mistura caprichada.',estoque:10,destaque:true },
+    { id:18,nome:'Absolut Vodka',volume:'1L',preco:89.90,categoria:'Destilados',imagem:'assets/products/party.svg',descricao:'Vodka premium para drinks marcantes e noites especiais.',estoque:8 },
+    { id:19,nome:'Tanqueray London Dry',volume:'750ml',preco:109.90,categoria:'Destilados',imagem:'assets/products/party.svg',descricao:'Gin clássico para montar um gin tônica no seu estilo.',estoque:7 },
+    { id:20,nome:"Gordon's London Dry",volume:'750ml',preco:69.90,categoria:'Destilados',imagem:'assets/products/party.svg',descricao:'Gin equilibrado para combinar com tônica, gelo e cítricos.',estoque:8 },
+    { id:21,nome:'Johnnie Walker Red Label',volume:'1L',preco:99.90,categoria:'Destilados',imagem:'assets/products/party.svg',descricao:'Whisky intenso e versátil para servir com gelo ou em drinks.',estoque:6 },
+    { id:22,nome:'White Horse Whisky',volume:'1L',preco:79.90,categoria:'Destilados',imagem:'assets/products/party.svg',descricao:'Whisky clássico para quem quer sabor e praticidade no pedido.',estoque:7 },
+    { id:23,nome:'Cachaça 51',volume:'965ml',preco:18.90,categoria:'Destilados',imagem:'assets/products/party.svg',descricao:'A clássica para caipirinha e combinações bem brasileiras.',estoque:15 },
+    { id:24,nome:'Campari',volume:'748ml',preco:54.90,categoria:'Destilados',imagem:'assets/products/party.svg',descricao:'Aperitivo marcante para drinks cítricos e combinações especiais.',estoque:7 },
+    { id:25,nome:'Coca-Cola Zero',volume:'2L',preco:12.99,categoria:'Refrigerantes',imagem:'assets/products/energy.svg',descricao:'Sabor clássico sem açúcar, gelada para acompanhar tudo.',estoque:18 },
+    { id:26,nome:'Guaraná Antarctica',volume:'2L',preco:10.90,categoria:'Refrigerantes',imagem:'assets/products/energy.svg',descricao:'Guaraná gelado, brasileiro e certeiro para compartilhar.',estoque:20 },
+    { id:27,nome:'Sprite',volume:'2L',preco:9.90,categoria:'Refrigerantes',imagem:'assets/products/energy.svg',descricao:'Refrescância cítrica para o pedido chegar completo.',estoque:14 },
+    { id:28,nome:'Fanta Laranja',volume:'2L',preco:9.90,categoria:'Refrigerantes',imagem:'assets/products/energy.svg',descricao:'Sabor laranja e muita refrescância para dividir com a galera.',estoque:14 },
+    { id:29,nome:'Schweppes Citrus',volume:'350ml',preco:5.49,categoria:'Refrigerantes',imagem:'assets/products/energy.svg',descricao:'Cítrica e gelada, ótima pura ou como parceira de drinks.',estoque:18 },
+    { id:30,nome:'Água Tônica Antarctica',volume:'350ml',preco:4.90,categoria:'Refrigerantes',imagem:'assets/products/energy.svg',descricao:'Tônica gelada para gin, drinks ou para beber pura.',estoque:20 },
+    { id:31,nome:'Água Mineral sem Gás',volume:'500ml',preco:3.49,categoria:'Águas',imagem:'assets/products/ice.svg',descricao:'Hidratação gelada, simples e indispensável em qualquer pedido.',estoque:36 },
+    { id:32,nome:'Água Mineral com Gás',volume:'500ml',preco:3.99,categoria:'Águas',imagem:'assets/products/ice.svg',descricao:'Gelada e com gás para refrescar ou acompanhar seu drink.',estoque:24 },
+    { id:33,nome:'H2OH! Limão',volume:'500ml',preco:5.90,categoria:'Águas',imagem:'assets/products/ice.svg',descricao:'Leve toque de limão para refrescar sem pesar.',estoque:16 },
+    { id:34,nome:'Monster Energy',volume:'473ml',preco:11.90,categoria:'Energéticos',imagem:'assets/products/energy.svg',descricao:'Lata grande para dar energia quando a noite pede mais.',estoque:15 },
+    { id:35,nome:'Red Bull Tropical',volume:'250ml',preco:11.90,categoria:'Energéticos',imagem:'assets/products/energy.svg',descricao:'Energia com perfil tropical para variar o combo.',estoque:12 },
+    { id:36,nome:'Fusion Energy Drink',volume:'473ml',preco:8.90,categoria:'Energéticos',imagem:'assets/products/energy.svg',descricao:'Energia e custo-benefício para manter o ritmo.',estoque:18 },
+    { id:37,nome:'Suco Del Valle Uva',volume:'290ml',preco:5.90,categoria:'Sucos',imagem:'assets/products/energy.svg',descricao:'Suco gelado de uva para uma pausa mais leve.',estoque:14 },
+    { id:38,nome:'Suco Del Valle Laranja',volume:'290ml',preco:5.90,categoria:'Sucos',imagem:'assets/products/energy.svg',descricao:'Sabor de laranja, gelado e pronto para acompanhar o lanche.',estoque:14 },
+    { id:39,nome:'Água de Coco',volume:'1L',preco:11.90,categoria:'Sucos',imagem:'assets/products/ice.svg',descricao:'Refrescante e prática para hidratar a qualquer hora.',estoque:10 },
+    { id:40,nome:'Gelo em Cubos',volume:'3kg',preco:9.90,categoria:'Gelo',imagem:'assets/products/ice.svg',descricao:'O tamanho certo para deixar bebida e cooler no grau.',estoque:20 },
+    { id:41,nome:'Gelo de Coco',volume:'1kg',preco:16.90,categoria:'Gelo',imagem:'assets/products/ice.svg',descricao:'Gelo saborizado para dar outra cara aos seus drinks.',estoque:7 },
+    { id:42,nome:'Amendoim Crocante',volume:'100g',preco:5.90,categoria:'Conveniência',imagem:'assets/products/snack.svg',descricao:'Petisco crocante que combina com cerveja bem gelada.',estoque:16 },
+    { id:43,nome:'Chocolate',volume:'90g',preco:7.90,categoria:'Conveniência',imagem:'assets/products/snack.svg',descricao:'Um doce rápido para completar o pedido da madrugada.',estoque:11 },
+    { id:44,nome:'Carvão Premium',volume:'3kg',preco:18.90,categoria:'Conveniência',imagem:'assets/products/party.svg',descricao:'Churrasco de última hora? A Esquina também resolve.',estoque:9 },
+    { id:45,nome:'Combo Gin Tônica',volume:'Gin + tônica + gelo',preco:79.90,precoDe:89.90,promocao:true,categoria:'Combos',imagem:'assets/products/party.svg',descricao:'Kit prático para montar o gin tônica sem esquecer nada.',estoque:6 },
+    { id:46,nome:'Combo Churrasco',volume:'Cervejas + gelo + carvão',preco:109.90,categoria:'Combos',imagem:'assets/products/party.svg',descricao:'O essencial do churrasco reunido em um pedido só.',estoque:5 },
+    { id:47,nome:'Combo Madrugada',volume:'Bebidas + energético + gelo',preco:64.90,categoria:'Combos',imagem:'assets/products/combo.svg',descricao:'Virou a noite? Esse combo chega para manter o clima.',estoque:7 },
+    { id:48,nome:'Isqueiro Premium',volume:'Unidade',preco:19.90,categoria:'Tabacaria',imagem:'assets/products/tabacaria.svg',descricao:'Acessório de conveniência para maiores de 18 anos.',estoque:4 }
   ];
 
   const niveis = { GUEST: 0, CLIENTE: 1, ADMIN: 2 };
@@ -276,8 +300,15 @@
             <strong class="product-price">${moeda(prod.preco)}</strong>
             <div class="stock-line ${prod.estoque <= 5 ? 'is-low' : ''}"><span></span>${prod.estoque <= 5 ? 'Últimas unidades' : 'Em estoque'}</div>
             <div class="product-footer">
-              <div class="card-qty" aria-label="Quantidade"><button type="button" tabindex="-1">−</button><span>1</span><button type="button" tabindex="-1">+</button></div>
-              <button class="product-action${podeComprar ? '' : ' login-required'}" type="button" data-add="${prod.id}">${podeComprar ? 'ADICIONAR' : 'ENTRAR'}</button>
+              <div class="card-qty" aria-label="Quantidade de ${escapeHTML(prod.nome)}">
+                <button type="button" data-card-dec="${prod.id}" aria-label="Diminuir quantidade">−</button>
+                <span data-card-qty="${prod.id}" aria-live="polite">1</span>
+                <button type="button" data-card-inc="${prod.id}" aria-label="Aumentar quantidade">+</button>
+              </div>
+              <button class="product-action${podeComprar ? '' : ' login-required'}" type="button" data-add="${prod.id}">
+                <span>${podeComprar ? 'ADICIONAR' : 'ENTRAR'}</span>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h-2l-1 2m3 0h13l-2 8H9L7 6Zm2 12a1.5 1.5 0 1 0 0 .01M17 18a1.5 1.5 0 1 0 0 .01M12 8v4m-2-2h4"/></svg>
+              </button>
             </div>
           </div>
         </article>`;
@@ -405,7 +436,7 @@
       </article>`).join('');
   }
 
-  function adicionarAoCarrinho(id, { abrir = true } = {}) {
+  function adicionarAoCarrinho(id, { abrir = true, quantidade = 1 } = {}) {
     const produto = produtos.find(p => p.id === Number(id));
     if (!produto) return;
     if (!verificarAcesso('CLIENTE')) {
@@ -413,10 +444,11 @@
       abrirConta();
       return;
     }
-    carrinho[produto.id] = (carrinho[produto.id] || 0) + 1;
+    const qtd = Math.max(1, Math.min(Number(quantidade) || 1, produto.estoque || 99));
+    carrinho[produto.id] = Math.min((carrinho[produto.id] || 0) + qtd, produto.estoque || 99);
     salvarCarrinho();
     renderizarCarrinho({ animateBadge: true });
-    showToast(`${produto.nome} adicionado ao carrinho ✨`);
+    showToast(`${qtd}x ${produto.nome} adicionado ao carrinho ✨`);
     if (abrir) abrirCarrinho();
   }
 
@@ -566,9 +598,22 @@
   els.catalogSort?.addEventListener('change', event => { ordenacaoAtual = event.target.value; renderizarProdutos(); });
 
   els.productGrid?.addEventListener('click', event => {
-    const button = event.target.closest('[data-add]');
-    if (!button) return;
-    adicionarAoCarrinho(button.dataset.add);
+    const inc = event.target.closest('[data-card-inc]');
+    const dec = event.target.closest('[data-card-dec]');
+    const add = event.target.closest('[data-add]');
+    const control = inc || dec;
+    if (control) {
+      const id = Number(control.dataset.cardInc || control.dataset.cardDec);
+      const value = els.productGrid.querySelector(`[data-card-qty="${id}"]`);
+      const produto = produtos.find(p => p.id === id);
+      if (!value || !produto) return;
+      const atual = Number(value.textContent) || 1;
+      value.textContent = String(Math.max(1, Math.min(atual + (inc ? 1 : -1), produto.estoque || 99)));
+      return;
+    }
+    if (!add) return;
+    const qty = Number(els.productGrid.querySelector(`[data-card-qty="${add.dataset.add}"]`)?.textContent) || 1;
+    adicionarAoCarrinho(add.dataset.add, { quantidade: qty });
   });
 
   els.offersTrack?.addEventListener('click', event => {
