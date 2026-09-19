@@ -5293,3 +5293,217 @@ body.age-locked, body.age-denied, body.cart-open {
   .right-visual { width: 126% !important; right: -7% !important; }
   .sign24 { width: 39% !important; }
 }
+
+
+/* ==========================================================
+   V17 — screenshot-aligned hero without left sign
+   ========================================================== */
+@media (min-width: 981px) {
+  .hero-banner {
+    aspect-ratio: 1837 / 557 !important;
+    overflow: hidden !important;
+  }
+
+  /* Center the three visual zones across the full banner width. */
+  .brand-panel {
+    left: 1.0% !important;
+    top: 0.2% !important;
+    width: 34.2% !important;
+    height: 98.8% !important;
+    padding: 0 !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: visible !important;
+  }
+
+  .hero-logo {
+    width: 100% !important;
+    height: 93.5% !important;
+    max-width: none !important;
+    max-height: none !important;
+    margin: -1.8% 0 -8.5% !important;
+    transform: scale(1.08) !important;
+    object-fit: contain !important;
+  }
+
+  .brand-copy {
+    width: 78% !important;
+    margin: -2.8% auto 0 !important;
+    text-align: center !important;
+    font-size: clamp(.72rem,.94cqw,1.02rem) !important;
+    letter-spacing: .08em !important;
+  }
+
+  .brand-slogan {
+    width: 76% !important;
+    margin: .6% auto 0 !important;
+    text-align: center !important;
+    font-size: clamp(.8rem,1.08cqw,1.2rem) !important;
+  }
+
+  /* Central banner content */
+  .hero-copy {
+    left: 34.2% !important;
+    top: 1.0% !important;
+    width: 34.2% !important;
+    height: 98% !important;
+    padding: 0 !important;
+    transform: none !important;
+  }
+
+  .hero-title-svg {
+    left: 2.5% !important;
+    top: 3.5% !important;
+    width: 94.5% !important;
+    height: 59% !important;
+  }
+
+  .service-badges {
+    left: 5.5% !important;
+    width: 89% !important;
+    bottom: 19.5% !important;
+    height: 15.2% !important;
+  }
+
+  .service-badges article {
+    justify-content: center !important;
+    padding-top: 0 !important;
+  }
+
+  .hero-actions {
+    left: 2.5% !important;
+    width: 95% !important;
+    bottom: 4.0% !important;
+    grid-template-columns: 1.17fr .95fr !important;
+    gap: 2.3% !important;
+    margin: 0 auto !important;
+  }
+
+  .hero-actions .cta {
+    min-height: clamp(46px,3.1cqw,58px) !important;
+    font-size: clamp(.88rem,1.02cqw,1.14rem) !important;
+  }
+
+  /* Right showcase */
+  .right-stage {
+    left: 67.3% !important;
+    top: 0 !important;
+    width: 32.7% !important;
+    height: 100% !important;
+  }
+
+  .right-neon-copy {
+    left: 1.5% !important;
+    top: 3.2% !important;
+    width: 53% !important;
+    height: 34.5% !important;
+  }
+
+  .sign24 {
+    top: 2.0% !important;
+    right: .7% !important;
+    width: 37.8% !important;
+    padding: 1.7% 1.8% 2.7% !important;
+  }
+
+  .sign24 strong {
+    font-size: clamp(2.5rem,4.1cqw,4.9rem) !important;
+  }
+
+  .sign24 small {
+    font-size: clamp(.58rem,.75cqw,.86rem) !important;
+  }
+
+  .right-visual {
+    width: 120% !important;
+    right: -2.8% !important;
+    bottom: -6.0% !important;
+  }
+
+  /* Bottom row centered page-wide */
+  .benefit-strip {
+    display: grid !important;
+    grid-template-columns: repeat(5,minmax(0,1fr)) minmax(220px,1.1fr) !important;
+    gap: 0 !important;
+    padding: 8px 4.4% 8px 5.0% !important;
+    align-items: center !important;
+  }
+
+  .benefit-strip article {
+    justify-content: center !important;
+    min-height: 54px !important;
+    padding-inline: 7% !important;
+  }
+
+  .benefit-slogan-svg {
+    width: 116% !important;
+    margin-left: -4% !important;
+  }
+
+  /* Header centered and balanced around the page axis. */
+  .topbar {
+    grid-template-columns:
+      clamp(88px,7vw,126px)
+      minmax(640px,1fr)
+      minmax(330px,24vw)
+      auto !important;
+    padding-left: clamp(26px,2.5vw,46px) !important;
+    padding-right: clamp(22px,1.9vw,34px) !important;
+  }
+
+  .desktop-nav {
+    justify-content: center !important;
+    gap: clamp(22px,1.8vw,34px) !important;
+  }
+
+  .search-box {
+    justify-self: center !important;
+    width: 100% !important;
+  }
+
+  .header-actions {
+    justify-self: end !important;
+  }
+}
+
+/* Slightly tighter geometry when browser zoom reduces CSS width. */
+@media (min-width: 981px) and (max-width: 1280px) {
+  .brand-panel {
+    left: .5% !important;
+    width: 35.5% !important;
+  }
+
+  .hero-copy {
+    left: 34.6% !important;
+    width: 35.3% !important;
+  }
+
+  .right-stage {
+    left: 68.1% !important;
+    width: 31.9% !important;
+  }
+
+  .hero-title-svg {
+    width: 95% !important;
+    left: 1.5% !important;
+  }
+
+  .hero-actions {
+    width: 96% !important;
+    left: 1.5% !important;
+  }
+
+  .right-neon-copy {
+    width: 54% !important;
+  }
+
+  .right-visual {
+    width: 124% !important;
+    right: -6% !important;
+  }
+}
+
+/* The removed left sign stays removed on every device. */
+.left-sign {
+  display: none !important;
+}
