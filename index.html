@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,700;0,800;0,900;1,700;1,800;1,900&family=Kalam:wght@400;700&family=Kaushan+Script&family=Permanent+Marker&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css">\n  <link rel="stylesheet" href="home-v25.css">
 </head>
 <body>
   <!-- AGE GATE: bloqueio visual obrigatório antes da navegação. A validação jurídica/servidor deve ser integrada em produção. -->
@@ -54,7 +54,7 @@
       <form class="search-box" id="searchForm" role="search">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.5-4.5m2.5-5A7.5 7.5 0 1 1 4 11.5a7.5 7.5 0 0 1 15 0Z"/></svg>
         <label class="sr-only" for="searchInput">O que você procura?</label>
-        <input id="searchInput" type="search" autocomplete="off" placeholder="O que você procura?">
+        <input id="searchInput" type="search" autocomplete="off" placeholder="A BEBIDA GELADA A QUALQUER HORA">
       </form>
 
       <div class="header-actions">
@@ -73,166 +73,24 @@
       <div class="ticker-status"><span class="status-dot"></span><strong>ABERTO</strong></div>
       <div class="ticker-viewport" aria-hidden="true">
         <div class="ticker-track">
-          <span>SUA SEXTA COMEÇA NO ESQUINA MIX • BEBIDAS GELADAS 24H • COMBOS ESPECIAIS • ENTREGA ULTRA RÁPIDA • </span>
-          <span>SUA SEXTA COMEÇA NO ESQUINA MIX • BEBIDAS GELADAS 24H • COMBOS ESPECIAIS • ENTREGA ULTRA RÁPIDA • </span>
+          <span>BEBIDAS GELADAS 24H • COMBOS ESPECIAIS • ENTREGA ULTRA RÁPIDA • SUA SEXTA COMEÇA NO ESQUINA MIX • </span>
+          <span>BEBIDAS GELADAS 24H • COMBOS ESPECIAIS • ENTREGA ULTRA RÁPIDA • SUA SEXTA COMEÇA NO ESQUINA MIX • </span>
         </div>
       </div>
     </section>
 
     <main>
-      <section class="hero-banner" aria-labelledby="heroTitle">
-        <div class="hero-bg" aria-hidden="true"></div>
-        <div class="neon-rain" aria-hidden="true"></div>
-        <div class="corner-leaves corner-leaves-left" aria-hidden="true"></div>
-        <div class="corner-leaves corner-leaves-right" aria-hidden="true"></div>
-
-        <div class="brand-panel neon-contained" data-reveal>
-          <img class="hero-logo" src="assets/logo-transparent.png" alt="Adega e Tabacaria Esquina Mix">
-          <p class="brand-copy">BEBIDAS GELADAS, COMBOS ESPECIAIS<br>E ENTREGA RÁPIDA</p>
-          <p class="brand-slogan"><span>♛</span> SEMPRE COM VOCÊ</p>
+      <section class="hero-banner hero-reference" aria-labelledby="heroTitle">
+        <div class="hero-reference-a11y sr-only">
+          <h1 id="heroTitle">A sua bebida gelada a qualquer hora</h1>
+          <p>Adega e Tabacaria Esquina Mix. Bebidas sempre geladas, entrega rápida, compra segura e variedade de produtos.</p>
         </div>
-
-        <div class="hero-copy neon-contained" data-reveal>
-          <div class="hero-crown" aria-hidden="true">♛</div>
-          <p class="script-white"><span>Sua Bebida</span></p>
-          <h1 class="headline-pink neon-flicker" id="heroTitle">GELADA</h1>
-          <p class="headline-cyan">A QUALQUER HORA</p>
-
-          <svg class="hero-title-svg" viewBox="0 0 1000 650" role="img" aria-label="Sua Bebida Gelada a qualquer hora">
-            <defs>
-              <filter id="heroPinkGlow" x="-50%" y="-50%" width="200%" height="200%">
-                <feGaussianBlur stdDeviation="4.5" result="a"/><feGaussianBlur stdDeviation="9" result="b"/>
-                <feMerge><feMergeNode in="b"/><feMergeNode in="a"/><feMergeNode in="SourceGraphic"/></feMerge>
-              </filter>
-              <filter id="heroCyanGlow" x="-50%" y="-50%" width="200%" height="200%">
-                <feGaussianBlur stdDeviation="3.5" result="a"/><feGaussianBlur stdDeviation="8" result="b"/>
-                <feMerge><feMergeNode in="b"/><feMergeNode in="a"/><feMergeNode in="SourceGraphic"/></feMerge>
-              </filter>
-              <filter id="heroGoldGlow" x="-60%" y="-60%" width="220%" height="220%">
-                <feGaussianBlur stdDeviation="4" result="a"/>
-                <feMerge><feMergeNode in="a"/><feMergeNode in="SourceGraphic"/></feMerge>
-              </filter>
-            </defs>
-            <g transform="rotate(-4 500 250)">
-              <g fill="none" stroke="#ffe600" stroke-width="13" stroke-linejoin="round" filter="url(#heroGoldGlow)">
-                <path d="M170 88 183 126 207 106 230 126 244 88 225 99 207 79 189 99Z"/>
-                <path d="M182 139h51"/>
-              </g>
-              <text x="500" y="180" text-anchor="middle" fill="#fff" stroke="#fff" stroke-width="1.5" paint-order="stroke"
-                    font-family="Permanent Marker, cursive" font-size="112" letter-spacing="-3">SUA BEBIDA</text>
-              <text x="500" y="395" text-anchor="middle" fill="#ff0789" stroke="#ff4fb2" stroke-width="3" paint-order="stroke"
-                    font-family="Permanent Marker, cursive" font-size="222" letter-spacing="-10" filter="url(#heroPinkGlow)">GELADA</text>
-              <path d="M330 425 Q520 385 732 412" fill="none" stroke="#ffe600" stroke-width="17" stroke-linecap="round" filter="url(#heroGoldGlow)"/>
-              <text x="500" y="540" text-anchor="middle" fill="#13eaff" stroke="#9affff" stroke-width="1.3" paint-order="stroke"
-                    font-family="Permanent Marker, cursive" font-size="82" letter-spacing="-4" filter="url(#heroCyanGlow)">A QUALQUER HORA</text>
-            </g>
-          </svg>
-
-          <div class="service-badges" aria-label="Destaques do serviço">
-            <article>
-              <span class="hero-icon cyan" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M32 5v54M9 18l46 28M55 18 9 46M25 9l7 8 7-8M25 55l7-8 7 8M11 27l11 2-4-10M53 37l-11-2 4 10M53 27l-11 2 4-10M11 37l11-2-4 10"/></svg></span>
-              <b>DELIVERY<br>24H</b>
-            </article>
-            <article>
-              <span class="hero-icon pink" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M8 27h48v29H8zM5 20h54v10H5zM32 20v36M16 20c-7-2-7-12 0-12 8 0 16 12 16 12S24 8 16 8M48 20c7-2 7-12 0-12-8 0-16 12-16 12s8-12 16-12"/></svg></span>
-              <b>COMBOS<br>ESPECIAIS</b>
-            </article>
-            <article>
-              <span class="hero-icon yellow" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M37 4 16 36h15l-4 24 21-34H34z"/></svg></span>
-              <b>ATENDIMENTO<br>RÁPIDO</b>
-            </article>
-          </div>
-
-          <div class="hero-actions">
-            <button class="cta cta-primary" id="orderButton" type="button">
-              <span class="cta-icon" aria-hidden="true"><svg viewBox="0 0 64 64"><circle cx="18" cy="49" r="7"/><circle cx="48" cy="49" r="7"/><path d="M8 49h5m12 0h16m14 0h4M22 19h15l7 14h8l6 8H38l-8-13H18m0-9h-8m5 8H5"/></svg></span>
-              <span>PEDIR AGORA</span><b>➜</b>
-            </button>
-            <a class="cta cta-outline" href="#promocoes">
-              <span class="cta-icon tag-icon" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M8 28 30 6h22l6 6v22L36 56 8 28Z"/><circle cx="44" cy="20" r="4"/></svg></span>
-              <span>VER PROMOÇÕES</span>
-            </a>
-          </div>
-        </div>
-
-        <div class="right-stage" data-reveal>
-          <p class="sr-only">Bebidas Geladas Tabacaria ♛ 24h — GELO | BEBIDAS | TABACARIA | COMBOS E MUITO MAIS</p>
-          <div class="right-neon-copy neon-contained" aria-label="Bebidas Geladas Tabacaria">
-            <span class="pink">Bebidas</span><span class="pink">Geladas</span><span class="cyan">Tabacaria</span><b>♛</b>
-            <svg class="right-neon-svg" viewBox="0 0 440 330" aria-hidden="true">
-              <defs>
-                <filter id="rightPinkGlow" x="-80%" y="-80%" width="260%" height="260%">
-                  <feGaussianBlur stdDeviation="5" result="a"/><feGaussianBlur stdDeviation="12" result="b"/>
-                  <feMerge><feMergeNode in="b"/><feMergeNode in="a"/><feMergeNode in="SourceGraphic"/></feMerge>
-                </filter>
-                <filter id="rightCyanGlow" x="-80%" y="-80%" width="260%" height="260%">
-                  <feGaussianBlur stdDeviation="5" result="a"/><feGaussianBlur stdDeviation="11" result="b"/>
-                  <feMerge><feMergeNode in="b"/><feMergeNode in="a"/><feMergeNode in="SourceGraphic"/></feMerge>
-                </filter>
-                <filter id="rightGoldGlow" x="-80%" y="-80%" width="260%" height="260%">
-                  <feGaussianBlur stdDeviation="4" result="a"/>
-                  <feMerge><feMergeNode in="a"/><feMergeNode in="SourceGraphic"/></feMerge>
-                </filter>
-              </defs>
-              <g transform="rotate(-5 220 160)" font-family="Kaushan Script, cursive">
-                <text x="26" y="102" fill="#ff31a9" font-size="86" filter="url(#rightPinkGlow)">Bebidas</text>
-                <text x="40" y="180" fill="#ff31a9" font-size="86" filter="url(#rightPinkGlow)">Geladas</text>
-                <text x="61" y="260" fill="#1cecff" font-size="88" filter="url(#rightCyanGlow)">Tabacaria</text>
-                <g fill="none" stroke="#ffe600" stroke-width="9" stroke-linejoin="round" filter="url(#rightGoldGlow)">
-                  <path d="M330 35 342 70 365 52 388 70 400 35 382 45 365 26 348 45Z"/>
-                  <path d="M341 84h49"/>
-                </g>
-              </g>
-            </svg>
-          </div>
-          <div class="sign24 neon-frame neon-contained neon-flicker" aria-label="Aberto 24 horas">
-            <strong>24h</strong><small>GELO<br>BEBIDAS<br>TABACARIA<br>COMBOS<br>E MUITO MAIS</small>
-          </div>
-          <img class="right-visual" src="assets/right-bucket-cutout.png" alt="Balde de gelo com bebidas geladas">
-        </div>
+        <a class="hero-hotspot hero-hotspot-products" href="#produtos" aria-label="Ver produtos"></a>
+        <a class="hero-hotspot hero-hotspot-promos" href="#promocoes" aria-label="Ver promoções"></a>
       </section>
 
-      <section class="benefit-strip" aria-label="Benefícios Esquina Mix">
-        <article>
-          <span class="benefit-svg" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M14 10h36l10 14-28 30L4 24l10-14Zm-10 14h56M14 10l18 44 18-44M22 24l10-14 10 14"/></svg></span>
-          <p>PRODUTOS<br><b>DE QUALIDADE</b></p>
-        </article>
-        <article>
-          <span class="benefit-svg" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M32 4v56M8 18l48 28M56 18 8 46M24 9l8 9 8-9M24 55l8-9 8 9"/></svg></span>
-          <p>SEMPRE<br><b>GELADO</b></p>
-        </article>
-        <article>
-          <span class="benefit-svg" aria-hidden="true"><svg viewBox="0 0 64 64"><circle cx="18" cy="49" r="7"/><circle cx="48" cy="49" r="7"/><path d="M6 49h5m14 0h16m14 0h3V31H46l-6-12H20v22H8V29h12M40 31h18"/></svg></span>
-          <p>ENTREGA<br><b>EM TODA A REGIÃO</b></p>
-        </article>
-        <article>
-          <span class="benefit-svg" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M32 5 54 14v16c0 14-9 23-22 29C19 53 10 44 10 30V14L32 5Z"/><path d="m22 31 7 7 14-16"/></svg></span>
-          <p>COMPRA<br><b>SEGURA</b></p>
-        </article>
-        <article>
-          <span class="benefit-svg" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M32 55 9 34C-2 22 6 8 19 10c6 1 10 5 13 10 3-5 7-9 13-10 13-2 21 12 10 24L32 55Z"/></svg></span>
-          <p>CLIENTES<br><b>SATISFEITOS</b></p>
-        </article>
-        <p class="benefit-slogan" aria-label="Mais que bebidas, conectamos momentos!">
-          <span class="benefit-slogan-text">Mais que bebidas,<br>conectamos momentos! <span>♛</span></span>
-          <svg class="benefit-slogan-svg" viewBox="0 0 560 220" aria-hidden="true">
-            <defs>
-              <filter id="sloganGlow" x="-40%" y="-40%" width="180%" height="180%">
-                <feGaussianBlur stdDeviation="3.5" result="a"/>
-                <feMerge><feMergeNode in="a"/><feMergeNode in="SourceGraphic"/></feMerge>
-              </filter>
-            </defs>
-            <g transform="rotate(-6 280 95)" filter="url(#sloganGlow)">
-              <text x="18" y="73" fill="#ffe600" font-family="Kaushan Script, cursive" font-size="56">Mais que bebidas,</text>
-              <text x="18" y="132" fill="#ffe600" font-family="Kaushan Script, cursive" font-size="56">conectamos momentos!</text>
-              <path d="M180 151 Q360 126 512 143" fill="none" stroke="#ff0a8d" stroke-width="9" stroke-linecap="round"/>
-              <g transform="translate(264 154)" fill="none" stroke="#ffe600" stroke-width="7" stroke-linejoin="round">
-                <path d="M0 6 10 34 29 19 48 34 58 6 43 14 29 0 15 14Z"/>
-                <path d="M8 45h42"/>
-              </g>
-            </g>
-          </svg>
-        </p>
+      <section class="benefit-strip benefit-reference" aria-label="Categorias Esquina Mix">
+        <span class="sr-only">Cervejas, destilados, drinks e coquetéis, tabacaria, petiscos e snacks, bebidas não alcoólicas. Mais que bebidas, a sua Esquina.</span>
       </section>
 
       <section class="offers-rail" id="ofertas" aria-labelledby="offersTitle" data-promotions-section>
