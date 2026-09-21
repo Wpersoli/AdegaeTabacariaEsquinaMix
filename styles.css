@@ -6636,3 +6636,256 @@ button:disabled{cursor:not-allowed;filter:saturate(.55)}
   .catalog-v23 .product-card,.catalog-v23 .product-media img{transition:none!important}
   .catalog-v23 .product-card:hover{transform:none!important}
 }
+
+
+/* ==========================================================
+   V25.5 — composição final do hero por zonas.
+   Reseta hotfixes antigos para impedir sobreposição entre
+   logo, título central, benefícios, CTAs e bloco direito.
+   ========================================================== */
+@media (min-width:981px){
+  .hero-banner{
+    display:block!important;
+    position:relative!important;
+    height:clamp(590px,calc(100dvh - 228px),690px)!important;
+    min-height:590px!important;
+    overflow:hidden!important;
+  }
+
+  .hero-banner>.hero-bg{
+    display:block!important;
+    position:absolute!important;
+    inset:0!important;
+    width:100%!important;
+    height:100%!important;
+    z-index:0!important;
+  }
+
+  .hero-banner>.brand-panel{
+    display:flex!important;
+    position:absolute!important;
+    left:3.2%!important;
+    top:2.2%!important;
+    width:32.8%!important;
+    height:95.2%!important;
+    padding:0!important;
+    margin:0!important;
+    transform:none!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+    overflow:visible!important;
+    z-index:4!important;
+  }
+  .hero-banner .hero-logo{
+    display:block!important;
+    width:95%!important;
+    height:76%!important;
+    max-width:none!important;
+    max-height:none!important;
+    margin:0!important;
+    transform:none!important;
+    object-fit:contain!important;
+    object-position:center center!important;
+  }
+  .hero-banner .brand-copy{
+    display:block!important;
+    width:88%!important;
+    margin:-1.8% auto 0!important;
+    color:#fff!important;
+    text-align:center!important;
+    font:800 clamp(12px,.86vw,16px)/1.05 "Barlow Condensed",sans-serif!important;
+    letter-spacing:.08em!important;
+    text-shadow:none!important;
+  }
+  .hero-banner .brand-slogan{
+    display:block!important;
+    margin:1.6% 0 0!important;
+    color:#ffe600!important;
+    font:400 clamp(19px,1.45vw,27px)/1 "Kaushan Script",cursive!important;
+    transform:rotate(-4deg)!important;
+    text-align:center!important;
+  }
+
+  .hero-banner>.hero-copy{
+    display:flex!important;
+    position:absolute!important;
+    left:34.3%!important;
+    top:2%!important;
+    width:38.2%!important;
+    height:96%!important;
+    padding:0!important;
+    margin:0!important;
+    transform:none!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+    overflow:visible!important;
+    z-index:5!important;
+  }
+  .hero-banner .hero-title-svg{
+    position:relative!important;
+    left:auto!important;
+    top:auto!important;
+    display:block!important;
+    width:100%!important;
+    height:58%!important;
+    max-width:none!important;
+    max-height:none!important;
+    margin:0!important;
+    transform:none!important;
+    flex:0 0 58%!important;
+  }
+  .hero-banner .service-badges{
+    position:relative!important;
+    left:auto!important;
+    top:auto!important;
+    width:94%!important;
+    max-width:none!important;
+    min-height:88px!important;
+    margin:-1.5% auto 1.5%!important;
+    display:grid!important;
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    gap:0!important;
+    flex:0 0 auto!important;
+  }
+  .hero-banner .service-badges article{
+    min-width:0!important;
+    min-height:82px!important;
+    padding:0 8px!important;
+  }
+  .hero-banner .service-badges b{
+    font-size:clamp(11px,.82vw,15px)!important;
+    line-height:1.04!important;
+  }
+  .hero-banner .hero-icon{
+    width:clamp(34px,2.6vw,44px)!important;
+    height:clamp(34px,2.6vw,44px)!important;
+  }
+  .hero-banner .hero-actions{
+    position:relative!important;
+    left:auto!important;
+    top:auto!important;
+    width:96%!important;
+    max-width:none!important;
+    height:auto!important;
+    margin:0 auto!important;
+    padding:0!important;
+    display:grid!important;
+    grid-template-columns:1.22fr 1fr!important;
+    gap:12px!important;
+    flex:0 0 auto!important;
+    pointer-events:auto!important;
+  }
+  .hero-banner .hero-actions .cta{
+    min-width:0!important;
+    height:clamp(54px,4vw,64px)!important;
+    min-height:clamp(54px,4vw,64px)!important;
+    font-size:clamp(14px,1.12vw,20px)!important;
+  }
+
+  .hero-banner>.right-stage{
+    display:block!important;
+    position:absolute!important;
+    left:70.8%!important;
+    right:auto!important;
+    top:0!important;
+    bottom:auto!important;
+    width:29.2%!important;
+    height:100%!important;
+    margin:0!important;
+    padding:0!important;
+    transform:none!important;
+    overflow:visible!important;
+    opacity:1!important;
+    z-index:4!important;
+  }
+  .hero-banner .right-visual{
+    position:absolute!important;
+    width:128%!important;
+    max-width:none!important;
+    height:auto!important;
+    right:-12%!important;
+    left:auto!important;
+    bottom:-5%!important;
+    top:auto!important;
+    object-fit:contain!important;
+    transform:none!important;
+  }
+  .hero-banner .right-neon-copy{
+    display:block!important;
+    position:absolute!important;
+    left:-2%!important;
+    top:4.2%!important;
+    width:61%!important;
+    height:34%!important;
+    transform:none!important;
+  }
+  .hero-banner .right-neon-svg{
+    display:block!important;
+    width:100%!important;
+    height:100%!important;
+  }
+  .hero-banner .sign24{
+    display:flex!important;
+    position:absolute!important;
+    right:1.5%!important;
+    left:auto!important;
+    top:4.5%!important;
+    width:36.5%!important;
+    height:31%!important;
+    padding:10px 8px!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:center!important;
+  }
+  .hero-banner .sign24 strong{
+    display:block!important;
+    color:#ffe600!important;
+    font:400 clamp(44px,4vw,72px)/.9 "Kaushan Script",cursive!important;
+    text-shadow:0 0 10px rgba(255,230,0,.55)!important;
+  }
+  .hero-banner .sign24 small{
+    color:#fff!important;
+    font:900 clamp(10px,.72vw,14px)/1.25 "Barlow Condensed",sans-serif!important;
+  }
+
+  .hero-banner>.corner-leaves-left{
+    display:block!important;
+    left:-1.4%!important;
+    bottom:-2%!important;
+    width:13%!important;
+  }
+  .hero-banner>.corner-leaves-right{
+    display:block!important;
+    right:-1.8%!important;
+    bottom:-3%!important;
+    width:13%!important;
+  }
+
+  .benefit-strip{
+    width:100vw!important;
+    max-width:none!important;
+    min-height:118px!important;
+    height:118px!important;
+    margin:0 calc(50% - 50vw)!important;
+    padding:10px clamp(20px,3vw,56px)!important;
+    grid-template-columns:repeat(6,minmax(0,1fr)) minmax(250px,1.15fr)!important;
+  }
+  .benefit-strip article{
+    height:76px!important;
+    padding:0 clamp(8px,1vw,18px)!important;
+  }
+  .benefit-slogan-text{
+    font-size:clamp(23px,1.75vw,31px)!important;
+  }
+}
+@media (min-width:981px) and (max-width:1240px){
+  .hero-banner>.brand-panel{left:1.5%!important;width:34%!important}
+  .hero-banner>.hero-copy{left:33.5%!important;width:39.5%!important}
+  .hero-banner>.right-stage{left:70%!important;width:30%!important}
+  .hero-banner .hero-logo{width:100%!important}
+  .hero-banner .right-visual{width:138%!important;right:-22%!important}
+  .hero-banner .sign24{width:39%!important}
+  .benefit-strip{grid-template-columns:repeat(6,minmax(0,1fr)) 220px!important;padding-inline:14px!important}
+}
