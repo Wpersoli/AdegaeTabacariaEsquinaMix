@@ -6521,3 +6521,123 @@ button:disabled{cursor:not-allowed;filter:saturate(.55)}
   .benefit-strip article{height:68px!important}
   .benefit-slogan-text{font-size:26px!important}
 }
+
+
+/* ==========================================================
+   V25.1 — hero desktop usa a arte de referência integral.
+   Objetivo: máxima fidelidade visual ao print aprovado.
+   A animação do ticker permanece intocada.
+   ========================================================== */
+@media (min-width:981px){
+  .hero-banner{
+    position:relative!important;
+    height:690px!important;
+    min-height:690px!important;
+    display:block!important;
+    overflow:hidden!important;
+    background:#03040a url("assets/reference-banner.png") center center/100% 100% no-repeat!important;
+    isolation:isolate;
+  }
+  .hero-banner>.hero-bg,
+  .hero-banner>.neon-rain,
+  .hero-banner>.corner-leaves,
+  .hero-banner>.brand-panel,
+  .hero-banner>.right-stage{
+    display:none!important;
+  }
+
+  /* Mantém a semântica do título sem duplicar visualmente a arte do banner. */
+  .hero-copy{
+    position:absolute!important;
+    inset:0!important;
+    width:100%!important;
+    height:100%!important;
+    padding:0!important;
+    margin:0!important;
+    transform:none!important;
+    display:block!important;
+    pointer-events:none!important;
+    z-index:3!important;
+  }
+  .hero-copy .hero-crown,
+  .hero-copy .script-white,
+  .hero-copy .headline-cyan,
+  .hero-copy .hero-title-svg,
+  .hero-copy .service-badges{
+    display:none!important;
+  }
+  .hero-copy #heroTitle{
+    display:block!important;
+    position:absolute!important;
+    width:1px!important;
+    height:1px!important;
+    padding:0!important;
+    margin:-1px!important;
+    overflow:hidden!important;
+    clip:rect(0,0,0,0)!important;
+    white-space:nowrap!important;
+    border:0!important;
+  }
+
+  /* Hotspots funcionais exatamente sobre os dois botões já desenhados na arte. */
+  .hero-copy .hero-actions{
+    position:absolute!important;
+    left:31.7%!important;
+    top:81.7%!important;
+    width:33.6%!important;
+    height:66px!important;
+    margin:0!important;
+    padding:0!important;
+    display:grid!important;
+    grid-template-columns:56.5% 41.5%!important;
+    gap:2%!important;
+    pointer-events:auto!important;
+    z-index:6!important;
+  }
+  .hero-copy .hero-actions .cta{
+    width:100%!important;
+    height:66px!important;
+    min-height:66px!important;
+    margin:0!important;
+    padding:0!important;
+    border:0!important;
+    border-radius:30px!important;
+    background:transparent!important;
+    box-shadow:none!important;
+    color:transparent!important;
+    opacity:.001!important;
+    cursor:pointer!important;
+  }
+  .hero-copy .hero-actions .cta *{visibility:hidden!important}
+  .hero-copy .hero-actions .cta:focus-visible{
+    opacity:.16!important;
+    outline:3px solid #fff!important;
+    outline-offset:3px!important;
+    background:#ff1687!important;
+  }
+
+  /* A faixa de categorias continua em HTML para ser responsiva e clicável. */
+  .benefit-strip{
+    min-height:135px!important;
+    height:135px!important;
+  }
+}
+
+@media (min-width:981px) and (max-height:820px){
+  .hero-banner{
+    height:calc(100dvh - 110px - 118px)!important;
+    min-height:545px!important;
+  }
+  .benefit-strip{
+    height:118px!important;
+    min-height:118px!important;
+  }
+  .hero-copy .hero-actions{
+    top:81.2%!important;
+    height:58px!important;
+  }
+  .hero-copy .hero-actions .cta{
+    height:58px!important;
+    min-height:58px!important;
+  }
+}
