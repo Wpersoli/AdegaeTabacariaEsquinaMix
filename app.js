@@ -349,7 +349,7 @@
       return `
         <article class="offer-card" data-product-id="${prod.id}">
           <span class="offer-badge">-${desconto}%</span>
-          <div class="offer-media"><img src="${prod.imagem}" alt="${escapeHTML(prod.nome)}" loading="lazy"></div>
+          <div class="offer-media"><img src="${prod.imagem}" data-offer-image="${prod.id}" alt="${escapeHTML(prod.nome)}" loading="lazy" decoding="async"></div>
           <div class="offer-copy">
             <span>${escapeHTML(prod.categoria.toUpperCase())}</span>
             <h3>${escapeHTML(prod.nome)}</h3>
@@ -651,6 +651,22 @@
     const qty = Number(els.productGrid.querySelector(`[data-card-qty="${add.dataset.add}"]`)?.textContent) || 1;
     adicionarAoCarrinho(add.dataset.add, { quantidade: qty });
   });
+
+  els.offersTrack?.addEventListener('error', event => {
+    const img = event.target;
+    if (!img?.matches?.('img[data-offer-image]') || img.dataset.fallbackApplied) return;
+    const prod = produtos.find(p => p.id === Number(img.dataset.offerImage));
+    if (!prod) return;
+    img.dataset.fallbackApplied = '1';
+    const mapa = {
+      'Cervejas':'assets/products/beer.svg','Energéticos':'assets/products/energy.svg',
+      'Refrigerantes':'assets/products/energy.svg','Águas':'assets/products/ice.svg',
+      'Gelo':'assets/products/ice.svg','Combos':'assets/products/combo.svg',
+      'Conveniência':'assets/products/snack.svg','Tabacaria':'assets/products/tabacaria.svg',
+      'Destilados':'assets/products/party.svg','Sucos':'assets/products/energy.svg'
+    };
+    img.src = mapa[prod.categoria] || 'assets/products/party.svg';
+  }, true);
 
   els.offersTrack?.addEventListener('click', event => {
     const button = event.target.closest('[data-add]');
