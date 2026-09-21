@@ -342,7 +342,7 @@
       if (els.offersNext) els.offersNext.disabled = true;
       return;
     }
-    const ofertasVisiveis = ofertas.slice(0, 6);
+    const ofertasVisiveis = ofertas.slice(0, 12);
     els.offersTrack.innerHTML = ofertasVisiveis.map(prod => {
       const desconto = Math.round((1 - prod.preco / prod.precoDe) * 100);
       const podeComprar = verificarAcesso('CLIENTE');
@@ -698,6 +698,31 @@
     if (event.key === 'End') { event.preventDefault(); els.offersViewport.scrollTo({ left: els.offersViewport.scrollWidth, behavior: 'smooth' }); }
   });
 
+  /* Rotação leve das ofertas: pausa ao interagir e respeita redução de movimento. */
+  let offersAutoTimer = null;
+  const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)');
+  function pararAutoOfertas() {
+    if (offersAutoTimer) clearInterval(offersAutoTimer);
+    offersAutoTimer = null;
+  }
+  function iniciarAutoOfertas() {
+    pararAutoOfertas();
+    if (!els.offersViewport || reducedMotion?.matches) return;
+    if (els.offersViewport.scrollWidth <= els.offersViewport.clientWidth + 2) return;
+    offersAutoTimer = setInterval(() => {
+      if (document.hidden || els.offersViewport.matches(':hover') || els.offersViewport.matches(':focus-within')) return;
+      const max = Math.max(0, els.offersViewport.scrollWidth - els.offersViewport.clientWidth - 2);
+      if (els.offersViewport.scrollLeft >= max) {
+        els.offersViewport.scrollTo({ left: 0, behavior: 'smooth' });
+      } else moverOfertas(1);
+    }, 6500);
+  }
+  els.offersViewport?.addEventListener('pointerdown', pararAutoOfertas, { passive: true });
+  els.offersViewport?.addEventListener('pointerup', () => setTimeout(iniciarAutoOfertas, 1200), { passive: true });
+  reducedMotion?.addEventListener?.('change', iniciarAutoOfertas);
+  window.addEventListener('visibilitychange', () => { if (!document.hidden) iniciarAutoOfertas(); });
+
+
   els.searchForm?.addEventListener('submit', event => {
     event.preventDefault();
     buscaAtual = els.searchInput?.value || '';
@@ -785,7 +810,10 @@
   if (els.footerYear) els.footerYear.textContent = String(new Date().getFullYear());
   renderizarFiltros();
   renderizarOfertas();
-  requestAnimationFrame(atualizarSetasOfertas);
+  requestAnimationFrame(() => {
+    atualizarSetasOfertas();
+    iniciarAutoOfertas();
+  });
   atualizarAcesso();
   renderizarCarrinho();
   iniciarAgeGate();
