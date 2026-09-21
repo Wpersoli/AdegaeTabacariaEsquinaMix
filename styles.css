@@ -6889,3 +6889,292 @@ button:disabled{cursor:not-allowed;filter:saturate(.55)}
   .hero-banner .sign24{width:39%!important}
   .benefit-strip{grid-template-columns:repeat(6,minmax(0,1fr)) 220px!important;padding-inline:14px!important}
 }
+
+
+/* ==========================================================
+   V25.6 — PROMOÇÕES EM DESTAQUE fiel ao layout aprovado.
+   Mantém a faixa escura de categorias entre hero e ofertas.
+   ========================================================== */
+@media (min-width:981px){
+  .benefit-strip{
+    position:relative!important;
+    z-index:8!important;
+    margin-bottom:0!important;
+    border-bottom:1px solid rgba(255,0,127,.35)!important;
+    background:linear-gradient(180deg,#05050a 0%,#080810 100%)!important;
+  }
+  .offers-rail{
+    position:relative!important;
+    z-index:3!important;
+    width:100%!important;
+    max-width:none!important;
+    margin:0!important;
+    padding:18px clamp(28px,2.5vw,46px) 24px!important;
+    background:linear-gradient(180deg,#fff 0%,#fbfbfc 100%)!important;
+    border:0!important;
+    border-top:0!important;
+    box-shadow:inset 0 1px 0 rgba(20,18,25,.08)!important;
+    overflow:hidden!important;
+    scroll-margin-top:calc(var(--header-h) + var(--ticker-h))!important;
+  }
+  .offers-head{
+    position:relative!important;
+    display:grid!important;
+    grid-template-columns:max-content 1fr auto!important;
+    align-items:center!important;
+    gap:20px!important;
+    width:100%!important;
+    max-width:1540px!important;
+    margin:0 auto 16px!important;
+    padding:0!important;
+  }
+  .offers-head>div:first-child{
+    position:relative!important;
+    padding-left:18px!important;
+  }
+  .offers-head>div:first-child:before{
+    content:""!important;
+    position:absolute!important;
+    left:0!important;
+    top:0!important;
+    bottom:0!important;
+    width:5px!important;
+    border-radius:2px!important;
+    background:#ff1687!important;
+  }
+  .offers-head>div:first-child:after{
+    content:""!important;
+    position:absolute!important;
+    left:calc(100% + 18px)!important;
+    top:52%!important;
+    width:min(48vw,760px)!important;
+    height:3px!important;
+    border-radius:999px!important;
+    background:#ff1687!important;
+    transform:translateY(-50%)!important;
+  }
+  .offers-head .eyebrow-label{
+    display:block!important;
+    margin:0!important;
+    color:#ff1687!important;
+    font:900 clamp(12px,.8vw,14px)/1 "Barlow Condensed",sans-serif!important;
+    letter-spacing:.28em!important;
+    text-shadow:none!important;
+  }
+  .offers-head h2{
+    margin:5px 0 0!important;
+    color:#09070c!important;
+    font:900 clamp(24px,1.65vw,31px)/.94 "Barlow Condensed",sans-serif!important;
+    letter-spacing:.01em!important;
+    text-shadow:none!important;
+  }
+  .offers-live{
+    grid-column:3!important;
+    justify-self:end!important;
+    position:relative!important;
+    z-index:4!important;
+    min-height:36px!important;
+    padding:8px 13px!important;
+    border:1px solid #ececf1!important;
+    border-radius:999px!important;
+    background:#fff!important;
+    color:#46404a!important;
+    font:600 12px/1 "Barlow Condensed",sans-serif!important;
+    box-shadow:0 2px 10px rgba(16,10,22,.05)!important;
+    white-space:nowrap!important;
+  }
+  .offers-live .status-dot{
+    width:8px!important;
+    height:8px!important;
+    box-shadow:0 0 8px rgba(0,255,76,.65)!important;
+  }
+
+  .offers-carousel{
+    position:relative!important;
+    width:100%!important;
+    max-width:1540px!important;
+    margin:0 auto!important;
+    padding:0 46px!important;
+  }
+  .offers-viewport{
+    width:100%!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    scroll-snap-type:x mandatory!important;
+    scrollbar-width:none!important;
+    border-radius:0!important;
+    overscroll-behavior-inline:contain!important;
+  }
+  .offers-viewport::-webkit-scrollbar{display:none!important}
+  .offers-track{
+    display:grid!important;
+    grid-auto-flow:column!important;
+    grid-auto-columns:calc((100% - 60px)/6)!important;
+    gap:12px!important;
+    width:auto!important;
+    min-width:100%!important;
+    padding:2px 1px 8px!important;
+  }
+  .offer-card{
+    position:relative!important;
+    display:flex!important;
+    flex-direction:column!important;
+    width:100%!important;
+    min-width:0!important;
+    min-height:276px!important;
+    height:276px!important;
+    overflow:hidden!important;
+    scroll-snap-align:start!important;
+    border:1px solid #e8e8ed!important;
+    border-radius:14px!important;
+    background:#fff!important;
+    box-shadow:0 6px 18px rgba(18,10,24,.07)!important;
+    transform:translateZ(0)!important;
+  }
+  .offer-card:hover{
+    transform:translateY(-2px)!important;
+    border-color:rgba(255,22,135,.38)!important;
+    box-shadow:0 10px 24px rgba(18,10,24,.10),0 0 0 2px rgba(255,22,135,.04)!important;
+  }
+  .offer-badge{
+    position:absolute!important;
+    z-index:4!important;
+    top:8px!important;
+    left:8px!important;
+    min-width:42px!important;
+    padding:4px 8px!important;
+    border-radius:999px!important;
+    background:#ff1687!important;
+    color:#fff!important;
+    font:900 12px/1 "Barlow Condensed",sans-serif!important;
+    text-align:center!important;
+    box-shadow:0 2px 8px rgba(255,22,135,.24)!important;
+  }
+  .offer-media{
+    flex:0 0 156px!important;
+    height:156px!important;
+    display:grid!important;
+    place-items:center!important;
+    padding:15px 16px 8px!important;
+    background:linear-gradient(180deg,#fff,#fafafa)!important;
+    overflow:hidden!important;
+  }
+  .offer-media img{
+    display:block!important;
+    width:100%!important;
+    height:100%!important;
+    max-width:150px!important;
+    max-height:145px!important;
+    margin:auto!important;
+    object-fit:contain!important;
+    object-position:center center!important;
+    filter:none!important;
+    transform:none!important;
+  }
+  .offer-copy{
+    display:flex!important;
+    flex:1!important;
+    flex-direction:column!important;
+    min-height:0!important;
+    padding:9px 11px 10px!important;
+    background:#fff!important;
+  }
+  .offer-copy>span{
+    min-height:11px!important;
+    color:#8b858d!important;
+    font:800 9px/1 "Barlow Condensed",sans-serif!important;
+    letter-spacing:.09em!important;
+  }
+  .offer-copy h3{
+    margin:4px 0 5px!important;
+    min-height:29px!important;
+    color:#151117!important;
+    font:800 14px/1.05 "Barlow Condensed",sans-serif!important;
+    display:-webkit-box!important;
+    -webkit-line-clamp:2!important;
+    -webkit-box-orient:vertical!important;
+    white-space:normal!important;
+    overflow:hidden!important;
+  }
+  .offer-price{
+    display:flex!important;
+    align-items:baseline!important;
+    gap:7px!important;
+    min-height:22px!important;
+    margin-bottom:7px!important;
+  }
+  .offer-price del{
+    color:#97919a!important;
+    font:600 11px/1 "Barlow Condensed",sans-serif!important;
+  }
+  .offer-price strong{
+    color:#ff1687!important;
+    font:900 17px/1 "Barlow Condensed",sans-serif!important;
+  }
+  .offer-add{
+    width:100%!important;
+    min-height:34px!important;
+    height:34px!important;
+    margin-top:auto!important;
+    border:1.5px solid #ff1687!important;
+    border-radius:999px!important;
+    background:#fff!important;
+    color:#e70070!important;
+    font:900 11px/1 "Barlow Condensed",sans-serif!important;
+    letter-spacing:.08em!important;
+    box-shadow:none!important;
+  }
+  .offer-add:hover,.offer-add:focus-visible{
+    background:#ff1687!important;
+    color:#fff!important;
+    box-shadow:0 0 14px rgba(255,22,135,.20)!important;
+  }
+  .offers-arrow{
+    position:absolute!important;
+    z-index:7!important;
+    top:50%!important;
+    width:40px!important;
+    height:40px!important;
+    min-height:40px!important;
+    border:0!important;
+    border-radius:50%!important;
+    background:#ff1687!important;
+    color:#fff!important;
+    font-size:30px!important;
+    line-height:1!important;
+    box-shadow:0 5px 14px rgba(255,22,135,.22)!important;
+    transform:translateY(-50%)!important;
+  }
+  .offers-prev{left:0!important}
+  .offers-next{right:0!important}
+  .offers-arrow:hover:not(:disabled){transform:translateY(-50%) scale(1.06)!important}
+  .offers-arrow:disabled{opacity:.25!important}
+
+  /* Em desktop, a HOME termina o bloco visual com categorias e abre
+     imediatamente o bloco branco de ofertas, sem faixa duplicada. */
+  .benefit-strip + .offers-rail{margin-top:0!important}
+}
+
+@media (min-width:681px) and (max-width:980px){
+  .offers-rail{padding:16px 18px 20px!important}
+  .offers-head{grid-template-columns:1fr auto!important;gap:12px!important}
+  .offers-head>div:first-child:after{display:none!important}
+  .offers-live{grid-column:2!important}
+  .offers-carousel{padding:0 38px!important}
+  .offers-track{grid-auto-columns:calc((100% - 24px)/3)!important;gap:12px!important}
+  .offer-card{height:268px!important;min-height:268px!important}
+  .offer-media{height:148px!important;flex-basis:148px!important}
+}
+
+@media (max-width:680px){
+  .offers-rail{padding:15px 10px 18px!important}
+  .offers-head{display:grid!important;grid-template-columns:1fr!important;gap:8px!important;margin-bottom:12px!important}
+  .offers-head>div:first-child{padding-left:13px!important}
+  .offers-head>div:first-child:after{display:none!important}
+  .offers-live{grid-column:1!important;justify-self:start!important;min-height:30px!important;padding:6px 9px!important}
+  .offers-carousel{padding:0 31px!important}
+  .offers-track{grid-auto-columns:min(76vw,210px)!important;gap:10px!important;min-width:max-content!important}
+  .offer-card{height:258px!important;min-height:258px!important}
+  .offer-media{height:140px!important;flex-basis:140px!important}
+  .offers-arrow{width:30px!important;height:30px!important;min-height:30px!important;font-size:23px!important}
+}
