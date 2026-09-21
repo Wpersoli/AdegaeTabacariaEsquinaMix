@@ -7178,3 +7178,122 @@ button:disabled{cursor:not-allowed;filter:saturate(.55)}
   .offer-media{height:140px!important;flex-basis:140px!important}
   .offers-arrow{width:30px!important;height:30px!important;min-height:30px!important;font-size:23px!important}
 }
+
+
+/* ==========================================================
+   V25.7 — primeira dobra premium.
+   Desktop: header + ticker + hero + barra escura ocupam 100dvh.
+   Promoções começam somente após a dobra.
+   ========================================================== */
+@media (min-width:981px){
+  :root{
+    --home-header-h:80px;
+    --home-ticker-h:30px;
+    --home-benefit-h:118px;
+    --home-first-screen-h:100dvh;
+  }
+
+  .topbar{
+    min-height:var(--home-header-h)!important;
+    height:var(--home-header-h)!important;
+  }
+
+  .ticker{
+    min-height:var(--home-ticker-h)!important;
+    height:var(--home-ticker-h)!important;
+  }
+
+  .hero-banner{
+    height:calc(var(--home-first-screen-h) - var(--home-header-h) - var(--home-ticker-h) - var(--home-benefit-h))!important;
+    min-height:520px!important;
+    max-height:none!important;
+  }
+
+  .benefit-strip{
+    height:var(--home-benefit-h)!important;
+    min-height:var(--home-benefit-h)!important;
+    max-height:var(--home-benefit-h)!important;
+    margin-top:0!important;
+    margin-bottom:0!important;
+  }
+
+  .offers-rail{
+    margin-top:0!important;
+    scroll-margin-top:calc(var(--home-header-h) + var(--home-ticker-h))!important;
+  }
+}
+
+/* Alturas menores: reduz a faixa inferior, nunca invade a área de ofertas. */
+@media (min-width:981px) and (max-height:760px){
+  :root{
+    --home-header-h:72px;
+    --home-ticker-h:28px;
+    --home-benefit-h:96px;
+  }
+
+  .topbar{
+    min-height:var(--home-header-h)!important;
+    height:var(--home-header-h)!important;
+  }
+
+  .brand-mini{
+    height:calc(var(--home-header-h) - 4px)!important;
+  }
+
+  .brand-mini img{
+    height:calc(var(--home-header-h) - 10px)!important;
+  }
+
+  .benefit-strip article{
+    height:64px!important;
+  }
+
+  .benefit-svg{
+    width:40px!important;
+    height:40px!important;
+    flex-basis:40px!important;
+  }
+
+  .benefit-slogan-text{
+    font-size:clamp(20px,1.45vw,25px)!important;
+  }
+}
+
+/* Desktop médio: preserva as três zonas sem esmagar CTA/título. */
+@media (min-width:981px) and (max-width:1240px){
+  .hero-banner{
+    min-height:540px!important;
+  }
+
+  .hero-banner>.brand-panel{
+    left:1.5%!important;
+    width:33.5%!important;
+  }
+
+  .hero-banner>.hero-copy{
+    left:33.4%!important;
+    width:39.2%!important;
+  }
+
+  .hero-banner>.right-stage{
+    left:70.2%!important;
+    width:29.8%!important;
+  }
+}
+
+/* Tablet/mobile continuam em fluxo natural e não herdam altura rígida. */
+@media (max-width:980px){
+  .hero-banner{
+    height:auto!important;
+    max-height:none!important;
+  }
+
+  .benefit-strip{
+    height:auto!important;
+    max-height:none!important;
+  }
+
+  .offers-rail{
+    margin-top:0!important;
+  }
+}
