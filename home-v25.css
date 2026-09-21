@@ -1,0 +1,324 @@
+@import url("assets/v25/hero-slice-1.css");
+@import url("assets/v25/hero-slice-2.css");
+@import url("assets/v25/hero-slice-3.css");
+@import url("assets/v25/hero-slice-4.css");
+@import url("assets/v25/hero-slice-5.css");
+@import url("assets/v25/hero-slice-6.css");
+@import url("assets/v25/hero-slice-7.css");
+@import url("assets/v25/hero-slice-8.css");
+@import url("assets/v25/benefits.css");
+
+/* ==========================================================
+   V25 — HOME calibrada a partir do print aprovado
+   A animação do ticker permanece a implementação existente.
+   ========================================================== */
+:root{
+  --header-h:80px;
+  --ticker-h:35px;
+}
+html{background:#020106}
+body{background:#020106}
+.site-shell{overflow:hidden;background:#020106}
+
+/* Header: medidas extraídas do print 1673×989 */
+.topbar{
+  height:var(--header-h)!important;
+  min-height:var(--header-h)!important;
+  grid-template-columns:160px minmax(590px,1fr) minmax(390px,490px) auto!important;
+  gap:clamp(14px,1.55vw,26px)!important;
+  padding:0 clamp(22px,2.35vw,40px)!important;
+  background:#020106!important;
+  border-bottom:1px solid rgba(255,0,127,.78)!important;
+  box-shadow:none!important;
+}
+.brand-mini{
+  width:150px!important;
+  height:72px!important;
+  padding:3px 0!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  overflow:visible!important;
+}
+.brand-mini img{
+  width:148px!important;
+  height:68px!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  object-position:left center!important;
+  transform:none!important;
+  filter:none!important;
+}
+.desktop-nav{
+  height:100%;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:clamp(24px,2.15vw,38px)!important;
+  min-width:0;
+}
+.nav-link{
+  position:relative;
+  padding:30px 0 23px!important;
+  font-family:"Barlow Condensed",sans-serif!important;
+  font-size:16px!important;
+  line-height:1!important;
+  letter-spacing:.012em!important;
+  font-weight:900!important;
+  color:#f7f5f7!important;
+  text-shadow:0 1px 0 #000!important;
+  white-space:nowrap!important;
+}
+.nav-link::after{
+  content:"";
+  position:absolute;
+  left:0;right:0;bottom:17px;
+  height:2px;
+  border-radius:2px;
+  background:transparent;
+}
+.nav-link:hover,.nav-link.is-active{color:#ff1687!important}
+.nav-link.is-active::after{background:#ff1687;box-shadow:0 0 8px rgba(255,0,127,.8)}
+.search-box{
+  height:52px!important;
+  min-height:52px!important;
+  width:100%!important;
+  max-width:490px!important;
+  justify-self:end!important;
+  border:2px solid rgba(255,255,255,.78)!important;
+  border-radius:999px!important;
+  padding:0 20px!important;
+  background:#07070b!important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.04)!important;
+}
+.search-box svg{
+  width:22px!important;height:22px!important;
+  min-width:22px!important;
+  stroke:#fff!important;
+  stroke-width:2.6!important;
+}
+.search-box input{
+  font-family:"Barlow Condensed",sans-serif!important;
+  font-size:12px!important;
+  font-weight:800!important;
+  letter-spacing:.02em!important;
+  color:#fff!important;
+  text-transform:uppercase;
+}
+.search-box input::placeholder{color:#f3f0f3!important;opacity:.96!important}
+.header-actions{gap:10px!important}
+.round-btn{
+  width:52px!important;height:52px!important;min-width:52px!important;
+  border:1px solid rgba(255,255,255,.24)!important;
+  background:linear-gradient(180deg,#09090e,#040407)!important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.025),0 0 12px rgba(0,0,0,.55)!important;
+}
+.round-btn svg{width:24px!important;height:24px!important;stroke-width:2!important}
+.menu-trigger span{width:23px!important;height:3px!important;border-radius:4px!important}
+.cart-count{
+  top:-6px!important;right:-3px!important;
+  min-width:23px!important;height:23px!important;
+  padding:0 6px!important;
+  font-size:12px!important;
+  box-shadow:0 0 13px rgba(255,0,127,.95)!important;
+}
+
+/* Ticker: visual do print, movimento existente preservado */
+.ticker{
+  height:var(--ticker-h)!important;
+  min-height:var(--ticker-h)!important;
+  background:#020106!important;
+  border-top:0!important;
+  border-bottom:1px solid rgba(255,0,127,.72)!important;
+  box-shadow:none!important;
+}
+.ticker-status{
+  min-width:170px!important;
+  padding-left:clamp(46px,5.1vw,86px)!important;
+  padding-right:17px!important;
+  gap:9px!important;
+  border-right:1px solid rgba(255,255,255,.07)!important;
+  font-family:"Barlow Condensed",sans-serif!important;
+  font-size:13px!important;
+  font-weight:900!important;
+  letter-spacing:.04em!important;
+}
+.ticker-status .status-dot{width:8px!important;height:8px!important}
+.ticker-viewport{height:100%!important}
+.ticker-track{
+  min-height:100%!important;
+  align-items:center!important;
+  font-family:"Barlow Condensed",sans-serif!important;
+  font-size:13px!important;
+  font-weight:900!important;
+  letter-spacing:.025em!important;
+  color:#dfdce1!important;
+}
+
+/* Hero: 8 fatias do próprio print para preservar figuras e lettering */
+.hero-reference{
+  position:relative!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  aspect-ratio:1673/734!important;
+  margin:0!important;
+  padding:0!important;
+  display:block!important;
+  overflow:hidden!important;
+  background:#030407!important;
+  isolation:isolate;
+}
+.hero-slices{
+  position:absolute;
+  inset:0;
+  display:grid;
+  grid-template-columns:repeat(8,minmax(0,1fr));
+  width:100%;
+  height:100%;
+  z-index:0;
+  pointer-events:none;
+}
+.hero-slice{
+  display:block;
+  width:100%;
+  height:100%;
+  background-repeat:no-repeat;
+  background-position:center;
+  background-size:100% 100%;
+}
+.hero-hotspot{
+  position:absolute;
+  z-index:2;
+  display:block;
+  border-radius:999px;
+  background:transparent;
+  color:transparent!important;
+  font-size:0;
+  text-decoration:none;
+  cursor:pointer;
+  outline-offset:4px;
+}
+.hero-hotspot-products{
+  left:31.55%;
+  top:81.25%;
+  width:18.9%;
+  height:9.55%;
+}
+.hero-hotspot-promos{
+  left:51.15%;
+  top:81.25%;
+  width:14.1%;
+  height:9.55%;
+}
+.hero-hotspot:focus-visible{
+  outline:3px solid #fff;
+  box-shadow:0 0 0 5px rgba(255,0,127,.55),0 0 28px rgba(255,0,127,.75);
+}
+
+/* Barra inferior também usa o recorte do print */
+.benefit-reference{
+  position:relative!important;
+  box-sizing:border-box!important;
+  width:100vw!important;
+  max-width:none!important;
+  height:auto!important;
+  min-height:0!important;
+  aspect-ratio:1673/140!important;
+  margin:0 calc(50% - 50vw)!important;
+  padding:0!important;
+  display:block!important;
+  overflow:hidden!important;
+  background-repeat:no-repeat!important;
+  background-position:center!important;
+  background-size:100% 100%!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+.benefit-reference>.sr-only{position:absolute!important}
+
+/* A próxima seção começa sem invadir o enquadramento do print */
+.offers-rail{margin-top:0!important;scroll-margin-top:calc(var(--header-h) + var(--ticker-h))}
+
+/* Responsivo: mantém a composição integral em desktop/tablet e prioriza o centro no celular */
+@media(max-width:1320px){
+  .topbar{
+    grid-template-columns:140px minmax(430px,1fr) minmax(300px,390px) auto!important;
+    padding-inline:22px!important;
+    gap:16px!important;
+  }
+  .brand-mini{width:138px!important}
+  .brand-mini img{width:135px!important}
+  .desktop-nav{gap:20px!important}
+  .nav-link{font-size:14px!important}
+  .round-btn{width:48px!important;height:48px!important;min-width:48px!important}
+}
+@media(max-width:1050px){
+  :root{--header-h:72px;--ticker-h:34px}
+  .topbar{
+    grid-template-columns:128px 1fr auto!important;
+    padding-inline:18px!important;
+  }
+  .desktop-nav{display:none!important}
+  .search-box{max-width:none!important}
+  .brand-mini{width:124px!important;height:64px!important}
+  .brand-mini img{width:122px!important;height:60px!important}
+  .ticker-status{min-width:132px!important;padding-left:20px!important}
+}
+@media(max-width:700px){
+  :root{--header-h:66px;--ticker-h:32px}
+  .topbar{
+    grid-template-columns:105px 1fr auto!important;
+    gap:9px!important;
+    padding-inline:10px!important;
+  }
+  .brand-mini{width:101px!important;height:58px!important}
+  .brand-mini img{width:100px!important;height:55px!important}
+  .search-box{height:42px!important;min-height:42px!important;padding:0 12px!important}
+  .search-box input{font-size:10px!important}
+  .search-box svg{width:18px!important;height:18px!important;min-width:18px!important}
+  .header-actions{gap:6px!important}
+  .round-btn{width:42px!important;height:42px!important;min-width:42px!important}
+  #profileButton{display:none!important}
+  .ticker-status{min-width:108px!important;padding-left:12px!important;padding-right:10px!important;font-size:11px!important}
+  .ticker-track{font-size:11px!important}
+  .hero-reference{
+    aspect-ratio:auto!important;
+    height:68svh!important;
+    min-height:430px!important;
+  }
+  .hero-slices{
+    left:50%!important;
+    width:max(100%,980px)!important;
+    transform:translateX(-50%);
+  }
+  .hero-hotspot-products{
+    left:29%;
+    top:82%;
+    width:28%;
+    height:10%;
+  }
+  .hero-hotspot-promos{
+    left:59%;
+    top:82%;
+    width:24%;
+    height:10%;
+  }
+  .benefit-reference{
+    aspect-ratio:auto!important;
+    height:92px!important;
+    background-size:auto 100%!important;
+    background-position:center!important;
+  }
+}
+@media(max-width:430px){
+  .search-box{display:none!important}
+  .topbar{grid-template-columns:1fr auto!important}
+  .brand-mini{width:116px!important}
+  .brand-mini img{width:113px!important}
+  .hero-reference{height:64svh!important;min-height:400px!important}
+  .hero-slices{width:910px!important}
+  .hero-hotspot-products{left:30%;width:30%}
+  .hero-hotspot-promos{left:62%;width:26%}
+}
