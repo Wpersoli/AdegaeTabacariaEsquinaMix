@@ -568,9 +568,9 @@
   qsa('.drawer nav a').forEach(link => link.addEventListener('click', () => fecharDrawer({ restore: false })));
 
   els.orderButton?.addEventListener('click', () => {
-    const target = qs('#ofertas') || qs('#produtos');
+    const target = qs('#produtos') || qs('#ofertas');
     target?.scrollIntoView({ behavior: window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
-    showToast('Escolha uma oferta ou produto para montar seu pedido.');
+    showToast('Veja o catálogo e escolha seus produtos.');
   });
   els.cartButton?.addEventListener('click', abrirCarrinho);
   els.cartClose?.addEventListener('click', () => fecharCarrinho());
