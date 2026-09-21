@@ -255,15 +255,59 @@
             <label class="catalog-sort">Ordenar:<select id="catalogSort"><option value="destaques">Mais vendidos</option><option value="menor-preco">Menor preço</option><option value="maior-preco">Maior preço</option><option value="nome">Nome A–Z</option></select></label>
           </div>
         </div>
-        <div class="catalog-resultbar"><p><strong id="catalogCount">24</strong> produtos encontrados</p><span class="stock-live"><i></i><b>ESTOQUE ATUALIZADO</b><small> em tempo real</small></span></div>
+        <div class="catalog-resultbar"><p><strong id="catalogCount">48</strong> produtos encontrados</p><span class="stock-live"><i></i><b>ESTOQUE ATUALIZADO</b><small> em tempo real</small></span></div>
         <div class="product-grid" id="lista-produtos" aria-live="polite"></div>
       </section>
 
-      <section class="catalog-showcase" id="promocoes" aria-label="Destaques do catálogo">
-        <article class="showcase-card showcase-combo" id="combos"><span>COMBOS</span><h2>ESPECIAIS</h2><p>Mais economia para seus momentos.</p><a href="#produtos">VER COMBOS →</a></article>
-        <article class="showcase-card showcase-sale"><span>PROMOÇÕES</span><h2>DA SEMANA</h2><p>Descontos demonstrativos em bebidas, combos e muito mais.</p><a href="#ofertas">APROVEITAR →</a></article>
-        <article class="showcase-card showcase-detail"><span>DETALHES</span><h2>DO PRODUTO</h2><p>Veja informações, valores e adicione direto na sua sacola.</p><a href="#produtos">VER PRODUTOS →</a></article>
-        <article class="showcase-card showcase-bag"><span>MINHA SACOLA</span><h2>PEDIDO RÁPIDO</h2><p>Adicione produtos e acompanhe o subtotal no carrinho.</p><button type="button" onclick="document.getElementById('cartButton')?.click()">ABRIR SACOLA →</button></article>
+      <section class="catalog-showcase premium-showcase" id="promocoes" aria-label="Destaques do catálogo">
+        <article class="showcase-card showcase-combo" id="combos">
+          <span>COMBOS</span><h2>MONTE O SEU MOMENTO</h2>
+          <p>Bebidas, gelo e acompanhamentos pensados para facilitar seu pedido.</p>
+          <a href="#produtos">VER COMBOS <b>→</b></a>
+        </article>
+        <article class="showcase-card showcase-sale">
+          <span>PROMOÇÕES</span><h2>OFERTAS QUE GIRAM RÁPIDO</h2>
+          <p>Destaques atualizados para você economizar sem perder tempo.</p>
+          <a href="#ofertas">APROVEITAR <b>→</b></a>
+        </article>
+        <article class="showcase-card showcase-bag">
+          <span>MINHA SACOLA</span><h2>COMPRE SEM COMPLICAÇÃO</h2>
+          <p>Adicione, ajuste quantidades e acompanhe seu subtotal em poucos cliques.</p>
+          <button type="button" onclick="document.getElementById('cartButton')?.click()">ABRIR SACOLA <b>→</b></button>
+        </article>
+        <article class="showcase-card showcase-detail">
+          <span>ATENDIMENTO</span><h2>PRECISOU? CHAMA A ESQUINA</h2>
+          <p>Chat rápido no próprio site para dúvidas sobre produtos, entrega e pagamento.</p>
+          <button type="button" onclick="document.getElementById('chatLauncher')?.click()">FALAR AGORA <b>→</b></button>
+        </article>
+      </section>
+
+      <section class="service-experience" id="experiencia" aria-label="Experiência Esquina Mix">
+        <article class="experience-panel experience-steps">
+          <span class="eyebrow-label">COMO FUNCIONA</span>
+          <h2>DO CLIQUE À SUA PORTA</h2>
+          <ol>
+            <li><b>1</b><span><strong>Escolha</strong><small>Navegue, filtre e encontre o que precisa.</small></span></li>
+            <li><b>2</b><span><strong>Adicione</strong><small>Monte sua sacola e ajuste as quantidades.</small></span></li>
+            <li><b>3</b><span><strong>Receba</strong><small>Finalize o pedido e confirme a entrega.</small></span></li>
+          </ol>
+        </article>
+        <article class="experience-panel experience-proof">
+          <span class="eyebrow-label">EXPERIÊNCIA</span>
+          <h2>SERVIÇO QUE DÁ VONTADE DE VOLTAR</h2>
+          <div class="rating-row"><strong>4.9</strong><span>★★★★★</span><small>modelo demonstrativo de avaliação</small></div>
+          <blockquote>“Pedido simples, visual claro e tudo fácil de encontrar.”</blockquote>
+          <div class="proof-chips"><span>⚡ rápido</span><span>❄ gelado</span><span>✓ seguro</span></div>
+        </article>
+        <article class="experience-panel experience-support" id="contato">
+          <span class="eyebrow-label">FALE COM A GENTE</span>
+          <h2>ATENDIMENTO SEM ENROLAÇÃO</h2>
+          <p>Use o chat da Esquina Mix para dúvidas rápidas ou siga para o checkout quando já souber o que quer.</p>
+          <div class="support-actions">
+            <button type="button" onclick="document.getElementById('chatLauncher')?.click()">ABRIR CHAT</button>
+            <button type="button" onclick="document.getElementById('cartButton')?.click()">VER SACOLA</button>
+          </div>
+        </article>
       </section>
 
       <section class="faq-section" id="faq" aria-labelledby="faqTitle">
@@ -313,19 +357,31 @@
         </div>
       </section>
 
-      <section class="about-contact" id="sobre">
-        <article><span class="eyebrow-label">ESQUINA MIX</span><h2>Adega & Tabacaria 24h</h2><p>Identidade neon de alto contraste, navegação rápida e componentes prontos para crescer com o e-commerce.</p></article>
-        <article id="contato"><span class="eyebrow-label">ATENDIMENTO</span><h2>Contato e delivery</h2><p>Botões e eventos estão preparados para integração posterior com WhatsApp, pagamento e sistema de pedidos.</p></article>
+      <section class="about-contact premium-about" id="sobre">
+        <article>
+          <span class="eyebrow-label">ESQUINA MIX</span>
+          <h2>MAIS QUE BEBIDAS. UMA EXPERIÊNCIA DE CONVENIÊNCIA.</h2>
+          <p>Catálogo rápido, identidade forte, navegação simples e atendimento integrado para transformar visitas em pedidos.</p>
+        </article>
+        <article>
+          <span class="eyebrow-label">24 HORAS</span>
+          <h2>PRONTO PARA A MADRUGADA, O FIM DE SEMANA E O IMPREVISTO.</h2>
+          <p>Estoque, preços e cobertura de entrega podem ser atualizados conforme a operação real evoluir.</p>
+        </article>
       </section>
     </main>
 
-    <footer class="site-footer" aria-label="Rodapé Esquina Mix">
+    <footer class="site-footer premium-footer" aria-label="Rodapé Esquina Mix">
       <div class="footer-main">
-        <a class="footer-brand" href="#inicio" aria-label="Esquina Mix - voltar ao início"><img src="assets/logo-transparent.png" alt="Adega e Tabacaria Esquina Mix"></a>
+        <a class="footer-brand" href="#inicio" aria-label="Esquina Mix - voltar ao início">
+          <img src="assets/logo-transparent.png" alt="Adega e Tabacaria Esquina Mix">
+          <span>SEMPRE COM VOCÊ.</span>
+        </a>
         <div class="footer-links">
           <div><strong>ESQUINA MIX</strong><a href="#inicio">Início</a><a href="#produtos">Produtos</a><a href="#promocoes">Promoções</a><a href="#combos">Combos</a></div>
           <div><strong>AJUDA</strong><a href="#faq">Perguntas frequentes</a><a href="#contato">Contato</a><button type="button" id="footerChatButton">Esquina Mix IA</button></div>
-          <div><strong>ATENDIMENTO</strong><p><span class="status-dot"></span> 24H</p><small>Disponibilidade de itens e entrega sujeita à confirmação no atendimento.</small></div>
+          <div><strong>ATENDIMENTO</strong><p><span class="status-dot"></span> 24H</p><small>Disponibilidade, cobertura e valores sujeitos à confirmação no atendimento.</small></div>
+          <div><strong>SEU PEDIDO</strong><button type="button" class="footer-cart-button" onclick="document.getElementById('cartButton')?.click()">ABRIR SACOLA</button><small>Monte seu pedido e revise antes de finalizar.</small></div>
         </div>
       </div>
       <div class="footer-bottom">
