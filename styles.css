@@ -6528,7 +6528,7 @@ button:disabled{cursor:not-allowed;filter:saturate(.55)}
    Objetivo: máxima fidelidade visual ao print aprovado.
    A animação do ticker permanece intocada.
    ========================================================== */
-@media (min-width:981px){
+@media (min-width:1440px){
   .hero-banner{
     position:relative!important;
     height:690px!important;
@@ -6623,7 +6623,7 @@ button:disabled{cursor:not-allowed;filter:saturate(.55)}
   }
 }
 
-@media (min-width:981px) and (max-height:820px){
+@media (min-width:1440px) and (max-height:820px){
   .hero-banner{
     height:calc(100dvh - 110px - 118px)!important;
     min-height:545px!important;
@@ -6639,5 +6639,31 @@ button:disabled{cursor:not-allowed;filter:saturate(.55)}
   .hero-copy .hero-actions .cta{
     height:58px!important;
     min-height:58px!important;
+  }
+}
+
+
+/* ==========================================================
+   V25.2 — proteção de proporção entre desktop amplo e médio.
+   1440px+ usa a arte integral aprovada; 981–1439 usa a
+   composição HTML/SVG responsiva para evitar distorção.
+   ========================================================== */
+@media (min-width:981px) and (max-width:1439px){
+  .hero-banner{
+    height:min(690px,calc(100dvh - 110px - 118px))!important;
+    min-height:565px!important;
+  }
+  .benefit-strip{
+    min-height:118px!important;
+    height:118px!important;
+  }
+  .hero-logo{max-height:72%!important}
+  .hero-title-svg{max-height:58vh!important}
+  .right-visual{max-height:92%!important;object-fit:contain!important}
+}
+@media (min-width:1440px){
+  .hero-banner{
+    background-size:cover!important;
+    background-position:center center!important;
   }
 }
