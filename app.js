@@ -720,7 +720,7 @@
   els.offersViewport?.addEventListener('pointerdown', pararAutoOfertas, { passive: true });
   els.offersViewport?.addEventListener('pointerup', () => setTimeout(iniciarAutoOfertas, 1200), { passive: true });
   reducedMotion?.addEventListener?.('change', iniciarAutoOfertas);
-  window.addEventListener('visibilitychange', () => { if (!document.hidden) iniciarAutoOfertas(); });
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) iniciarAutoOfertas(); });
 
 
   els.searchForm?.addEventListener('submit', event => {
