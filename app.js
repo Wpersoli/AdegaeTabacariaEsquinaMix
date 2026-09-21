@@ -290,14 +290,15 @@
       return `
         <article class="product-card" data-product-id="${prod.id}">
           ${admin ? '<span class="admin-badge">ADMIN</span>' : ''}
-          <button class="product-favorite" type="button" aria-label="Favoritar ${escapeHTML(prod.nome)}">♡</button>
-          <div class="product-media"><img src="${prod.imagem}" alt="${escapeHTML(prod.nome)}" loading="lazy"></div>
+          ${prod.promocao && prod.precoDe > prod.preco ? `<span class="product-discount">-${Math.round((1-prod.preco/prod.precoDe)*100)}%</span>` : ''}
+          <button class="product-favorite" type="button" data-favorite="${prod.id}" aria-label="Favoritar ${escapeHTML(prod.nome)}" aria-pressed="false">♡</button>
+          <div class="product-media"><img src="${prod.imagem}" data-product-image="${prod.id}" alt="${escapeHTML(prod.nome)}" loading="lazy" decoding="async"></div>
           <div class="product-body">
             <span class="product-category">${escapeHTML(prod.categoria.toUpperCase())}</span>
             <h3>${escapeHTML(prod.nome)}</h3>
             <p class="product-volume">${escapeHTML(prod.volume || '')}</p>
             <p class="product-desc">${escapeHTML(prod.descricao)}</p>
-            <strong class="product-price">${moeda(prod.preco)}</strong>
+            <div class="product-pricing">${prod.precoDe && prod.precoDe > prod.preco ? `<del>${moeda(prod.precoDe)}</del>` : ''}<strong class="product-price">${moeda(prod.preco)}</strong></div>
             <div class="stock-line ${prod.estoque <= 5 ? 'is-low' : ''}"><span></span>${prod.estoque <= 5 ? 'Últimas unidades' : 'Em estoque'}</div>
             <div class="product-footer">
               <div class="card-qty" aria-label="Quantidade de ${escapeHTML(prod.nome)}">
@@ -313,6 +314,7 @@
           </div>
         </article>`;
     }).join('');
+    atualizarFavoritosVisuais();
   }
 
   /* ---------- OFFERS CAROUSEL ---------- */
@@ -597,7 +599,41 @@
   els.catalogSearch?.addEventListener('input', event => { buscaAtual = event.target.value || ''; renderizarProdutos(); });
   els.catalogSort?.addEventListener('change', event => { ordenacaoAtual = event.target.value; renderizarProdutos(); });
 
+  const favoritos = new Set(JSON.parse(storageGet('esquinaMixFavorites') || '[]').map(Number));
+  function salvarFavoritos(){ storageSet('esquinaMixFavorites', JSON.stringify([...favoritos])); }
+  function atualizarFavoritosVisuais(){
+    els.productGrid?.querySelectorAll('[data-favorite]').forEach(btn => {
+      const ativo = favoritos.has(Number(btn.dataset.favorite));
+      btn.classList.toggle('is-active', ativo);
+      btn.setAttribute('aria-pressed', String(ativo));
+      btn.textContent = ativo ? '♥' : '♡';
+    });
+  }
+  function fallbackImagemProduto(img){
+    const card = img.closest('[data-product-id]');
+    const prod = produtos.find(p => p.id === Number(card?.dataset.productId));
+    if (!prod || img.dataset.fallbackApplied) return;
+    img.dataset.fallbackApplied = '1';
+    const mapa = {
+      'Cervejas':'assets/products/beer.svg','Energéticos':'assets/products/energy.svg','Gelo':'assets/products/ice.svg',
+      'Combos':'assets/products/combo.svg','Conveniência':'assets/products/snack.svg','Tabacaria':'assets/products/tabacaria.svg'
+    };
+    img.src = mapa[prod.categoria] || 'assets/products/party.svg';
+  }
+
+  els.productGrid?.addEventListener('error', event => {
+    if (event.target?.matches('img[data-product-image]')) fallbackImagemProduto(event.target);
+  }, true);
+
   els.productGrid?.addEventListener('click', event => {
+    const fav = event.target.closest('[data-favorite]');
+    if (fav) {
+      const id = Number(fav.dataset.favorite);
+      favoritos.has(id) ? favoritos.delete(id) : favoritos.add(id);
+      salvarFavoritos();
+      atualizarFavoritosVisuais();
+      return;
+    }
     const inc = event.target.closest('[data-card-inc]');
     const dec = event.target.closest('[data-card-dec]');
     const add = event.target.closest('[data-add]');
