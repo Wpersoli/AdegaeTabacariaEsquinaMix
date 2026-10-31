@@ -285,11 +285,11 @@
     const options = { enableHighAccuracy: true, timeout: 18000, maximumAge: 0 };
     if (watch) {
       if (locationState.watchId !== null) navigator.geolocation.clearWatch(locationState.watchId);
+      locationEls.watch.hidden = true;
+      locationEls.stop.hidden = false;
       locationState.watchId = navigator.geolocation.watchPosition(position => {
         renderPosition(position);
         setLocationStatus('Atualizando sua posição enquanto esta página estiver aberta.', 'success');
-        locationEls.watch.hidden = true;
-        locationEls.stop.hidden = false;
       }, error => {
         showLocationError(error);
         stopLocationWatch(false);
