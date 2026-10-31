@@ -1,0 +1,60 @@
+name: Quality gates
+
+on:
+  push:
+    branches:
+      - main
+      - quality/**
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: quality-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  static-integrity:
+    name: Static integrity and JavaScript syntax
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Validate JavaScript syntax
+        run: node --check app.js
+
+      - name: Audit HTML IDs, local assets and required features
+        run: python audit_static.py
+
+      - name: Install Playwright
+        run: python -m pip install playwright==1.52.0
+
+      - name: Install Chromium and system dependencies
+        run: python -m playwright install --with-deps chromium webkit
+
+      - name: Run browser, interaction and responsive regression tests
+        run: python audit_browser.py
+
+      - name: Upload browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: esquina-mix-browser-audit
+          path: |
+            AUDIT-browser.json
+            artifacts/responsive/*.png
+          if-no-files-found: ignore

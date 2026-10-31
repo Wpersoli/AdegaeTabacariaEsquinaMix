@@ -63,9 +63,10 @@
   const sessionSet = (key, value) => { try { window.sessionStorage?.setItem(key, value); } catch { /* noop */ } };
   const sessionRemove = key => { try { window.sessionStorage?.removeItem(key); } catch { /* noop */ } };
 
+  const roleSalvo = storageGet('esquinaMixRole');
   const utilizadorAtual = {
     nome: 'Visitante',
-    perfil: storageGet('esquinaMixRole') || 'GUEST'
+    perfil: Object.hasOwn(niveis, roleSalvo) ? roleSalvo : 'GUEST'
   };
 
   let filtroAtual = 'Todos';
@@ -426,11 +427,16 @@
     els.categoryFilters.innerHTML = categorias().map(cat => `<button class="filter-btn${cat === filtroAtual ? ' is-active' : ''}" type="button" data-category="${escapeHTML(cat)}">${escapeHTML(cat)}</button>`).join('');
   }
 
+  function normalizarBusca(value) {
+    return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('pt-BR').trim();
+  }
+
   function produtosFiltrados() {
-    const termo = buscaAtual.trim().toLocaleLowerCase('pt-BR');
+    const termo = normalizarBusca(buscaAtual);
     const lista = produtos.filter(prod => {
       const categoriaOk = filtroAtual === 'Todos' || prod.categoria === filtroAtual;
-      const buscaOk = !termo || `${prod.nome} ${prod.volume || ''} ${prod.categoria} ${prod.descricao}`.toLocaleLowerCase('pt-BR').includes(termo);
+      const texto = normalizarBusca([prod.nome, prod.volume || '', prod.categoria, prod.descricao].join(' '));
+      const buscaOk = !termo || texto.includes(termo);
       return categoriaOk && buscaOk;
     });
     return lista.sort((a,b) => {
@@ -452,6 +458,7 @@
 
     els.productGrid.innerHTML = lista.map(prod => {
       const podeComprar = verificarAcesso('CLIENTE');
+      const indisponivel = !(Number(prod.estoque) > 0);
       const admin = verificarAcesso('ADMIN');
       return `
         <article class="product-card" data-product-id="${prod.id}">
@@ -465,15 +472,15 @@
             <p class="product-volume">${escapeHTML(prod.volume || '')}</p>
             <p class="product-desc">${escapeHTML(prod.descricao)}</p>
             <div class="product-pricing">${prod.precoDe && prod.precoDe > prod.preco ? `<del>${moeda(prod.precoDe)}</del>` : ''}<strong class="product-price">${moeda(prod.preco)}</strong></div>
-            <div class="stock-line ${prod.estoque <= 5 ? 'is-low' : ''}"><span></span>${prod.estoque <= 5 ? 'Últimas unidades' : 'Em estoque'}</div>
+            <div class="stock-line ${prod.estoque <= 5 ? 'is-low' : ''}"><span></span>${indisponivel ? 'Esgotado' : prod.estoque <= 5 ? 'Últimas unidades' : 'Em estoque'}</div>
             <div class="product-footer">
               <div class="card-qty" aria-label="Quantidade de ${escapeHTML(prod.nome)}">
-                <button type="button" data-card-dec="${prod.id}" aria-label="Diminuir quantidade">−</button>
+                <button type="button" data-card-dec="${prod.id}" aria-label="Diminuir quantidade" ${indisponivel ? 'disabled' : ''}>−</button>
                 <span data-card-qty="${prod.id}" aria-live="polite">1</span>
-                <button type="button" data-card-inc="${prod.id}" aria-label="Aumentar quantidade">+</button>
+                <button type="button" data-card-inc="${prod.id}" aria-label="Aumentar quantidade" ${indisponivel ? 'disabled' : ''}>+</button>
               </div>
-              <button class="product-action${podeComprar ? '' : ' login-required'}" type="button" data-add="${prod.id}">
-                <span>${podeComprar ? 'ADICIONAR' : 'ENTRAR'}</span>
+              <button class="product-action${podeComprar ? '' : ' login-required'}" type="button" data-add="${prod.id}" ${indisponivel ? 'disabled aria-disabled="true"' : ''}>
+                <span>${indisponivel ? 'ESGOTADO' : podeComprar ? 'ADICIONAR' : 'ENTRAR'}</span>
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h-2l-1 2m3 0h13l-2 8H9L7 6Zm2 12a1.5 1.5 0 1 0 0 .01M17 18a1.5 1.5 0 1 0 0 .01M12 8v4m-2-2h4"/></svg>
               </button>
             </div>
@@ -520,7 +527,7 @@
             <span>${escapeHTML(prod.categoria.toUpperCase())}</span>
             <h3>${escapeHTML(prod.nome)}</h3>
             <div class="offer-price"><del>${moeda(prod.precoDe)}</del><strong>${moeda(prod.preco)}</strong></div>
-            <button class="offer-add${podeComprar ? '' : ' login-required'}" type="button" data-add="${prod.id}">${podeComprar ? 'ADICIONAR' : 'ENTRAR'}</button>
+            <button class="offer-add${podeComprar ? '' : ' login-required'}" type="button" data-add="${prod.id}" ${Number(prod.estoque) <= 0 ? 'disabled aria-disabled="true"' : ''}>${Number(prod.estoque) <= 0 ? 'ESGOTADO' : podeComprar ? 'ADICIONAR' : 'ENTRAR'}</button>
           </div>
         </article>`;
     }).join('');
@@ -555,7 +562,11 @@
     try {
       const parsed = JSON.parse(storageGet('esquinaMixCart') || '{}');
       if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return {};
-      return Object.fromEntries(Object.entries(parsed).filter(([id, qty]) => produtos.some(p => p.id === Number(id)) && Number.isInteger(qty) && qty > 0));
+      return Object.fromEntries(Object.entries(parsed).flatMap(([id, qty]) => {
+        const produto = produtos.find(p => p.id === Number(id));
+        if (!produto || !Number.isInteger(qty) || qty <= 0) return [];
+        return [[String(produto.id), Math.min(qty, Math.max(0, Number(produto.estoque) || 0))]];
+      }).filter(([, qty]) => qty > 0));
     } catch { return {}; }
   }
 
@@ -612,8 +623,10 @@
       abrirConta();
       return;
     }
-    const qtd = Math.max(1, Math.min(Number(quantidade) || 1, produto.estoque || 99));
-    carrinho[produto.id] = Math.min((carrinho[produto.id] || 0) + qtd, produto.estoque || 99);
+    const limite = Math.max(0, Number(produto.estoque) || 0);
+    if (!limite) return showToast('Este produto está indisponível no momento.');
+    const qtd = Math.max(1, Math.min(Number(quantidade) || 1, limite));
+    carrinho[produto.id] = Math.min((carrinho[produto.id] || 0) + qtd, limite);
     salvarCarrinho();
     renderizarCarrinho({ animateBadge: true });
     showToast(`${qtd}x ${produto.nome} adicionado ao carrinho ✨`);
@@ -622,11 +635,15 @@
 
   function alterarQuantidade(id, delta) {
     id = Number(id);
-    if (!carrinho[id]) return;
-    carrinho[id] += delta;
-    if (carrinho[id] <= 0) delete carrinho[id];
+    const produto = produtos.find(p => p.id === id);
+    if (!produto || !carrinho[id]) return;
+    const limite = Math.max(0, Number(produto.estoque) || 0);
+    const proxima = Math.min(carrinho[id] + Number(delta || 0), limite);
+    if (proxima <= 0) delete carrinho[id];
+    else carrinho[id] = proxima;
     salvarCarrinho();
     renderizarCarrinho({ animateBadge: true });
+    if (delta > 0 && proxima === limite) showToast('Limite de estoque disponível atingido.');
   }
 
   function removerDoCarrinho(id) {
@@ -672,9 +689,12 @@
       '',
       'Pode confirmar disponibilidade, taxa de entrega e formas de pagamento?'
     ];
-    const url = `https://wa.me/?text=${encodeURIComponent(linhas.join('\n'))}`;
-    window.open(url, '_blank', 'noopener,noreferrer');
-    showToast('Resumo do pedido preparado para o WhatsApp.');
+    const telefone = (qs('meta[name="esquina-whatsapp"]')?.content || '').replace(/\D/g, '');
+    const texto = encodeURIComponent(linhas.join('\n'));
+    const destino = telefone ? `https://wa.me/${telefone}?text=${texto}` : `https://wa.me/?text=${texto}`;
+    const janela = window.open(destino, '_blank', 'noopener,noreferrer');
+    if (!janela) showToast('O navegador bloqueou a nova aba. Permita pop-ups para abrir o WhatsApp.');
+    else showToast(telefone ? 'Pedido preparado para o WhatsApp comercial.' : 'Resumo preparado. Selecione o contato da Esquina Mix no WhatsApp.');
   }
 
   /* ---------- CHAT ---------- */
@@ -777,7 +797,12 @@
   els.catalogSearch?.addEventListener('input', event => { buscaAtual = event.target.value || ''; renderizarProdutos(); });
   els.catalogSort?.addEventListener('change', event => { ordenacaoAtual = event.target.value; renderizarProdutos(); });
 
-  const favoritos = new Set(JSON.parse(storageGet('esquinaMixFavorites') || '[]').map(Number));
+  let favoritosSalvos = [];
+  try {
+    const valorSalvo = JSON.parse(storageGet('esquinaMixFavorites') || '[]');
+    if (Array.isArray(valorSalvo)) favoritosSalvos = valorSalvo;
+  } catch { /* preferências inválidas não devem impedir a inicialização do catálogo */ }
+  const favoritos = new Set(favoritosSalvos.map(Number).filter(id => produtos.some(prod => prod.id === id)));
   function salvarFavoritos(){ storageSet('esquinaMixFavorites', JSON.stringify([...favoritos])); }
   function atualizarFavoritosVisuais(){
     els.productGrid?.querySelectorAll('[data-favorite]').forEach(btn => {
@@ -822,7 +847,7 @@
       const produto = produtos.find(p => p.id === id);
       if (!value || !produto) return;
       const atual = Number(value.textContent) || 1;
-      value.textContent = String(Math.max(1, Math.min(atual + (inc ? 1 : -1), produto.estoque || 99)));
+      value.textContent = String(Math.max(1, Math.min(atual + (inc ? 1 : -1), Math.max(1, Number(produto.estoque) || 1))));
       return;
     }
     if (!add) return;
