@@ -86,6 +86,8 @@ try:
         record("Chat panel opens", page.locator("#chatPanel").is_visible())
         page.locator("#chatClose").click()
         record("Chat panel closes", page.locator("#chatPanel").is_hidden())
+        desktop_hero = page.evaluate("""() => { const rect = s => document.querySelector(s).getBoundingClientRect(); return { titleBottom: rect('.headline-cyan').bottom, badgesTop: rect('.service-badges').top, badgesBottom: rect('.service-badges').bottom, actionsTop: rect('.hero-actions').top }; }""")
+        record("Desktop hero title, benefits and CTAs do not overlap", desktop_hero["badgesTop"] >= desktop_hero["titleBottom"] - 2 and desktop_hero["actionsTop"] >= desktop_hero["badgesBottom"] - 2, desktop_hero)
 
         for width, height in [(320, 740), (360, 800), (375, 812), (390, 844), (430, 932), (768, 1024), (1024, 768), (1366, 768), (1920, 1080)]:
             page.set_viewport_size({"width": width, "height": height})
@@ -98,6 +100,9 @@ try:
             })""")
             ok = metrics["document"] <= metrics["viewport"] + 1 and metrics["body"] <= metrics["viewport"] + 1
             record("Responsive layout " + str(width) + "x" + str(height) + " has no horizontal overflow", ok, metrics)
+            if width == 390:
+                mobile_hero = page.evaluate("""() => ({ brand: getComputedStyle(document.querySelector('.brand-panel')).display, rightStage: getComputedStyle(document.querySelector('.right-stage')).display, title: getComputedStyle(document.querySelector('.headline-pink')).display, badges: getComputedStyle(document.querySelector('.service-badges')).position, actions: getComputedStyle(document.querySelector('.hero-actions')).position })""")
+                record("Mobile hero uses a single clean content flow", mobile_hero["brand"] == "none" and mobile_hero["rightStage"] == "none" and mobile_hero["title"] != "none" and mobile_hero["badges"] == "relative" and mobile_hero["actions"] == "relative", mobile_hero)
             page.screenshot(path=str(ARTIFACTS / (str(width) + "x" + str(height) + ".png")), full_page=False)
 
         record("No uncaught browser JavaScript errors", len(page_errors) == 0, page_errors)
