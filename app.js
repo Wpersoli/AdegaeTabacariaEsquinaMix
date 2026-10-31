@@ -137,6 +137,7 @@
     if (verificado) {
       els.ageGate.hidden = true;
       liberarConteudo();
+      startLocationOnboardingIfNeeded();
       return;
     }
 
@@ -159,6 +160,7 @@
       liberarConteudo();
       els.ageGate?.classList.remove('is-leaving');
       els.menuTrigger?.focus();
+      startLocationOnboardingIfNeeded();
     }, 330);
   }
 
@@ -175,6 +177,170 @@
     document.body.classList.remove('age-denied');
     els.ageGate?.classList.remove('is-denied');
     setTimeout(() => els.ageConfirm?.focus(), 20);
+  }
+
+
+  /* ---------- LOCATION / DELIVERY REGION ---------- */
+  const locationState = { watchId: null, lastPosition: null };
+  const locationEls = {
+    modal: qs('#locationOnboarding'), status: qs('#locationStatus'),
+    detect: qs('#locationDetectButton'), skip: qs('#locationSkipButton'),
+    cepForm: qs('#locationCepForm'), cepInput: qs('#locationCepInput'),
+    cepFeedback: qs('#locationCepFeedback'), controls: qs('#locationLiveControls'),
+    accuracy: qs('#locationAccuracy'), watch: qs('#locationWatchButton'),
+    stop: qs('#locationStopButton'), settings: qs('#locationSettingsButton'),
+    chipText: qs('#locationChipText')
+  };
+  const LOCATION_STORAGE_KEY = 'esquinaMixDeliveryLocation';
+
+  function getSavedDeliveryLocation() {
+    try { return JSON.parse(storageGet(LOCATION_STORAGE_KEY) || 'null'); }
+    catch { return null; }
+  }
+
+  function saveDeliveryLocation(value) {
+    const payload = { ...value, updatedAt: new Date().toISOString() };
+    storageSet(LOCATION_STORAGE_KEY, JSON.stringify(payload));
+    updateLocationChip(payload);
+    return payload;
+  }
+
+  function updateLocationChip(location = getSavedDeliveryLocation()) {
+    if (!locationEls.chipText) return;
+    if (location && location.cep) locationEls.chipText.textContent = location.cep;
+    else if (location && Number.isFinite(location.latitude)) locationEls.chipText.textContent = 'Região definida';
+    else locationEls.chipText.textContent = 'Definir região';
+  }
+
+  function setLocationStatus(message, state = 'info') {
+    if (!locationEls.status) return;
+    locationEls.status.textContent = message;
+    qs('#locationLivePanel')?.setAttribute('data-state', state);
+  }
+
+  function openLocationOnboarding({ firstVisit = false } = {}) {
+    if (!locationEls.modal) return;
+    locationEls.modal.hidden = false;
+    els.site?.setAttribute('inert', '');
+    document.body.classList.add('location-open');
+    const saved = getSavedDeliveryLocation();
+    if (saved && saved.cep) setLocationStatus('CEP salvo: ' + saved.cep + '. Você pode atualizar sua região.', 'success');
+    else if (saved && Number.isFinite(saved.latitude)) setLocationStatus('Localização salva. Atualize quando quiser.', 'success');
+    else setLocationStatus('Sua localização só será acessada quando você autorizar.', 'info');
+    locationEls.skip.textContent = firstVisit ? 'Continuar sem informar agora' : 'Fechar';
+    setTimeout(() => locationEls.detect?.focus(), 50);
+  }
+
+  function closeLocationOnboarding({ remember = true } = {}) {
+    if (!locationEls.modal) return;
+    locationEls.modal.hidden = true;
+    document.body.classList.remove('location-open');
+    els.site?.removeAttribute('inert');
+    if (remember) storageSet('esquinaMixLocationPromptSeen', 'yes');
+  }
+
+  function showLocationError(error) {
+    const messages = {
+      1: 'Permissão negada. Libere a localização nas configurações do navegador ou informe seu CEP.',
+      2: 'Não foi possível determinar sua posição. Verifique o GPS/Wi-Fi e tente novamente.',
+      3: 'A localização demorou para responder. Tente novamente em um local com melhor sinal.'
+    };
+    setLocationStatus(messages[error?.code] || 'Não foi possível acessar a localização neste dispositivo.', 'error');
+    if (locationEls.detect) {
+      locationEls.detect.disabled = false;
+      const label = locationEls.detect.querySelector('span');
+      if (label) label.textContent = 'Tentar novamente';
+    }
+  }
+
+  function renderPosition(position) {
+    const coords = position.coords;
+    const saved = saveDeliveryLocation({
+      latitude: Number(coords.latitude.toFixed(6)),
+      longitude: Number(coords.longitude.toFixed(6)),
+      accuracyMeters: Math.round(coords.accuracy),
+      source: 'browser-geolocation'
+    });
+    locationState.lastPosition = saved;
+    locationEls.controls.hidden = false;
+    locationEls.accuracy.textContent = 'Precisão aproximada: ' + saved.accuracyMeters + ' metros · Atualizado às ' + new Date(saved.updatedAt).toLocaleTimeString('pt-BR');
+    setLocationStatus('Localização obtida com autorização. Confira a precisão abaixo.', 'success');
+    if (locationEls.detect) {
+      locationEls.detect.disabled = false;
+      const label = locationEls.detect.querySelector('span');
+      if (label) label.textContent = 'Atualizar minha localização';
+    }
+  }
+
+  function requestPreciseLocation({ watch = false } = {}) {
+    if (!window.isSecureContext || !navigator.geolocation) {
+      setLocationStatus('Este navegador não disponibiliza geolocalização segura. Acesse por HTTPS ou informe seu CEP.', 'error');
+      return;
+    }
+    if (locationEls.detect) {
+      locationEls.detect.disabled = true;
+      const label = locationEls.detect.querySelector('span');
+      if (label) label.textContent = 'Solicitando autorização…';
+    }
+    const options = { enableHighAccuracy: true, timeout: 18000, maximumAge: 0 };
+    if (watch) {
+      if (locationState.watchId !== null) navigator.geolocation.clearWatch(locationState.watchId);
+      locationEls.watch.hidden = true;
+      locationEls.stop.hidden = false;
+      locationState.watchId = navigator.geolocation.watchPosition(position => {
+        renderPosition(position);
+        setLocationStatus('Atualizando sua posição enquanto esta página estiver aberta.', 'success');
+      }, error => {
+        showLocationError(error);
+        stopLocationWatch(false);
+      }, options);
+      setLocationStatus('Aguardando posição precisa do dispositivo…', 'info');
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(position => renderPosition(position), showLocationError, options);
+  }
+
+  function stopLocationWatch(updateStatus = true) {
+    if (locationState.watchId !== null && navigator.geolocation) {
+      navigator.geolocation.clearWatch(locationState.watchId);
+      locationState.watchId = null;
+    }
+    if (locationEls.watch) locationEls.watch.hidden = false;
+    if (locationEls.stop) locationEls.stop.hidden = true;
+    if (updateStatus) setLocationStatus('Atualização em tempo real pausada. A última posição permanece salva neste dispositivo.', 'info');
+  }
+
+  async function lookupDeliveryCep(event) {
+    event.preventDefault();
+    const cep = (locationEls.cepInput?.value || '').replace(/[^0-9]/g, '');
+    if (!/^[0-9]{8}$/.test(cep)) {
+      if (locationEls.cepFeedback) locationEls.cepFeedback.textContent = 'Digite um CEP válido com 8 números.';
+      return;
+    }
+    if (locationEls.cepFeedback) locationEls.cepFeedback.textContent = 'Consultando CEP…';
+    try {
+      const response = await fetch('https://viacep.com.br/ws/' + cep + '/json/');
+      if (!response.ok) throw new Error('Falha ao consultar CEP');
+      const data = await response.json();
+      if (data.erro) throw new Error('CEP não encontrado. Confira os números.');
+      const address = {
+        cep: data.cep || cep, street: data.logradouro || '',
+        neighborhood: data.bairro || '', city: data.localidade || '',
+        state: data.uf || '', source: 'cep'
+      };
+      saveDeliveryLocation(address);
+      locationEls.controls.hidden = true;
+      if (locationEls.cepFeedback) locationEls.cepFeedback.textContent = [address.street, address.neighborhood, address.city, address.state].filter(Boolean).join(', ') || 'CEP salvo.';
+      setLocationStatus('Região definida pelo CEP. A localização GPS não foi ativada.', 'success');
+    } catch (error) {
+      if (locationEls.cepFeedback) locationEls.cepFeedback.textContent = error.message || 'Não foi possível consultar o CEP agora.';
+      setLocationStatus('Não foi possível validar o CEP. Tente novamente.', 'error');
+    }
+  }
+
+  function startLocationOnboardingIfNeeded() {
+    updateLocationChip();
+    if (storageGet('esquinaMixLocationPromptSeen') !== 'yes') openLocationOnboarding({ firstVisit: true });
   }
 
   /* ---------- ACCESS / ACCOUNT ---------- */
@@ -563,6 +729,18 @@
   els.ageConfirm?.addEventListener('click', confirmarIdade);
   els.ageDeny?.addEventListener('click', negarIdade);
   els.ageDeniedBack?.addEventListener('click', voltarAgeGate);
+  locationEls.detect?.addEventListener('click', () => requestPreciseLocation());
+  locationEls.watch?.addEventListener('click', () => requestPreciseLocation({ watch: true }));
+  locationEls.stop?.addEventListener('click', () => stopLocationWatch());
+  locationEls.skip?.addEventListener('click', () => { stopLocationWatch(false); closeLocationOnboarding(); });
+  locationEls.cepForm?.addEventListener('submit', lookupDeliveryCep);
+  locationEls.settings?.addEventListener('click', () => openLocationOnboarding());
+  locationEls.cepInput?.addEventListener('input', event => {
+    const digits = event.target.value.replace(/[^0-9]/g, '').slice(0, 8);
+    event.target.value = digits.length > 5 ? digits.slice(0, 5) + '-' + digits.slice(5) : digits;
+  });
+  window.addEventListener('pagehide', () => stopLocationWatch(false));
+
 
   els.menuTrigger?.addEventListener('click', () => els.drawer?.classList.contains('is-open') ? fecharDrawer() : abrirDrawer());
   els.drawerClose?.addEventListener('click', () => fecharDrawer());
@@ -817,4 +995,5 @@
   atualizarAcesso();
   renderizarCarrinho();
   iniciarAgeGate();
+  updateLocationChip();
 })();
