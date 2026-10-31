@@ -8196,3 +8196,18 @@ body.location-open{overflow:hidden}
     margin: 0 auto !important;
   }
 }
+
+
+/* Restore neon palette on inline SVG icons, including touch layouts. */
+.hero-banner .hero-icon.cyan { color: var(--cyan) !important; }
+.hero-banner .hero-icon.pink { color: var(--pink) !important; }
+.hero-banner .hero-icon.yellow { color: var(--yellow) !important; }
+.hero-banner .hero-actions .cta-icon { color: #fff !important; }
+.hero-banner .hero-actions .cta-icon svg {
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-width: 3.2 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+}
+.hero-banner .hero-actions .cta-outline .cta-icon { color: var(--yellow) !important; }
