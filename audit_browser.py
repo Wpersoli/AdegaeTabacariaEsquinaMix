@@ -37,6 +37,8 @@ try:
           localStorage.setItem('esquinaMixFavorites', '{invalid-json');
           localStorage.setItem('esquinaMixCart', JSON.stringify({'48': 999, '999': 2}));
           localStorage.setItem('esquinaMixRole', 'UNTRUSTED_ROLE');
+          window.__openedUrls = [];
+          window.open = (url) => { window.__openedUrls.push(String(url)); return {}; };
         """)
         page.goto(base_url + "/index.html", wait_until="domcontentloaded")
         record("Age Gate is shown before access", page.locator("#ageGate").is_visible())
@@ -65,6 +67,9 @@ try:
         record("Add-to-cart opens the cart drawer accessibly", page.locator("#cartDrawer").get_attribute("aria-hidden") == "false")
         page.locator("[data-cart-inc='48']").click()
         record("Cart increment respects stock ceiling", page.locator("[data-cart-item='48'] .qty-value").inner_text() == "4")
+        page.locator('#checkoutButton').click()
+        checkout_url = page.evaluate('window.__openedUrls[0] || ""')
+        record('Checkout generates a WhatsApp order summary', 'https://wa.me/' in checkout_url and 'Subtotal' in checkout_url, checkout_url[:180])
         page.locator("#cartClose").click()
         page.wait_for_timeout(300)
         page.locator("#cartButton").click()
