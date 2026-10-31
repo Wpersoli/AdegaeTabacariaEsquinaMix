@@ -29,7 +29,8 @@ O workflow `.github/workflows/quality.yml` executa:
 2. Auditoria de IDs, referências locais de assets e recursos obrigatórios.
 3. Testes de navegador Chromium/Playwright para Age Gate, persistência corrompida, papel de visitante, catálogo, busca sem acentos, filtros, carrinho, limite de estoque, menu e chat.
 4. Verificação de overflow horizontal em 320, 360, 375, 390, 430, 768, 1024, 1366 e 1920 pixels.
-5. Upload do relatório JSON e capturas de tela como artefatos do workflow.
+5. Emulação mobile Chromium com toque (perfil Android) e WebKit mobile com toque (aproximação do motor Safari/iOS).
+6. Upload do relatório JSON e capturas de tela como artefatos do workflow.
 
 Os testes automatizados de Chromium não substituem validação física em Safari/iOS, Chrome/Android, dispositivos reais, leitor de tela ou testes de compra com o número comercial.
 
