@@ -8139,3 +8139,26 @@ body.location-open{overflow:hidden}
   .service-badges article { min-height: 70px !important; }
   .service-badges b { font-size: .68rem !important; }
 }
+
+
+/* Icon strokes stay on-brand in every viewport and browser engine. */
+.hero-banner .hero-icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: currentColor !important;
+}
+.hero-banner .hero-icon svg {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-width: 3.2 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+}
+.hero-banner .hero-icon.yellow svg path {
+  fill: currentColor !important;
+  stroke: currentColor !important;
+}
