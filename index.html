@@ -34,6 +34,19 @@
       <button id="ageDeniedBack" type="button">Voltar</button>
     </div>
   </div>
+  <section class="location-onboarding" id="locationOnboarding" role="dialog" aria-modal="true" aria-labelledby="locationTitle" aria-describedby="locationDescription" hidden>
+<div class="location-card"><div class="location-card-topline"></div>
+<div class="location-icon-wrap" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+<span class="location-eyebrow">ENTREGA DO SEU JEITO</span><h2 id="locationTitle">Vamos encontrar sua região?</h2>
+<p class="location-intro" id="locationDescription">Informe onde você está para verificarmos a cobertura e preparar a melhor experiência de entrega.</p>
+<div class="location-live-panel" id="locationLivePanel" aria-live="polite"><span class="location-live-dot"></span><span id="locationStatus">Sua localização só será acessada quando você autorizar.</span></div>
+<button class="location-primary-action" id="locationDetectButton" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v3m0 14v3M2 12h3m14 0h3M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"/></svg><span>Usar minha localização precisa</span></button>
+<p class="location-privacy-note">O navegador pedirá sua autorização. Não ativamos o GPS sem sua escolha.</p>
+<div class="location-divider"><span>OU INFORME SEU CEP</span></div>
+<form class="location-cep-form" id="locationCepForm" novalidate><label for="locationCepInput">CEP</label><div class="location-cep-row"><input id="locationCepInput" name="cep" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="9" placeholder="00000-000" aria-describedby="locationCepFeedback"><button type="submit" aria-label="Consultar CEP">Consultar</button></div><small id="locationCepFeedback" class="location-cep-feedback" aria-live="polite"></small></form>
+<div class="location-live-controls" id="locationLiveControls" hidden><div class="location-accuracy" id="locationAccuracy"></div><button class="location-watch-button" id="locationWatchButton" type="button">Ativar atualização em tempo real</button><button class="location-stop-button" id="locationStopButton" type="button" hidden>Parar localização em tempo real</button></div>
+<button class="location-skip" id="locationSkipButton" type="button">Continuar sem informar agora</button><p class="location-footer-note">Você pode alterar sua região depois. Sua localização precisa permanece sob seu controle.</p>
+</div></section>
   <noscript><div class="noscript">Ative o JavaScript para usar busca, menu, catálogo e carrinho.</div></noscript>
 
   <div class="site-shell" id="inicio">
@@ -246,7 +259,7 @@
       <section class="catalog-section catalog-v23" id="produtos" data-reveal aria-labelledby="catalogTitle">
         <div class="catalog-hero">
           <div><span class="eyebrow-label">CATÁLOGO 24H</span><h2 id="catalogTitle">CATÁLOGO</h2><p>Tudo gelado, rápido e do seu jeito.</p></div>
-          <div class="catalog-promises"><span>⚡ <b>ENTREGA RÁPIDA</b></span><span>❄ <b>SEMPRE GELADO</b></span><span>▣ <b>COMPRA SEGURA</b></span></div>
+          <div class="catalog-promises"><span>⚡ <b>ENTREGA RÁPIDA</b></span><span>❄ <b>SEMPRE GELADO</b></span><span>▣ <b>COMPRA SEGURA</b></span><button class="location-chip" id="locationSettingsButton" type="button" aria-label="Configurar localização"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg><span id="locationChipText">Definir região</span></button></div>
         </div>
         <div class="catalog-toolbar">
           <div class="category-filters" id="categoryFilters" aria-label="Categorias"></div>
