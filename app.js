@@ -137,6 +137,7 @@
     if (verificado) {
       els.ageGate.hidden = true;
       liberarConteudo();
+      startLocationOnboardingIfNeeded();
       return;
     }
 
