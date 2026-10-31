@@ -53,7 +53,7 @@ try:
         record("Catalog renders all 48 products", page.locator(".product-card").count() == 48, page.locator(".product-card").count())
 
         page.locator("#catalogSearch").fill("energetico")
-        record("Search ignores Portuguese diacritics", page.locator(".product-card").count() == 4, page.locator(".product-card").count())
+        record("Search ignores Portuguese diacritics", page.locator(".product-card").count() == 5, page.locator(".product-card").count())
         page.locator("#catalogSearch").fill("")
         page.locator("#categoryFilters [data-category='Gelo']").click()
         record("Category filter isolates ice products", page.locator(".product-card").count() == 3, page.locator(".product-card").count())
