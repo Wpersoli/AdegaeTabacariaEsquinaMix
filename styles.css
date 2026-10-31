@@ -8162,3 +8162,23 @@ body.location-open{overflow:hidden}
   fill: currentColor !important;
   stroke: currentColor !important;
 }
+
+
+/* Final specificity guard: semantic hero typography wins over legacy SVG overrides. */
+.hero-banner .hero-title-svg { display: none !important; }
+.hero-banner .hero-crown { display: none !important; }
+.hero-banner .script-white,
+.hero-banner .headline-pink,
+.hero-banner .headline-cyan {
+  position: relative !important;
+  inset: auto !important;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+.hero-banner .service-badges,
+.hero-banner .hero-actions {
+  position: relative !important;
+  inset: auto !important;
+}
