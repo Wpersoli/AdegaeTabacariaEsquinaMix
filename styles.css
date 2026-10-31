@@ -7975,3 +7975,8 @@ body{background:#f4f3f6;color:#18151d;font-family:Inter,Arial,sans-serif;letter-
 @media(prefers-reduced-motion:reduce){
  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
+
+/* Component hooks used by the current catalog renderer */
+.category-filters .filter-btn{border:1px solid #e8e3ec;background:#fff;color:#4e4854;border-radius:999px;padding:9px 15px;font-size:.78rem;font-weight:750;white-space:nowrap}
+.category-filters .filter-btn.is-active{background:#17131b;color:#fff;border-color:#17131b;box-shadow:0 3px 12px rgba(15,10,20,.14)}
+.category-filters{display:flex;align-items:center;gap:8px}
