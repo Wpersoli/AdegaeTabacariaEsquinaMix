@@ -458,6 +458,7 @@
 
     els.productGrid.innerHTML = lista.map(prod => {
       const podeComprar = verificarAcesso('CLIENTE');
+      const indisponivel = !(Number(prod.estoque) > 0);
       const admin = verificarAcesso('ADMIN');
       return `
         <article class="product-card" data-product-id="${prod.id}">
@@ -471,15 +472,15 @@
             <p class="product-volume">${escapeHTML(prod.volume || '')}</p>
             <p class="product-desc">${escapeHTML(prod.descricao)}</p>
             <div class="product-pricing">${prod.precoDe && prod.precoDe > prod.preco ? `<del>${moeda(prod.precoDe)}</del>` : ''}<strong class="product-price">${moeda(prod.preco)}</strong></div>
-            <div class="stock-line ${prod.estoque <= 5 ? 'is-low' : ''}"><span></span>${prod.estoque <= 5 ? 'Últimas unidades' : 'Em estoque'}</div>
+            <div class="stock-line ${prod.estoque <= 5 ? 'is-low' : ''}"><span></span>${indisponivel ? 'Esgotado' : prod.estoque <= 5 ? 'Últimas unidades' : 'Em estoque'}</div>
             <div class="product-footer">
               <div class="card-qty" aria-label="Quantidade de ${escapeHTML(prod.nome)}">
-                <button type="button" data-card-dec="${prod.id}" aria-label="Diminuir quantidade">−</button>
+                <button type="button" data-card-dec="${prod.id}" aria-label="Diminuir quantidade" ${indisponivel ? 'disabled' : ''}>−</button>
                 <span data-card-qty="${prod.id}" aria-live="polite">1</span>
-                <button type="button" data-card-inc="${prod.id}" aria-label="Aumentar quantidade">+</button>
+                <button type="button" data-card-inc="${prod.id}" aria-label="Aumentar quantidade" ${indisponivel ? 'disabled' : ''}>+</button>
               </div>
-              <button class="product-action${podeComprar ? '' : ' login-required'}" type="button" data-add="${prod.id}">
-                <span>${podeComprar ? 'ADICIONAR' : 'ENTRAR'}</span>
+              <button class="product-action${podeComprar ? '' : ' login-required'}" type="button" data-add="${prod.id}" ${indisponivel ? 'disabled aria-disabled="true"' : ''}>
+                <span>${indisponivel ? 'ESGOTADO' : podeComprar ? 'ADICIONAR' : 'ENTRAR'}</span>
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h-2l-1 2m3 0h13l-2 8H9L7 6Zm2 12a1.5 1.5 0 1 0 0 .01M17 18a1.5 1.5 0 1 0 0 .01M12 8v4m-2-2h4"/></svg>
               </button>
             </div>
@@ -526,7 +527,7 @@
             <span>${escapeHTML(prod.categoria.toUpperCase())}</span>
             <h3>${escapeHTML(prod.nome)}</h3>
             <div class="offer-price"><del>${moeda(prod.precoDe)}</del><strong>${moeda(prod.preco)}</strong></div>
-            <button class="offer-add${podeComprar ? '' : ' login-required'}" type="button" data-add="${prod.id}">${podeComprar ? 'ADICIONAR' : 'ENTRAR'}</button>
+            <button class="offer-add${podeComprar ? '' : ' login-required'}" type="button" data-add="${prod.id}" ${Number(prod.estoque) <= 0 ? 'disabled aria-disabled="true"' : ''}>${Number(prod.estoque) <= 0 ? 'ESGOTADO' : podeComprar ? 'ADICIONAR' : 'ENTRAR'}</button>
           </div>
         </article>`;
     }).join('');
@@ -622,8 +623,10 @@
       abrirConta();
       return;
     }
-    const qtd = Math.max(1, Math.min(Number(quantidade) || 1, produto.estoque || 99));
-    carrinho[produto.id] = Math.min((carrinho[produto.id] || 0) + qtd, produto.estoque || 99);
+    const limite = Math.max(0, Number(produto.estoque) || 0);
+    if (!limite) return showToast('Este produto está indisponível no momento.');
+    const qtd = Math.max(1, Math.min(Number(quantidade) || 1, limite));
+    carrinho[produto.id] = Math.min((carrinho[produto.id] || 0) + qtd, limite);
     salvarCarrinho();
     renderizarCarrinho({ animateBadge: true });
     showToast(`${qtd}x ${produto.nome} adicionado ao carrinho ✨`);
@@ -844,7 +847,7 @@
       const produto = produtos.find(p => p.id === id);
       if (!value || !produto) return;
       const atual = Number(value.textContent) || 1;
-      value.textContent = String(Math.max(1, Math.min(atual + (inc ? 1 : -1), produto.estoque || 99)));
+      value.textContent = String(Math.max(1, Math.min(atual + (inc ? 1 : -1), Math.max(1, Number(produto.estoque) || 1))));
       return;
     }
     if (!add) return;
