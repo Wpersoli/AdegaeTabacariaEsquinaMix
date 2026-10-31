@@ -63,9 +63,10 @@
   const sessionSet = (key, value) => { try { window.sessionStorage?.setItem(key, value); } catch { /* noop */ } };
   const sessionRemove = key => { try { window.sessionStorage?.removeItem(key); } catch { /* noop */ } };
 
+  const roleSalvo = storageGet('esquinaMixRole');
   const utilizadorAtual = {
     nome: 'Visitante',
-    perfil: storageGet('esquinaMixRole') || 'GUEST'
+    perfil: Object.hasOwn(niveis, roleSalvo) ? roleSalvo : 'GUEST'
   };
 
   let filtroAtual = 'Todos';
@@ -426,11 +427,16 @@
     els.categoryFilters.innerHTML = categorias().map(cat => `<button class="filter-btn${cat === filtroAtual ? ' is-active' : ''}" type="button" data-category="${escapeHTML(cat)}">${escapeHTML(cat)}</button>`).join('');
   }
 
+  function normalizarBusca(value) {
+    return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('pt-BR').trim();
+  }
+
   function produtosFiltrados() {
-    const termo = buscaAtual.trim().toLocaleLowerCase('pt-BR');
+    const termo = normalizarBusca(buscaAtual);
     const lista = produtos.filter(prod => {
       const categoriaOk = filtroAtual === 'Todos' || prod.categoria === filtroAtual;
-      const buscaOk = !termo || `${prod.nome} ${prod.volume || ''} ${prod.categoria} ${prod.descricao}`.toLocaleLowerCase('pt-BR').includes(termo);
+      const texto = normalizarBusca([prod.nome, prod.volume || '', prod.categoria, prod.descricao].join(' '));
+      const buscaOk = !termo || texto.includes(termo);
       return categoriaOk && buscaOk;
     });
     return lista.sort((a,b) => {
@@ -555,7 +561,11 @@
     try {
       const parsed = JSON.parse(storageGet('esquinaMixCart') || '{}');
       if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return {};
-      return Object.fromEntries(Object.entries(parsed).filter(([id, qty]) => produtos.some(p => p.id === Number(id)) && Number.isInteger(qty) && qty > 0));
+      return Object.fromEntries(Object.entries(parsed).flatMap(([id, qty]) => {
+        const produto = produtos.find(p => p.id === Number(id));
+        if (!produto || !Number.isInteger(qty) || qty <= 0) return [];
+        return [[String(produto.id), Math.min(qty, Math.max(0, Number(produto.estoque) || 0))]];
+      }).filter(([, qty]) => qty > 0));
     } catch { return {}; }
   }
 
@@ -622,11 +632,15 @@
 
   function alterarQuantidade(id, delta) {
     id = Number(id);
-    if (!carrinho[id]) return;
-    carrinho[id] += delta;
-    if (carrinho[id] <= 0) delete carrinho[id];
+    const produto = produtos.find(p => p.id === id);
+    if (!produto || !carrinho[id]) return;
+    const limite = Math.max(0, Number(produto.estoque) || 0);
+    const proxima = Math.min(carrinho[id] + Number(delta || 0), limite);
+    if (proxima <= 0) delete carrinho[id];
+    else carrinho[id] = proxima;
     salvarCarrinho();
     renderizarCarrinho({ animateBadge: true });
+    if (delta > 0 && proxima === limite) showToast('Limite de estoque disponível atingido.');
   }
 
   function removerDoCarrinho(id) {
@@ -672,9 +686,12 @@
       '',
       'Pode confirmar disponibilidade, taxa de entrega e formas de pagamento?'
     ];
-    const url = `https://wa.me/?text=${encodeURIComponent(linhas.join('\n'))}`;
-    window.open(url, '_blank', 'noopener,noreferrer');
-    showToast('Resumo do pedido preparado para o WhatsApp.');
+    const telefone = (qs('meta[name="esquina-whatsapp"]')?.content || '').replace(/\D/g, '');
+    const texto = encodeURIComponent(linhas.join('\n'));
+    const destino = telefone ? `https://wa.me/${telefone}?text=${texto}` : `https://wa.me/?text=${texto}`;
+    const janela = window.open(destino, '_blank', 'noopener,noreferrer');
+    if (!janela) showToast('O navegador bloqueou a nova aba. Permita pop-ups para abrir o WhatsApp.');
+    else showToast(telefone ? 'Pedido preparado para o WhatsApp comercial.' : 'Resumo preparado. Selecione o contato da Esquina Mix no WhatsApp.');
   }
 
   /* ---------- CHAT ---------- */
@@ -777,7 +794,12 @@
   els.catalogSearch?.addEventListener('input', event => { buscaAtual = event.target.value || ''; renderizarProdutos(); });
   els.catalogSort?.addEventListener('change', event => { ordenacaoAtual = event.target.value; renderizarProdutos(); });
 
-  const favoritos = new Set(JSON.parse(storageGet('esquinaMixFavorites') || '[]').map(Number));
+  let favoritosSalvos = [];
+  try {
+    const valorSalvo = JSON.parse(storageGet('esquinaMixFavorites') || '[]');
+    if (Array.isArray(valorSalvo)) favoritosSalvos = valorSalvo;
+  } catch { /* preferências inválidas não devem impedir a inicialização do catálogo */ }
+  const favoritos = new Set(favoritosSalvos.map(Number).filter(id => produtos.some(prod => prod.id === id)));
   function salvarFavoritos(){ storageSet('esquinaMixFavorites', JSON.stringify([...favoritos])); }
   function atualizarFavoritosVisuais(){
     els.productGrid?.querySelectorAll('[data-favorite]').forEach(btn => {
