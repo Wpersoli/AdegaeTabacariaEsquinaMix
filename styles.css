@@ -30,6 +30,8 @@ button{font:inherit;cursor:pointer;border:0;color:inherit;background:none}
 .loc{text-align:center;padding:8px 12px;font:700 clamp(11px,1.3vw,14px) "DM Sans",monospace;text-transform:uppercase;color:var(--cream);background:#0b0713}
 .loc b{color:var(--green)}
 .hero{position:relative;overflow:hidden;background:#12082a;line-height:0}
+.hero picture{display:block;width:100%;aspect-ratio:3/1}
+.hero img{display:block;width:100%;height:100%;object-fit:cover}
 .hero img{width:100%;height:auto;transform-origin:70% 50%;animation:kb 16s ease-in-out infinite alternate}
 @keyframes kb{to{transform:scale(1.045)}}
 .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.14) 50%,transparent 60%);transform:translateX(-120%);animation:shine 7s 1.5s infinite;pointer-events:none}
@@ -330,3 +332,4 @@ body{overflow-x:clip}
   .gate{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(7,5,12,.96)}
   .gate-box{box-shadow:0 8px 24px rgba(0,0,0,.28)}
 }
+@media(max-width:700px){.hero picture{aspect-ratio:2/3}}
