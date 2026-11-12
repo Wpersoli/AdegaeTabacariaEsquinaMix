@@ -1,10 +1,6 @@
 name: Quality audit
 
 'on':
-concurrency:
-  group: quality-audit-${{ github.ref }}
-  cancel-in-progress: true
-
   push:
     branches:
       - 'quality/**'
@@ -15,6 +11,10 @@ concurrency:
       - 'assets/**'
       - 'vercel.json'
       - '.github/workflows/quality-audit.yml'
+
+concurrency:
+  group: quality-audit-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
