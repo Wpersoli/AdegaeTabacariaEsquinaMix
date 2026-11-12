@@ -140,7 +140,7 @@ function sync(open){
     b[0].onclick=function(){cart[x.id]--;if(cart[x.id]<1)delete cart[x.id];sync()};
     b[1].onclick=function(){add(x.id)};
     ul.appendChild(li)});
-  $('badge').textContent=n;$('total').textContent=brl(t);$('send').disabled=!n;$('cartBtn').setAttribute('aria-label','Abrir sacola ('+n+(n===1?' item':' itens')+')');
+  $('badge').textContent=n;$('total').textContent=brl(t);$('send').disabled=!n;var sendStatus=$('sendStatus');if(sendStatus)sendStatus.textContent='';$('cartBtn').setAttribute('aria-label','Abrir sacola ('+n+(n===1?' item':' itens')+')');
   save('emCart',JSON.stringify(cart));
   if(open)toggle(true)}
 var lastFocus=null;
@@ -258,7 +258,7 @@ var reviews=[]; /* ex.: {n:'Nome',t:'há 1 semana',x:'Texto da avaliação'} */
   tr.addEventListener('pointerdown',function(e){if(e.pointerType!=='mouse')return;d=1;sx=e.clientX;sl=tr.scrollLeft;tr.classList.add('is-grabbing')});
   window.addEventListener('pointermove',function(e){if(d)tr.scrollLeft=sl-(e.clientX-sx)});
   window.addEventListener('pointerup',function(){d=0;tr.classList.remove('is-grabbing')});
-  var bt=$('brandsT');brands.forEach(function(b){var s=document.createElement('span');s.className='fleet__i fleet__i--'+b.f;var im=document.createElement('img');im.src='assets/marcas/'+b.f+'.webp';im.alt=b.n;im.decoding='async';s.appendChild(im);bt.appendChild(s)});
+  var bt=$('brandsT');brands.forEach(function(b){var s=document.createElement('span');s.className='fleet__i fleet__i--'+b.f;var im=document.createElement('img');im.src='assets/marcas/'+b.f+'.webp';im.alt=b.n;im.width=124;im.height=80;im.loading='lazy';im.decoding='async';im.onerror=function(){this.onerror=null;this.src='assets/logo.webp'};s.appendChild(im);bt.appendChild(s)});
   /* letreiros: deslizam para a esquerda em loop contínuo; pausam com mouse/toque */
   function slide(track){var box=track.parentNode,base=[].slice.call(track.children),w=track.getBoundingClientRect().width||1,
     reps=Math.max(1,Math.ceil(Math.max(window.innerWidth,box.offsetWidth)/w)),f=document.createDocumentFragment();
@@ -271,7 +271,7 @@ var reviews=[]; /* ex.: {n:'Nome',t:'há 1 semana',x:'Texto da avaliação'} */
     track.style.animationDuration=Math.max(12,track.getBoundingClientRect().width/2/70)+'s';
     box.addEventListener('touchstart',function(){track.classList.add('is-paused')},{passive:true});
     ['touchend','touchcancel'].forEach(function(ev){box.addEventListener(ev,function(){track.classList.remove('is-paused')},{passive:true})})}
-  slide(document.querySelector('#mq .mq-t'));slide(bt);
+  slide(document.querySelector('#mq .mq-t'));slide(bt);\n  if(window.matchMedia&&window.matchMedia('(max-width:700px)').matches){document.querySelectorAll('.mq-t,.fleet__t').forEach(function(track){track.style.animationDuration='55s'})}
   var r=$('revList');
   if(!reviews.length){r.innerHTML='<article class="rev-card"><p>Já pediu na Esquina Mix? Conte como foi a sua experiência no Google.</p></article>'}
   reviews.forEach(function(v){var c=document.createElement('article');c.className='rev-card';
