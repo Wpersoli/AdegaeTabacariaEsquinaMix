@@ -160,7 +160,7 @@ jobs:
               });
               assert.equal(staticBrandLogos.animation, 'none', name + ': brand logos should not run independent motion loops');
               assert.equal(staticBrandLogos.shine, 'none', name + ': brand logo shine overlay should be removed');
-              await page.locator('#cardapio').scrollIntoViewIfNeeded();
+              await page.locator('#marcas').scrollIntoViewIfNeeded();
               await page.waitForTimeout(250);
               const offscreenPaused = await page.evaluate(() => ({
                 ticker: document.querySelector('.mq')?.classList.contains('is-offscreen') ?? false,
