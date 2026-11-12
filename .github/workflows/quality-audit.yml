@@ -174,10 +174,19 @@ jobs:
               }));
               assert.equal(pausedAnimationState.ticker, 'paused', name + ': offscreen ticker animation must be paused');
               assert.equal(pausedAnimationState.hero, 'paused', name + ': offscreen hero animation must be paused');
-              await page.evaluate(() => { document.documentElement.style.scrollBehavior='auto'; window.scrollTo(0,0); });
-              await page.waitForTimeout(250);
-              assert.equal(await page.locator('.hero').evaluate(el => el.classList.contains('is-offscreen')), false,
-                name + ': hero effects should resume when visible');
+              await page.evaluate(() => {
+                document.documentElement.style.scrollBehavior='auto';
+                window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+              });
+              await page.waitForFunction(() => !document.querySelector('.hero')?.classList.contains('is-offscreen'), null, { timeout: 3000 })
+                .catch(async () => {
+                  const state = await page.evaluate(() => ({
+                    scrollY: window.scrollY,
+                    heroTop: document.querySelector('.hero')?.getBoundingClientRect().top,
+                    className: document.querySelector('.hero')?.className
+                  }));
+                  throw new Error(name + ': hero did not resume after scrolling to top: ' + JSON.stringify(state));
+                });
 
               await page.locator('img').evaluateAll(images => images.forEach(image => { image.loading = 'eager'; }));
               await page.waitForTimeout(1500);
