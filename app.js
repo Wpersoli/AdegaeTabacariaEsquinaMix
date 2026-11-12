@@ -241,6 +241,16 @@ var qt;$('q').addEventListener('input',function(){var v=this.value;clearTimeout(
   window.addEventListener('scroll',function(){if(!m.hidden)close()},{passive:true});nav.addEventListener('scroll',close,{passive:true});window.addEventListener('resize',close);
 })();
 
+/* Menu do topo: se as opcoes nao couberem na linha, reduz a fonte (e tudo que usa em) ate caberem */
+(function(){
+  var nav=$('nav'),raf;
+  function fit(){nav.style.removeProperty('--nf');var f=parseFloat(getComputedStyle(nav.firstElementChild).fontSize),n=0;
+    while(nav.scrollWidth>nav.clientWidth+0.5&&f>5.5&&n++<80){f-=0.25;nav.style.setProperty('--nf',f+'px')}}
+  function sched(){cancelAnimationFrame(raf);raf=requestAnimationFrame(fit)}
+  window.addEventListener('resize',sched);window.addEventListener('orientationchange',sched);window.addEventListener('load',sched);
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(sched);sched();
+})();
+
 /* Convite para instalar o app: Android/Chrome/Edge usam o botao nativo; iPhone/iPad mostram o passo a passo "Adicionar a Tela de Inicio" */
 (function(){
   var KEY='esquinaMixInstall',DIAS=7,dp=null,el=null,shown=false,tm,

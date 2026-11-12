@@ -21,7 +21,8 @@ button{font:inherit;cursor:pointer;border:0;color:inherit;background:none}
 .nav{display:flex;background:var(--nav);overflow-x:auto;scrollbar-width:none;padding:0 clamp(10px,3vw,60px)}
 .nav::-webkit-scrollbar{display:none}
 .nav>:first-child{margin-left:auto}.nav>:last-child{margin-right:auto}
-.nav button{flex:none;padding:12px clamp(10px,1.5vw,22px);font:400 clamp(11px,.7vw + 4px,14px) "Bowlby One",sans-serif;letter-spacing:.2px;text-transform:uppercase;white-space:nowrap;color:#e9e1d4}
+.nav{--nf:clamp(11px,.7vw + 4px,14px)}
+.nav button{flex:none;padding:12px clamp(10px,1.5vw,22px);font:400 var(--nf) "Bowlby One",sans-serif;letter-spacing:.2px;text-transform:uppercase;white-space:nowrap;color:#e9e1d4}
 .nav button.on,.nav .pink{background:var(--pink);color:var(--cream)}
 .nav .green{background:var(--green);color:#10281f}
 .nav button:not(.on):not(.pink):not(.green):hover{color:var(--gold)}
@@ -321,9 +322,10 @@ body{overflow-x:clip}
 @media(prefers-reduced-motion:reduce){.pwa{animation:none}}
 
 .nav .tag{font-size:9px;padding:2px 5px;margin-left:4px;vertical-align:1px}
-/* Menu do topo em telas estreitas: quebra em linhas centralizadas (todas as opcoes visiveis, sem rolagem lateral) */
+/* Celular/tablet: tudo na MESMA linha; fonte, espacos e etiqueta encolhem juntos (em) e o JS ajusta o que faltar */
 @media(max-width:860px){
-  .nav{flex-wrap:wrap;justify-content:center;overflow:visible;padding:2px clamp(6px,2vw,24px)}
-  .nav>:first-child{margin-left:0}.nav>:last-child{margin-right:0}
-  .nav button{padding:9px clamp(8px,2.4vw,13px);font-size:clamp(10.5px,2.5vw,12.5px)}
+  .nav{flex-wrap:nowrap;overflow-x:auto;padding:0 clamp(2px,1vw,8px);--nf:clamp(7px,2.4vw,12.5px)}
+  .nav button{padding:clamp(9px,2.8vw,12px) .5em;letter-spacing:0}
+  .nav button.has-sub::after{margin-left:.25em}
+  .nav .tag{font-size:.78em;padding:.15em .4em;margin-left:.3em}
 }
