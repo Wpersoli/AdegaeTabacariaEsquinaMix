@@ -333,7 +333,20 @@ var reviews=[]; /* ex.: {n:'Nome',t:'há 1 semana',x:'Texto da avaliação'} */
     box.addEventListener('touchstart',function(){track.classList.add('is-paused')},{passive:true});
     ['touchend','touchcancel'].forEach(function(ev){box.addEventListener(ev,function(){track.classList.remove('is-paused')},{passive:true})})}
   slide(document.querySelector('#mq .mq-t'));slide(bt);
-  if(window.matchMedia&&window.matchMedia('(max-width:700px)').matches){document.querySelectorAll('.mq-t,.fleet__t').forEach(function(track){track.style.animationDuration='55s'})}
+  if(window.matchMedia&&window.matchMedia('(max-width:700px)').matches){document.querySelectorAll('.mq-t,.fleet__t').forEach(function(track){track.style.animationDuration='68s'})}
+  /* Economiza frames fora da viewport e quando a aba perde visibilidade. */
+  (function motionLifecycle(){
+    var targets=[document.querySelector('.hero'),document.querySelector('.mq'),document.querySelector('.fleet')].filter(Boolean);
+    if('IntersectionObserver' in window){
+      var motionObserver=new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){entry.target.classList.toggle('is-offscreen',!entry.isIntersecting)});
+      },{threshold:0.01,rootMargin:'80px 0px'});
+      targets.forEach(function(target){motionObserver.observe(target)});
+    }
+    function syncVisibility(){document.documentElement.classList.toggle('is-document-hidden',document.hidden)}
+    document.addEventListener('visibilitychange',syncVisibility,{passive:true});
+    syncVisibility();
+  })();
   var r=$('revList');
   if(!reviews.length){r.innerHTML='<article class="rev-card"><p>Já pediu na Esquina Mix? Conte como foi a sua experiência no Google.</p></article>'}
   reviews.forEach(function(v){var c=document.createElement('article');c.className='rev-card';
