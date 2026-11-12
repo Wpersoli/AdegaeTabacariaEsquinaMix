@@ -76,5 +76,37 @@ $('nav').addEventListener('click',function(e){var b=e.target.closest('button');i
 $('chips').addEventListener('click',function(e){var b=e.target.closest('button');if(b)setCat(b.dataset.cat)});
 $('q').addEventListener('input',function(){term=this.value;render()});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')toggle(false)});
+
+/* Ranking, marcas e avaliações — EDITE os dados abaixo */
+var topIds=[1,2,4,5,3,6,9,10];
+var brands=['Heineken','Brahma','Skol','Red Bull','Jack Daniel\u2019s','Absolut','Zomo','Ballantine\u2019s'];
+var reviews=[]; /* ex.: {n:'Nome',t:'há 1 semana',x:'Texto da avaliação'} */
+(function(){
+  var tr=$('rankTrack');
+  topIds.forEach(function(id,i){var x=catalog.filter(function(c){return c.id===id})[0];if(!x)return;
+    var a=document.createElement('button');a.className='rank-card';
+    a.innerHTML='<b class="rank-n"></b><img src="assets/logo.webp" alt="" width="64" height="65" loading="lazy"><span class="rank-i"><small></small><strong></strong><em></em></span>';
+    a.querySelector('.rank-n').textContent=('0'+(i+1)).slice(-2);a.querySelector('small').textContent=names[x.cat];
+    a.querySelector('strong').textContent=x.n;a.querySelector('em').textContent=brl(x.p);
+    a.onclick=function(){cart[x.id]=(cart[x.id]||0)+1;sync(true)};tr.appendChild(a)});
+  var d=0,sx=0,sl=0;
+  tr.addEventListener('pointerdown',function(e){if(e.pointerType!=='mouse')return;d=1;sx=e.clientX;sl=tr.scrollLeft;tr.classList.add('is-grabbing')});
+  window.addEventListener('pointermove',function(e){if(d)tr.scrollLeft=sl-(e.clientX-sx)});
+  window.addEventListener('pointerup',function(){d=0;tr.classList.remove('is-grabbing')});
+  var bt=$('brandsT');brands.forEach(function(n){var s=document.createElement('span');s.textContent=n;bt.appendChild(s)});
+  /* letreiros: deslizam para a esquerda em loop contínuo; pausam com mouse/toque */
+  function slide(track){var box=track.parentNode,base=[].slice.call(track.children),need=Math.max(window.screen.width||0,box.offsetWidth);
+    for(var i=0;i<30&&track.getBoundingClientRect().width<need;i++)base.forEach(function(k){track.appendChild(k.cloneNode(true))});
+    [].slice.call(track.children).forEach(function(k){var c=k.cloneNode(true);c.setAttribute('aria-hidden','true');track.appendChild(c)});
+    track.style.animationDuration=Math.max(12,track.getBoundingClientRect().width/2/70)+'s';
+    box.addEventListener('touchstart',function(){track.classList.add('is-paused')},{passive:true});
+    ['touchend','touchcancel'].forEach(function(ev){box.addEventListener(ev,function(){track.classList.remove('is-paused')},{passive:true})})}
+  slide(document.querySelector('#mq .mq-t'));slide(bt);
+  var r=$('revList');
+  if(!reviews.length){r.innerHTML='<article class="rev-card"><p>Já pediu na Esquina Mix? Conte como foi a sua experiência no Google.</p></article>'}
+  reviews.forEach(function(v){var c=document.createElement('article');c.className='rev-card';
+    c.innerHTML='<header><span class="av"></span><div><strong></strong><small></small></div></header><div class="st">★★★★★</div><p></p>';
+    c.querySelector('.av').textContent=v.n.charAt(0);c.querySelector('strong').textContent=v.n;c.querySelector('small').textContent=v.t;c.querySelector('p').textContent=v.x;r.appendChild(c)});
+})();
 render();sync();
 })();
