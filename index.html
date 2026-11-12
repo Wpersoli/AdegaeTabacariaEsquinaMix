@@ -45,7 +45,7 @@
     <span class="brand-t"><b>ESQUINA</b><b>MIX</b><small>Adega · Tabacaria</small></span>
   </a>
   <label class="search"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="m20 20-4-4" stroke="currentColor" stroke-width="2"/></svg>
-    <input id="q" type="search" aria-label="Buscar produtos" placeholder="Buscar charuto, whisky, energético..." autocomplete="off"></label>
+    <input id="q" type="search" aria-label="Buscar produtos" placeholder="Buscar: ipa até 9, zero álcool, lata..." autocomplete="off"></label>
   <div class="actions">
     <a class="ico" href="#contato" aria-label="Contato"><svg viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
     <button class="ico" id="cartBtn" aria-label="Abrir sacola"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M5 8h14l-1 12H6zM9 8a3 3 0 0 1 6 0" fill="none" stroke="currentColor" stroke-width="2"/></svg><em id="badge">0</em></button>
@@ -79,6 +79,7 @@
   <section class="feat" id="cardapio" aria-labelledby="title"><div class="wrap">
     <div class="feat__head"><div><p class="feat__eyebrow">// cardápio digital</p><h2 class="feat__title" id="title">Em destaque na <span class="hl">esquina</span></h2></div><a class="feat__cta" href="#contato">Ver tudo →</a></div>
     <div class="feat__chips" id="chips"><button class="feat-chip is-active" data-cat="todos">Todos</button><button class="feat-chip is-warn" data-cat="promo">Promo</button><button class="feat-chip" data-cat="bebidas">Bebidas</button><button class="feat-chip" data-cat="narguile">Narguile</button><button class="feat-chip" data-cat="headshop">Headshop</button><button class="feat-chip" data-cat="tabacos">Cigarros e tabacos</button></div>
+    <div class="feat__tools"><div class="facets" id="facets" role="group" aria-label="Filtros do catálogo"></div><label class="sort"><span>Ordenar</span><select id="sort" aria-label="Ordenar produtos"><option value="rel">Relevância</option><option value="asc">Menor preço</option><option value="desc">Maior preço</option><option value="az">A–Z</option></select></label></div>
     <div class="feat__grid" id="grid" aria-live="polite"></div>
   </div></section>
 

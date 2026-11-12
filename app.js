@@ -61,10 +61,56 @@ $('yes').onclick=function(){save('esquinaMixAge18','yes');gate.hidden=true;lock(
 $('no').onclick=function(){$('deny').hidden=false};
 
 /* Catálogo */
+/* Filtro inteligente: tags automaticas a partir do nome (ou x.t:['Tag'] no catalogo), busca tolerante e preco em linguagem natural ("ipa ate 9") */
+var sel={},sortBy='rel';
+var ZERO=/zero alcool|sem alcool|0\.0/,T=function(re){return function(x,s){return re.test(s)}};
+/* Filtros fixos, na ordem em que aparecem. Cada item entra automaticamente pelo nome ou manualmente com t:['Nome do filtro'] no catalogo */
+var CH=[['Ofertas',function(x){return !!x.promo}],
+['Cerveja Gelada',function(x,s){return /cerveja/.test(s)&&!ZERO.test(s)}],
+['Drinks Prontos',T(/cabare|mascate|cha de cana|xeque mate/)],
+['Vinhos',T(/vinho|espumante|prosecco|champanhe/)],
+['Salgadinhos',T(/salgadinho|batata|amendoim|ruffles|doritos|cheetos|torcida/)],
+['Refri e Energ',T(/energetico|refrigerante|refri\b|guarana|coca|pepsi/)],
+['Zero e Fit',function(x,s){return ZERO.test(s)||/ultra|light|diet|\bfit\b/.test(s)}],
+['Churrasco',function(x,s){return /carvao|churrasc|espeto|sal grosso|picanha/.test(s)&&!/narguile/.test(s)}],
+['Chopp',T(/chopp|chope|barril/)],
+['Novidades',function(){return false}],
+['Cerveja Sem Alcool',T(ZERO)],
+['Águas e Gelo',T(/agua|gelo/)],
+['Sobremesas',T(/sobremesa|sorvete|pudim|chocolate|picole/)],
+['Mercadinho',function(){return false}],
+['Conveniência',T(/isqueiro|pilha|carregador|chiclete|\bbala\b/)],
+['Destilados',T(/whisk|vodka|\bgin\b|cachaca|pinga|tequila|busca brisa/)],
+['Aperitivos',T(/aperitivo|campari|aperol/)],
+['Sucos e Chás',T(/\bsuco|cha gelado|cha verde|ice tea|leao/)]];
+var PR=[['Até R$ 5',-1,5],['De R$ 5 a 10',5,10]];
+var SYN={breja:'cerveja',cervejinha:'cerveja',gelada:'cerveja',latinha:'lata',longneck:'long',sem:'zero'};
+function tagsOf(x){if(x._t)return x._t;var s=norm(x.n),t=[];CH.forEach(function(c){if(c[1](x,s))t.push(c[0])});(x.t||[]).forEach(function(a){if(t.indexOf(a)<0)t.push(a)});x._t=t;return t}
+function wordsOf(x){if(!x._w)x._w=norm(x.n+' '+names[x.cat]+' '+tagsOf(x).join(' ')).split(/[^a-z0-9]+/).filter(Boolean);return x._w}
+function lev(a,b){var m=a.length,n=b.length,d=[],i,j;for(i=0;i<=m;i++)d[i]=[i];for(j=1;j<=n;j++)d[0][j]=j;for(i=1;i<=m;i++)for(j=1;j<=n;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return d[m][n]}
+function tokenMatch(t,ws){var k=t.length>6?2:1;return ws.some(function(w){return w.indexOf(t)>-1||(t.length>3&&w.length>3&&(lev(w.slice(0,t.length),t)<=k||lev(w,t)<=k))})}
+function parseTerm(v){var s=norm(v==null?term:v),mx=null,mn=null,m,num=function(v){return parseFloat(v.replace(',','.'))};
+  if((m=s.match(/(?:ate|menos de|abaixo de|max(?:imo)?)\s*(?:r\$)?\s*(\d+(?:[.,]\d+)?)/))){mx=num(m[1]);s=s.replace(m[0],' ')}
+  if((m=s.match(/(?:acima de|mais de|a partir de|min(?:imo)?)\s*(?:r\$)?\s*(\d+(?:[.,]\d+)?)/))){mn=num(m[1]);s=s.replace(m[0],' ')}
+  return{w:s.split(/[^a-z0-9]+/).filter(Boolean).map(function(t){return SYN[t]||t}),mx:mx,mn:mn}}
+function has(x,k){if(k.slice(0,2)==='p:'){var r=PR[+k.slice(2)];return x.p>r[1]&&x.p<=r[2]}return tagsOf(x).indexOf(k)>-1}
+function matchSel(x){var ks=Object.keys(sel),cs=ks.filter(function(k){return k.slice(0,2)!=='p:'}),pk=ks.filter(function(k){return k.slice(0,2)==='p:'})[0];
+  return(!cs.length||cs.some(function(k){return has(x,k)}))&&(!pk||has(x,pk))}
+function facets(base,q){
+  var box=$('facets');if(!box)return;box.textContent='';
+  var mk=function(k,label){var n=base.filter(function(x){return has(x,k)}).length,b=document.createElement('button');b.type='button';
+    b.className='feat-chip'+(sel[k]?' is-active':'')+(n?'':' is-empty');b.dataset.k=k;b.setAttribute('aria-pressed',sel[k]?'true':'false');b.textContent=label+' ('+n+')';box.appendChild(b)};
+  CH.forEach(function(c){mk(c[0],c[0])});PR.forEach(function(r,i){mk('p:'+i,r[0])});
+  if(q.mx!=null||q.mn!=null){var i=document.createElement('span');i.className='facet-note';i.textContent='Preço '+(q.mn!=null?'a partir de '+brl(q.mn)+' ':'')+(q.mx!=null?'até '+brl(q.mx):'');box.appendChild(i)}
+  if(Object.keys(sel).length){var c=document.createElement('button');c.type='button';c.className='feat-chip facet-clear';c.dataset.k='';c.textContent='Limpar filtros ✕';box.appendChild(c)}}
 function render(){
-  var list=catalog.filter(function(x){
+  var q=parseTerm();
+  var base=catalog.filter(function(x){
     var okCat=cat==='todos'||(cat==='promo'?x.promo:x.cat===cat);
-    return okCat&&norm(x.n).indexOf(norm(term))>-1});
+    return okCat&&(q.mx==null||x.p<=q.mx)&&(q.mn==null||x.p>=q.mn)&&q.w.every(function(t){return tokenMatch(t,wordsOf(x))})});
+  facets(base,q);
+  var list=base.filter(matchSel);
+  if(sortBy==='asc')list.sort(function(a,b){return a.p-b.p});else if(sortBy==='desc')list.sort(function(a,b){return b.p-a.p});else if(sortBy==='az')list.sort(function(a,b){return a.n.localeCompare(b.n,'pt-BR')});
   var g=$('grid');g.textContent='';
   if(!list.length){g.innerHTML='<p class="feat__empty">Nada encontrado. Tente outra busca.</p>';return}
   list.forEach(function(x){
@@ -110,7 +156,54 @@ function setCat(c){cat=c;
   render()}
 $('nav').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;setCat(b.dataset.cat);document.getElementById('cardapio').scrollIntoView()});
 $('chips').addEventListener('click',function(e){var b=e.target.closest('button');if(b)setCat(b.dataset.cat)});
+$('facets').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;var k=b.dataset.k;if(!k)sel={};else if(sel[k])delete sel[k];else{if(k.slice(0,2)==='p:')Object.keys(sel).forEach(function(o){if(o.slice(0,2)==='p:')delete sel[o]});sel[k]=1}render()});
+$('sort').addEventListener('change',function(){sortBy=this.value;render()});
 var qt;$('q').addEventListener('input',function(){var v=this.value;clearTimeout(qt);qt=setTimeout(function(){term=v;render()},120)});
+
+/* Auto-preenchimento da busca do topo: sugere produtos pelas iniciais (tolera erro de digitacao e entende "ipa ate 9") */
+(function(){
+  var q=$('q'),box=document.createElement('ul'),items=[],act=-1,total=0;
+  box.id='sug';box.className='sug';box.setAttribute('role','listbox');box.hidden=true;q.parentNode.appendChild(box);
+  q.setAttribute('role','combobox');q.setAttribute('aria-autocomplete','list');q.setAttribute('aria-controls','sug');q.setAttribute('aria-expanded','false');
+  function rank(x,t){var s=norm(x.n);if(s.indexOf(t)===0)return 0;if(s.replace(/^(cerveja|aperitivo|barril de cerveja|bebida mista)\s+/,'').indexOf(t)===0)return 1;
+    if(wordsOf(x).some(function(w){return w.indexOf(t)===0}))return 2;return s.indexOf(t)>-1?3:4}
+  function nw(x){return x._nw||(x._nw=norm(x.n).split(/[^a-z0-9]+/).filter(Boolean))}
+  function find(v){var p=parseTerm(v);if(!p.w.length&&p.mx==null&&p.mn==null)return{list:[],t:''};var last=p.w[p.w.length-1]||'';
+    var l=catalog.filter(function(x){return(p.mx==null||x.p<=p.mx)&&(p.mn==null||x.p>=p.mn)&&p.w.every(function(t){return tokenMatch(t,nw(x))})});
+    l=l.map(function(x,i){return{x:x,r:last?rank(x,last):0,i:i}}).sort(function(a,b){return a.r-b.r||a.i-b.i}).map(function(o){return o.x});
+    return{list:l,t:last}}
+  function close(){box.hidden=true;q.setAttribute('aria-expanded','false');q.removeAttribute('aria-activedescendant');act=-1}
+  function mark(el,name,t){var k=t?norm(name).indexOf(t):-1;if(k<0){el.textContent=name;return}
+    el.appendChild(document.createTextNode(name.slice(0,k)));var m=document.createElement('mark');m.textContent=name.slice(k,k+t.length);el.appendChild(m);el.appendChild(document.createTextNode(name.slice(k+t.length)))}
+  function go(){var el=document.getElementById('cardapio');if(el)el.scrollIntoView()}
+  function pick(k){var o=items[k];if(!o)return;
+    if(o.more){term=q.value;sel={};close();render();go();return}
+    q.value=o.x.n;term=o.x.n;sel={};close();if(cat!=='todos')setCat('todos');else render();go()}
+  function show(){var r=find(q.value);box.textContent='';items=[];act=-1;total=r.list.length;
+    if(!q.value.trim()){close();return}
+    r.list.slice(0,6).forEach(function(x){items.push({x:x})});
+    if(!items.length){var n=document.createElement('li');n.className='sug__empty';n.textContent='Nenhum produto encontrado';box.appendChild(n);box.hidden=false;q.setAttribute('aria-expanded','true');return}
+    if(total>6)items.push({more:1});
+    items.forEach(function(o,k){var li=document.createElement('li');li.id='sug'+k;li.setAttribute('role','option');li.className='sug__i'+(o.more?' sug__more':'');li.dataset.k=k;
+      if(o.more){li.textContent='Ver todos os '+total+' resultados →'}
+      else{var im=document.createElement('img');im.src=o.x.img||'assets/logo.webp';im.alt='';im.width=40;im.height=40;im.loading='lazy';li.appendChild(im);
+        var tx=document.createElement('span');tx.className='sug__n';var nm=document.createElement('span');mark(nm,o.x.n,r.t);tx.appendChild(nm);var sm=document.createElement('small');sm.textContent=names[o.x.cat];tx.appendChild(sm);li.appendChild(tx);
+        var pr=document.createElement('b');pr.textContent=brl(o.x.p);li.appendChild(pr)}
+      box.appendChild(li)});
+    box.hidden=false;q.setAttribute('aria-expanded','true')}
+  function setAct(k){var all=box.querySelectorAll('.sug__i');if(!all.length)return;act=(k+all.length)%all.length;
+    [].forEach.call(all,function(e,i){e.classList.toggle('is-act',i===act);e.setAttribute('aria-selected',i===act?'true':'false')});q.setAttribute('aria-activedescendant','sug'+act);all[act].scrollIntoView({block:'nearest'})}
+  q.addEventListener('input',show);q.addEventListener('focus',function(){if(q.value.trim())show()});
+  q.addEventListener('keydown',function(e){
+    if(e.key==='ArrowDown'){if(box.hidden)show();setAct(act+1);e.preventDefault()}
+    else if(e.key==='ArrowUp'){setAct(act-1);e.preventDefault()}
+    else if(e.key==='Enter'){e.preventDefault();if(!box.hidden&&act>-1)pick(act);else{term=q.value;sel={};close();render();go()}}
+    else if(e.key==='Escape'){close()}});
+  box.addEventListener('mousedown',function(e){e.preventDefault()});
+  box.addEventListener('click',function(e){var li=e.target.closest('.sug__i');if(li)pick(+li.dataset.k)});
+  document.addEventListener('click',function(e){if(!e.target.closest('.search'))close()});
+  q.addEventListener('blur',function(){setTimeout(close,120)});
+})();
 document.addEventListener('keydown',function(e){if(e.key==='Escape')toggle(false)});
 
 /* Ranking, marcas e avaliações — EDITE os dados abaixo */
