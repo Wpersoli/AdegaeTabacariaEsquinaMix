@@ -48,3 +48,8 @@ Projeto estatico. Basta conectar a branch `main` na Vercel; nao requer comando d
 - `manifest.webmanifest` + `sw.js` + `assets/icon-*.png`: o site pode ser instalado como app/atalho.
 - O convite aparece depois da confirmação +18 (Android/Chrome/Edge: botão nativo; iPhone/iPad: passo a passo). "Agora não" silencia por 7 dias.
 - Ao publicar mudanças grandes, aumente `VERSAO` no `sw.js` para renovar o cache dos visitantes.
+
+## Cabeçalho responsivo (baseado no exemplo de referência)
+- Ponto de quebra: **1025px**. Desktop: marca | busca (56px) | conta e sacola (caixas 48px) + barra de categorias centralizada.
+- Celular/tablet (≤1024px): hambúrguer 44px | marca centralizada 78px | lupa, conta e sacola 44px sem caixa. A barra horizontal vira um menu em tela cheia (hambúrguer), com subcategorias em sanfona. A lupa abre o campo de busca (com auto-preenchimento) em linha própria.
+- **Validar:** `npm i -D playwright && npx playwright install chromium`, depois `python -m http.server 8080` e `node tools/validar_responsivo.js http://localhost:8080` (11 larguras, de 320 a 1920px).

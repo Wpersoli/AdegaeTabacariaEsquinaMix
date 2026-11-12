@@ -322,10 +322,51 @@ body{overflow-x:clip}
 @media(prefers-reduced-motion:reduce){.pwa{animation:none}}
 
 .nav .tag{font-size:9px;padding:2px 5px;margin-left:4px;vertical-align:1px}
-/* Celular/tablet: tudo na MESMA linha; fonte, espacos e etiqueta encolhem juntos (em) e o JS ajusta o que faltar */
-@media(max-width:860px){
-  .nav{flex-wrap:nowrap;overflow-x:auto;padding:0 clamp(2px,1vw,8px);--nf:clamp(7px,2.4vw,12.5px)}
-  .nav button{padding:clamp(9px,2.8vw,12px) .5em;letter-spacing:0}
-  .nav button.has-sub::after{margin-left:.25em}
-  .nav .tag{font-size:.78em;padding:.15em .4em;margin-left:.3em}
+
+/* ===== Cabecalho responsivo (mesma estrutura do exemplo de referencia) =====
+   Ponto de quebra: 1025px.  Desktop: marca | busca larga | conta e sacola em caixas 48px + barra de categorias.
+   Celular/tablet (<=1024.98px): menu hamburguer 44px | marca centralizada 78px | busca (icone) | conta | sacola 44px, sem caixas;
+   a barra horizontal vira um menu em tela cheia aberto pelo hamburguer. */
+.ico-menu,.ico-search{display:none}
+.top,.nav{padding-inline:max(clamp(10px,3vw,60px),calc((100% - 1320px)/2))}
+.top{padding-block:14px;gap:clamp(12px,2.2vw,24px)}
+.search{height:56px;border-radius:10px;border:3px solid #030708}
+.actions{gap:12px}
+.ico{width:48px;height:48px;border-radius:10px;border:3px solid #030708}
+@media(max-width:1024.98px){
+  .nav{display:none}
+  .top{grid-template-columns:44px minmax(0,1fr) auto;gap:8px;padding:8px clamp(8px,2.5vw,16px)}
+  .ico-menu{display:inline-grid;place-items:center;width:44px;height:44px;color:var(--cream);border-radius:10px}
+  .brand{grid-column:2;justify-content:center}
+  .brand img{width:78px;height:auto}
+  .brand-t{display:none}
+  .actions{grid-column:3;gap:4px}
+  .actions .ico{width:44px;height:44px;background:transparent;color:var(--cream);border:0;border-radius:10px}
+  .ico-search{display:grid}
+  .ico-search[aria-expanded="true"]{color:var(--gold)}
+  .ico em{top:2px;right:0;border:2px solid #030708}
+  .search{display:none;grid-column:1/-1;height:48px}
+  .top.is-search .search{display:flex}
 }
+@media(max-width:360px){.brand img{width:66px}.top{gap:4px}}
+/* Menu em tela cheia (celular/tablet) */
+.mnav{position:fixed;inset:0;z-index:95;display:flex;flex-direction:column;background:var(--nav);transform:translateY(100%);visibility:hidden;transition:transform .32s ease,visibility .32s}
+.mnav.is-open{transform:none;visibility:visible}
+.mnav__top{display:flex;align-items:center;gap:12px;padding:8px clamp(10px,3vw,20px);background:var(--bg);border-bottom:3px solid #030708}
+.mnav__top img{width:48px;height:auto;border-radius:6px}
+.mnav__top strong{flex:1;font:400 18px "Bowlby One",sans-serif;text-transform:uppercase;color:var(--cream);letter-spacing:.04em}
+.mnav__x{width:44px;height:44px;display:grid;place-items:center;border-radius:10px;color:var(--cream);font-size:22px}
+.mnav__list{list-style:none;margin:0;padding:0;overflow-y:auto;flex:1;overscroll-behavior:contain;padding-bottom:env(safe-area-inset-bottom,0px)}
+.mnav__list>li{border-bottom:1px dashed rgba(242,233,212,.25)}
+.mnav__a{display:flex;align-items:center;gap:8px;width:100%;min-height:54px;padding:12px clamp(14px,4vw,24px);text-align:left;color:var(--cream);font:400 15px "Bowlby One",sans-serif;text-transform:uppercase}
+.mnav__a .tag{margin-left:2px}
+.mnav__a .chev{margin-left:auto;transition:transform .2s;font-size:14px}
+.mnav__a[aria-expanded="true"]{background:rgba(236,26,181,.18)}
+.mnav__a[aria-expanded="true"] .chev{transform:rotate(180deg)}
+.mnav__a:active,.mnav__sub button:active{background:var(--pink)}
+.mnav__sub{list-style:none;margin:0;padding:4px 0 8px;background:rgba(0,0,0,.28)}
+.mnav__sub[hidden]{display:none}
+.mnav__sub button{display:block;width:100%;min-height:46px;padding:10px clamp(22px,6vw,36px);text-align:left;color:#e9e1d4;font:500 16px/1.3 "DM Sans",sans-serif}
+.mnav__sub .all{color:var(--gold);font-weight:800;text-transform:uppercase;font-size:14px}
+@media(prefers-reduced-motion:reduce){.mnav{transition:none}}
+@media(min-width:1025px){.mnav{display:none}}

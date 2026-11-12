@@ -182,7 +182,7 @@ var qt;$('q').addEventListener('input',function(){var v=this.value;clearTimeout(
   function close(){box.hidden=true;q.setAttribute('aria-expanded','false');q.removeAttribute('aria-activedescendant');act=-1}
   function mark(el,name,t){var k=t?norm(name).indexOf(t):-1;if(k<0){el.textContent=name;return}
     el.appendChild(document.createTextNode(name.slice(0,k)));var m=document.createElement('mark');m.textContent=name.slice(k,k+t.length);el.appendChild(m);el.appendChild(document.createTextNode(name.slice(k+t.length)))}
-  function go(){var el=document.getElementById('cardapio');if(el)el.scrollIntoView()}
+  function go(){var t=document.querySelector('.top'),sbt=$('searchBtn');if(t)t.classList.remove('is-search');if(sbt)sbt.setAttribute('aria-expanded','false');var el=document.getElementById('cardapio');if(el)el.scrollIntoView()}
   function pick(k){var o=items[k];if(!o)return;
     if(o.more){term=q.value;sel={};close();render();go();return}
     q.value=o.x.n;term=o.x.n;sel={};close();if(cat!=='todos')setCat('todos');else render();go()}
@@ -249,6 +249,39 @@ var qt;$('q').addEventListener('input',function(){var v=this.value;clearTimeout(
   function sched(){cancelAnimationFrame(raf);raf=requestAnimationFrame(fit)}
   window.addEventListener('resize',sched);window.addEventListener('orientationchange',sched);window.addEventListener('load',sched);
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(sched);sched();
+})();
+
+/* Cabecalho mobile: busca em linha propria (icone) e menu de categorias em tela cheia (hamburguer) */
+(function(){
+  var top=document.querySelector('.top'),sb=$('searchBtn'),mb=$('menuBtn'),mq=window.matchMedia('(max-width:1024.98px)'),dr,last=null;
+  function node(tag,cls,txt){var n=document.createElement(tag);if(cls)n.className=cls;if(txt)n.textContent=txt;return n}
+  function searchRow(on){top.classList.toggle('is-search',on);sb.setAttribute('aria-expanded',on?'true':'false');if(on)$('q').focus();else $('q').blur()}
+  sb.addEventListener('click',function(){searchRow(!top.classList.contains('is-search'))});
+  $('q').addEventListener('keydown',function(e){if(e.key==='Escape'&&mq.matches&&top.classList.contains('is-search'))searchRow(false)});
+  /* menu em tela cheia */
+  dr=node('aside','mnav');dr.id='mnav';dr.setAttribute('role','dialog');dr.setAttribute('aria-modal','true');dr.setAttribute('aria-label','Menu de categorias');dr.setAttribute('aria-hidden','true');
+  var hd=node('div','mnav__top'),lg=node('img');lg.src='assets/logo.webp';lg.alt='';lg.width=48;lg.height=49;hd.appendChild(lg);hd.appendChild(node('strong','','Menu'));
+  var x=node('button','mnav__x','✕');x.type='button';x.setAttribute('aria-label','Fechar menu');hd.appendChild(x);dr.appendChild(hd);
+  var ul=node('ul','mnav__list');dr.appendChild(ul);
+  function go(c,sub){close();subF=sub?{label:sub[0],t:sub[1]}:null;setCat(c,true);var el=document.getElementById('cardapio');if(el)el.scrollIntoView()}
+  [].forEach.call($('nav').querySelectorAll('button[data-cat]'),function(b){
+    var c=b.dataset.cat,subs=SUBS[c],li=node('li'),a=node('button','mnav__a');a.type='button';
+    a.appendChild(node('span','',b.firstChild.textContent.trim()));var tg=b.querySelector('.tag');if(tg)a.appendChild(tg.cloneNode(true));
+    li.appendChild(a);
+    if(subs){var sl=node('ul','mnav__sub');sl.hidden=true;a.setAttribute('aria-expanded','false');a.appendChild(node('span','chev','▾'));
+      var add=function(t,cls,fn){var l=node('li'),bt=node('button',cls,t);bt.type='button';bt.onclick=fn;l.appendChild(bt);sl.appendChild(l)};
+      add('Ver tudo em '+names[c],'all',function(){go(c,null)});subs.forEach(function(sbi){add(sbi[0],'',function(){go(c,sbi)})});li.appendChild(sl);
+      a.onclick=function(){var open=a.getAttribute('aria-expanded')==='true';[].forEach.call(ul.querySelectorAll('.mnav__a[aria-expanded]'),function(o){o.setAttribute('aria-expanded','false');o.parentNode.querySelector('.mnav__sub').hidden=true});
+        if(!open){a.setAttribute('aria-expanded','true');sl.hidden=false;a.scrollIntoView({block:'nearest'})}}}
+    else a.onclick=function(){go(c,null)};
+    ul.appendChild(li)});
+  document.body.appendChild(dr);
+  function openD(){if(dr.classList.contains('is-open'))return;last=document.activeElement;dr.classList.add('is-open');dr.setAttribute('aria-hidden','false');mb.setAttribute('aria-expanded','true');lock(dr,true);setTimeout(function(){x.focus()},50)}
+  function close(){if(!dr.classList.contains('is-open'))return;dr.classList.remove('is-open');dr.setAttribute('aria-hidden','true');mb.setAttribute('aria-expanded','false');lock(dr,false);if(last&&last.focus)last.focus()}
+  mb.addEventListener('click',openD);x.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
+  var chg=function(){if(!mq.matches){close();top.classList.remove('is-search');sb.setAttribute('aria-expanded','false')}};
+  if(mq.addEventListener)mq.addEventListener('change',chg);else mq.addListener(chg);
 })();
 
 /* Convite para instalar o app: Android/Chrome/Edge usam o botao nativo; iPhone/iPad mostram o passo a passo "Adicionar a Tela de Inicio" */
