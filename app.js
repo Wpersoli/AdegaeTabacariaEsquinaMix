@@ -443,3 +443,31 @@ var reviews=[]; /* ex.: {n:'Nome',t:'há 1 semana',x:'Texto da avaliação'} */
 })();
 render();sync();
 })();
+
+
+/* Barra flutuante inferior (celulares): início, busca, como chegar, WhatsApp e produtos */
+(function(){
+  var bar=document.getElementById('mbar');if(!bar)return;
+  var mq=window.matchMedia('(max-width:820px)'),items=bar.querySelectorAll('[data-k]'),
+      top=document.querySelector('.top'),sb=document.getElementById('searchBtn'),raf=0;
+  var calm=function(){return window.matchMedia('(prefers-reduced-motion:reduce)').matches};
+  function searchOpen(){return !!(top&&top.classList.contains('is-search'))}
+  function paint(){raf=0;if(!mq.matches)return;
+    var y=window.pageYOffset||document.documentElement.scrollTop||0,c=document.getElementById('cardapio'),k='';
+    if(searchOpen())k='search';
+    else if(y<200)k='home';
+    else if(c){var r=c.getBoundingClientRect();if(r.top<window.innerHeight*.6&&r.bottom>window.innerHeight*.25)k='products'}
+    [].forEach.call(items,function(b){var on=b.dataset.k===k;b.classList.toggle('is-active',on);if(on)b.setAttribute('aria-current','true');else b.removeAttribute('aria-current')});
+    var s=bar.querySelector('[data-act="search"]');if(s)s.setAttribute('aria-expanded',searchOpen()?'true':'false')}
+  function req(){if(!raf)raf=requestAnimationFrame(paint)}
+  bar.addEventListener('click',function(e){
+    var b=e.target.closest('[data-act]');if(!b)return;
+    if(b.dataset.act==='home'){e.preventDefault();if(searchOpen()&&sb)sb.click();window.scrollTo({top:0,behavior:calm()?'auto':'smooth'})}
+    else if(b.dataset.act==='search'){e.preventDefault();if(sb)sb.click()}});
+  window.addEventListener('scroll',req,{passive:true});window.addEventListener('resize',req);
+  if(top&&window.MutationObserver)new MutationObserver(req).observe(top,{attributes:true,attributeFilter:['class']});
+  /* esconde a barra enquanto o teclado está aberto (campos de texto) */
+  document.addEventListener('focusin',function(e){if(mq.matches&&/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName))bar.classList.add('is-kb')});
+  document.addEventListener('focusout',function(){setTimeout(function(){var a=document.activeElement;if(!a||!/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName))bar.classList.remove('is-kb')},60)});
+  paint();
+})();
