@@ -67,6 +67,15 @@ function applyBusinessInfo(){
       opens:STORE.opens,closes:STORE.closes}];schema.textContent=JSON.stringify(data)}catch(e){}}
 }
 applyBusinessInfo();
+/* Fontes não bloqueiam a primeira pintura; a família final é aplicada após o download. */
+(function loadBrandFonts(){
+  var link=document.createElement('link');
+  link.rel='stylesheet';
+  link.href='https://fonts.googleapis.com/css2?family=Bungee&family=DM+Sans:wght@400;500;700&family=VT323&display=swap';
+  link.media='print';
+  link.onload=function(){this.media='all'};
+  document.head.appendChild(link);
+})();
 var save=function(k,v){try{localStorage.setItem(k,v)}catch(e){}};
 var load=function(k){try{return localStorage.getItem(k)}catch(e){return null}};
 var cat='todos',term='',cart={};
