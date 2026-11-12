@@ -1,0 +1,70 @@
+:root{--pink:#ec1ab5;--hot:#ff2fa8;--cyan:#3ec8ff;--gold:#f5b82e;--green:#3aa57c;--bg:#07050c;--nav:#1a1030;--cream:#efe5cf;--ink:#fff}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 "DM Sans",system-ui,sans-serif;overflow-x:hidden}
+button{font:inherit;cursor:pointer;border:0;color:inherit;background:none}
+.ticker{background:var(--pink);color:#07050c;display:flex;justify-content:space-between;gap:12px;padding:8px clamp(10px,3vw,60px);font:700 12px "Space Mono",monospace;text-transform:uppercase;letter-spacing:.04em}
+.dot{display:inline-block;width:11px;height:11px;border-radius:50%;background:#e8173a;border:2px solid #07050c;margin-right:8px;vertical-align:-1px;animation:blink 1.6s infinite}
+@keyframes blink{50%{opacity:.35}}
+.top{display:grid;grid-template-columns:auto minmax(200px,1fr) auto;align-items:center;gap:clamp(12px,3vw,48px);padding:8px clamp(10px,3vw,60px);background:var(--bg);position:sticky;top:0;z-index:20}
+.brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:inherit}
+.brand img{width:92px;height:auto;border-radius:6px}
+.brand-t{display:flex;flex-direction:column;line-height:1.05}
+.brand-t b{font:700 clamp(24px,2.6vw,32px) "Space Grotesk",sans-serif}
+.brand-t b+b{font-size:clamp(20px,2vw,24px)}
+.brand-t small{margin-top:6px;color:var(--gold);font:700 12px "Space Mono",monospace;letter-spacing:.2em;text-transform:uppercase}
+.search{display:flex;align-items:center;gap:10px;background:var(--cream);color:#222;border-radius:8px;padding:0 16px;height:50px;box-shadow:0 2px 0 rgba(0,0,0,.4)}
+.search input{flex:1;min-width:0;background:none;border:0;outline:0;font:500 16px "DM Sans",sans-serif;color:#222}
+.actions{display:flex;gap:18px}
+.ico{position:relative;display:grid;place-items:center;width:42px;height:42px;border-radius:8px;background:var(--cream);color:#111;text-decoration:none}
+.ico em{position:absolute;top:-8px;right:-8px;min-width:20px;height:20px;border-radius:10px;background:#d6204f;color:#fff;font:700 11px/20px "Space Mono",monospace;text-align:center;font-style:normal}
+.nav{display:flex;background:var(--nav);overflow-x:auto;scrollbar-width:none;padding:0 clamp(10px,3vw,60px)}
+.nav::-webkit-scrollbar{display:none}
+.nav button{flex:none;padding:14px clamp(14px,2vw,28px);font:400 clamp(13px,1.2vw,16px) "Bowlby One",sans-serif;text-transform:uppercase;white-space:nowrap;color:#e9e1d4}
+.nav button.on,.nav .pink{background:var(--pink);color:var(--cream)}
+.nav .green{background:var(--green);color:#10281f}
+.nav button:not(.on):not(.pink):not(.green):hover{color:var(--gold)}
+.nav .pink:not(.on){background:none;color:#e9e1d4}
+.nav .green.on{background:var(--green);color:#10281f}
+.tag{background:var(--gold);color:#222;font:700 10px "Space Mono",monospace;padding:3px 7px;border-radius:3px;vertical-align:2px}
+.loc{text-align:center;padding:8px 12px;font:700 clamp(11px,1.3vw,14px) "Space Mono",monospace;text-transform:uppercase;color:var(--cream);background:#0b0713}
+.loc b{color:var(--green)}
+.hero{position:relative;overflow:hidden;background:#12082a;line-height:0}
+.hero img{width:100%;height:auto;transform-origin:70% 50%;animation:kb 16s ease-in-out infinite alternate}
+@keyframes kb{to{transform:scale(1.045)}}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.14) 50%,transparent 60%);transform:translateX(-120%);animation:shine 7s 1.5s infinite;pointer-events:none}
+@keyframes shine{40%,100%{transform:translateX(120%)}}
+.hero-cta{position:absolute;left:clamp(12px,6.5%,120px);bottom:clamp(14px,6%,60px);line-height:1;background:var(--gold);color:#1a1030;text-decoration:none;font:400 clamp(12px,1.3vw,17px) "Bowlby One",sans-serif;text-transform:uppercase;padding:14px 22px;border-radius:8px;box-shadow:0 6px 0 #a8791a;z-index:2;animation:pulse 2.4s infinite}
+@keyframes pulse{50%{transform:translateY(-3px)}}
+.menu{padding:clamp(28px,5vw,64px) clamp(10px,3vw,60px)}
+.menu h2{font:400 clamp(24px,3vw,38px) "Bowlby One",sans-serif;text-transform:uppercase;margin-bottom:22px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr));gap:18px}
+.card{background:var(--nav);border:1px solid #3a2466;border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:6px}
+.card small{color:var(--cyan);font:700 11px "Space Mono",monospace;text-transform:uppercase}
+.card h3{font:700 18px "Space Grotesk",sans-serif}
+.card .p{margin-top:auto;font:700 20px "Space Grotesk",sans-serif;color:var(--gold)}
+.card button{margin-top:8px;background:var(--pink);color:var(--cream);border-radius:8px;padding:11px;font:400 13px "Bowlby One",sans-serif;text-transform:uppercase}
+.card button:hover{background:var(--hot)}
+.empty{grid-column:1/-1;color:#bdb2d6}
+footer{text-align:center;padding:40px 16px;background:#0b0713;color:#bdb2d6;font-size:14px;display:grid;gap:8px;justify-items:center}
+.veil{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:40}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(100vw,400px);background:var(--nav);z-index:50;display:flex;flex-direction:column;padding:18px;gap:12px}
+.drawer[hidden],.veil[hidden],.gate[hidden],#deny[hidden]{display:none}
+.drawer header{display:flex;justify-content:space-between;align-items:center}
+.drawer h2{font:400 22px "Bowlby One",sans-serif}
+#items{list-style:none;padding:0;flex:1;overflow:auto;display:grid;gap:10px;align-content:start}
+#items li{display:grid;grid-template-columns:1fr auto;gap:4px 10px;background:#0b0713;border-radius:10px;padding:10px}
+#items .q{display:flex;gap:8px;align-items:center}
+#items .q button{width:28px;height:28px;border-radius:6px;background:var(--pink)}
+.total{display:flex;justify-content:space-between;font:700 20px "Space Grotesk",sans-serif}
+.wa{background:#25d366;color:#06240f;border-radius:10px;padding:15px;font:400 14px "Bowlby One",sans-serif;text-transform:uppercase}
+.wa:disabled{opacity:.5}
+.gate{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:16px;background:rgba(7,5,12,.9);backdrop-filter:blur(8px)}
+.gate-box{max-width:420px;text-align:center;background:var(--nav);border:2px solid var(--pink);border-radius:16px;padding:24px;display:grid;gap:12px;justify-items:center;box-shadow:0 0 40px rgba(236,26,181,.4)}
+.gate-box h2{font:400 24px "Bowlby One",sans-serif}
+.gate-box div{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.gate .yes,.gate .no{padding:13px 20px;border-radius:10px;font:400 14px "Bowlby One",sans-serif;text-transform:uppercase}
+.gate .yes{background:var(--gold);color:#1a1030}.gate .no{background:#33244f}
+@media(max-width:900px){.top{grid-template-columns:1fr auto;row-gap:10px}.search{grid-column:1/-1;order:3;height:46px}.brand img{width:72px}}
+@media(max-width:700px){.ticker{flex-direction:column;gap:2px;font-size:10px;text-align:center}.hero-cta{left:50%;transform:translateX(-50%);animation:none;bottom:14px;white-space:nowrap}.actions{gap:14px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
