@@ -77,6 +77,7 @@ $('send').onclick=function(){
 function setCat(c){cat=c;
   [].forEach.call(document.querySelectorAll('#nav button'),function(x){x.classList.toggle('on',x.dataset.cat===c&&c!=='todos'?true:(c==='todos'&&x.textContent.trim()==='Início'))});
   [].forEach.call($('chips').children,function(x){x.classList.toggle('is-active',x.dataset.cat===c)});
+  var on=document.querySelector('#nav button.on');if(on&&on.scrollIntoView)on.scrollIntoView({inline:'center',block:'nearest'});
   render()}
 $('nav').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;setCat(b.dataset.cat);document.getElementById('cardapio').scrollIntoView()});
 $('chips').addEventListener('click',function(e){var b=e.target.closest('button');if(b)setCat(b.dataset.cat)});
@@ -132,6 +133,39 @@ var reviews=[]; /* ex.: {n:'Nome',t:'há 1 semana',x:'Texto da avaliação'} */
     window.scrollTo({top:0,behavior:calm?'auto':'smooth'})});
   upd();
 })();
+/* Rota até a loja: geolocalização sob demanda (HTTPS), atualiza ao se deslocar >100 m e a cada >=30 s */
+(function(){
+  var MAPS_KEY='', /* opcional: chave da Maps Embed API restrita por referrer (rota com trânsito oficial) */
+      DEST='Adega e Tabacaria Esquina Mix, R. São Francisco, 285, Vila Galvão, Guarulhos - SP',
+      btn=$('routeBtn'),st=$('routeStatus'),fr=$('mapFrame'),lnk=$('routeOpen'),modes=$('routeModes');
+  if(!btn||!fr)return;
+  var mode='driving',pos=null,last=null,watch=null,flg={driving:'d',walking:'w',bicycling:'b',transit:'r'};
+  function dist(a,b){var r=Math.PI/180,R=6371e3,p=(b.lat-a.lat)*r,q=(b.lng-a.lng)*r,
+    x=Math.sin(p/2)*Math.sin(p/2)+Math.cos(a.lat*r)*Math.cos(b.lat*r)*Math.sin(q/2)*Math.sin(q/2);return 2*R*Math.asin(Math.sqrt(x))}
+  function draw(){
+    var o=pos.lat.toFixed(6)+','+pos.lng.toFixed(6),d=encodeURIComponent(DEST);
+    fr.src=MAPS_KEY?'https://www.google.com/maps/embed/v1/directions?key='+encodeURIComponent(MAPS_KEY)+'&origin='+o+'&destination='+d+'&mode='+mode+'&language=pt-BR&region=BR'
+      :'https://maps.google.com/maps?saddr='+o+'&daddr='+d+'&dirflg='+flg[mode]+'&hl=pt-BR&output=embed';
+    lnk.href='https://www.google.com/maps/dir/?api=1&origin='+o+'&destination='+d+'&travelmode='+mode;lnk.hidden=false;
+    last={lat:pos.lat,lng:pos.lng,t:Date.now()}}
+  function onPos(p){pos={lat:p.coords.latitude,lng:p.coords.longitude};
+    if(!last||(dist(pos,last)>100&&Date.now()-last.t>=30000)){draw();
+      st.textContent='Rota traçada a partir da sua posição (precisão ≈ '+Math.round(p.coords.accuracy)+' m). O tempo de viagem aparece no mapa e é atualizado conforme você se desloca.'}}
+  function onErr(e){btn.disabled=false;st.textContent=e.code===1?'Permissão de localização negada. Libere no cadeado do navegador e tente de novo.'
+    :e.code===3?'Tempo esgotado ao obter a localização. Tente novamente.':'Não foi possível determinar sua posição. Verifique o GPS e a internet.'}
+  btn.onclick=function(){
+    if(!navigator.geolocation){st.textContent='Seu navegador não oferece localização.';return}
+    st.textContent='Obtendo a sua localização…';btn.disabled=true;
+    navigator.geolocation.getCurrentPosition(function(p){
+      btn.disabled=false;btn.textContent='Atualizar rota';last=null;onPos(p);
+      if(watch===null)watch=navigator.geolocation.watchPosition(onPos,function(){},{enableHighAccuracy:true,maximumAge:10000,timeout:20000})
+    },onErr,{enableHighAccuracy:true,timeout:15000,maximumAge:0})};
+  modes.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;mode=b.dataset.mode;
+    [].forEach.call(modes.children,function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});if(pos)draw()});
+  window.addEventListener('pagehide',function(){if(watch!==null)navigator.geolocation.clearWatch(watch)});
+})();
+/* Altura da barra fixa -> offset de rolagem das âncoras */
+(function(){var b=$('bar');if(!b)return;function set(){document.documentElement.style.setProperty('--bar-h',b.offsetHeight+'px')}set();if(window.ResizeObserver)new ResizeObserver(set).observe(b);else window.addEventListener('resize',set)})();
 /* Status da loja (horário de Brasília): aberto das OPEN às CLOSE, virando a meia-noite */
 (function(){
   var OPEN=10,CLOSE=2,h=parseInt(new Intl.DateTimeFormat('pt-BR',{hour:'numeric',hourCycle:'h23',timeZone:'America/Sao_Paulo'}).format(new Date()),10);

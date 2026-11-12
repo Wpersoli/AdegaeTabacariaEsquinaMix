@@ -218,8 +218,6 @@ footer{background:#030708;padding:0;display:block;text-align:left;color:var(--ca
 
 
 /* ===== Revisão: acessibilidade, toque e desempenho mobile ===== */
-html{scroll-padding-top:120px}
-@media(max-width:900px){html{scroll-padding-top:165px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .skip{position:absolute;left:8px;top:-64px;z-index:200;background:var(--gold);color:#1a1030;padding:10px 14px;border-radius:8px;font-weight:700;text-decoration:none}
@@ -229,3 +227,29 @@ html{scroll-padding-top:120px}
 .hint{opacity:.8}
 .prod-cat,.rank-i small,.rev-card small{opacity:.85}
 @media(hover:none){.fleet__i,.fleet__i::after{animation:none!important}}
+
+/* ===== Barra fixa: cabeçalho + categorias (logo, busca, conta, sacola, menu) ===== */
+.bar{position:sticky;top:0;z-index:20;background:var(--bg);padding-top:env(safe-area-inset-top,0px);box-shadow:0 4px 14px rgba(0,0,0,.45)}
+.top{position:static}
+html{scroll-padding-top:var(--bar-h,120px)}
+body{overflow-x:clip}
+@media(max-width:900px){
+  .top{padding-top:6px;padding-bottom:6px;row-gap:8px}
+  .brand img{width:56px}.brand-t b{font-size:22px}.brand-t b+b{font-size:18px}
+  .brand-t small{margin-top:3px;font-size:10px}
+  .search{height:42px}.nav button{padding:11px 14px}
+}
+@media(max-width:400px){.brand img{width:48px}.brand{gap:8px}}
+
+/* ===== Mapa com rota a partir da localização do usuário ===== */
+.loc2__map{display:flex;flex-direction:column;background:var(--card);color:var(--dk)}
+.loc2__map iframe{flex:1;min-height:360px;height:auto}
+.route{display:grid;gap:10px;padding:14px;border-bottom:3px solid var(--dk)}
+.route__row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.route .btn:disabled{opacity:.6;cursor:progress}
+.route__modes{display:flex;flex-wrap:wrap;gap:8px}
+.route__modes button{min-height:44px;padding:0 14px;font:400 12px "Bungee",sans-serif;text-transform:uppercase;border:3px solid var(--dk);border-radius:999px;background:var(--card);color:var(--dk)}
+.route__modes button[aria-pressed=true]{background:var(--prim);color:#fff}
+.route__st{font-size:14px;line-height:1.4}
+.route__open{justify-self:start;color:var(--dk);font-weight:700}
+.route__open[hidden]{display:none}
