@@ -55,7 +55,6 @@ function applyBusinessInfo(){
   document.querySelectorAll('[data-store-phone]').forEach(function(el){el.textContent=STORE.phoneDisplay});
   document.querySelectorAll('[data-store-whatsapp]').forEach(function(el){el.href='https://wa.me/'+String(STORE.whatsapp||'').replace(/\D/g,'')});
   var close=String(STORE.closes||'02:00'),open=String(STORE.opens||'10:00');
-  var close=String(STORE.closes||'02:00'),open=String(STORE.opens||'10:00');
   var place=encodeURIComponent((STORE.name||'Esquina Mix')+', '+STORE.address);
   document.querySelectorAll('[data-store-map-search]').forEach(function(el){el.href='https://www.google.com/maps/search/?api=1&query='+place});
   document.querySelectorAll('[data-store-map-route]').forEach(function(el){el.href='https://www.google.com/maps/dir/?api=1&destination='+place});
