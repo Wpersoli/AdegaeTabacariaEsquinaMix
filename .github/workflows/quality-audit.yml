@@ -4,6 +4,13 @@ name: Quality audit
   push:
     branches:
       - 'quality/**'
+    paths:
+      - 'index.html'
+      - 'styles.css'
+      - 'app.js'
+      - 'assets/**'
+      - 'vercel.json'
+      - '.github/workflows/quality-audit.yml'
 
 permissions:
   contents: read
@@ -127,6 +134,7 @@ jobs:
               await page.waitForSelector('#yes', { timeout: 15000 });
               await page.locator('#yes').click();
               await page.waitForSelector('.prod-card', { timeout: 15000 });
+              await page.waitForFunction(() => document.querySelectorAll('.prod-card').length === 39, null, { timeout: 15000 });
 
               await page.locator('img').evaluateAll(images => images.forEach(image => { image.loading = 'eager'; }));
               await page.waitForTimeout(1500);
