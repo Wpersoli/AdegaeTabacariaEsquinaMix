@@ -151,15 +151,17 @@ jobs:
               assert.equal(reducedMotion.floatingPulse, 'none', name + ': WhatsApp pulse must stop for reduced motion');
               assert.equal(reducedMotion.smoothScroll, 'auto', name + ': smooth scroll must stop for reduced motion');
               await page.emulateMedia({ reducedMotion: 'no-preference' });
-              const staticBrandLogos = await page.evaluate(() => {
+              const animatedBrandLogos = await page.evaluate(() => {
                 const logo = document.querySelector('.fleet__i');
                 return {
-                  animation: getComputedStyle(logo).animationName,
-                  shine: getComputedStyle(logo, '::after').content
+                  track: getComputedStyle(document.querySelector('.fleet__t')).animationName,
+                  float: getComputedStyle(logo).animationName,
+                  shine: getComputedStyle(logo, '::after').animationName
                 };
               });
-              assert.equal(staticBrandLogos.animation, 'none', name + ': brand logos should not run independent motion loops');
-              assert.equal(staticBrandLogos.shine, 'none', name + ': brand logo shine overlay should be removed');
+              assert.equal(animatedBrandLogos.track, 'mq', name + ': brand marquee must move');
+              assert.equal(animatedBrandLogos.float, 'fleetFloat', name + ': brand logos must orbit vertically');
+              assert.equal(animatedBrandLogos.shine, 'fleetShine', name + ': brand logos must retain the moving highlight');
               await page.locator('#marcas').scrollIntoViewIfNeeded();
               await page.waitForTimeout(250);
               const offscreenPaused = await page.evaluate(() => ({
@@ -207,18 +209,24 @@ jobs:
                     cta: getComputedStyle(document.querySelector('.hero-cta')).animationName,
                     statusDot: getComputedStyle(document.querySelector('.dot')).animationName,
                     whatsappPulse: getComputedStyle(document.querySelector('#waFab'), '::after').animationName,
-                    marqueeDuration: getComputedStyle(document.querySelector('.mq-t')).animationDuration
+                    marqueeDuration: getComputedStyle(document.querySelector('.mq-t')).animationDuration,
+                    brandDuration: getComputedStyle(document.querySelector('.fleet__t')).animationDuration,
+                    brandFloat: getComputedStyle(document.querySelector('.fleet__i')).animationName,
+                    brandShine: getComputedStyle(document.querySelector('.fleet__i'), '::after').animationName
                   }));
                   assert.equal(mobileMotion.hero, 'none', name + ': hero zoom must be disabled on touch-sized viewports');
                   assert.equal(mobileMotion.shine, 'none', name + ': hero shine overlay must be disabled on touch-sized viewports');
                   assert.equal(mobileMotion.cta, 'none', name + ': CTA pulse must be disabled on touch-sized viewports');
                   assert.equal(mobileMotion.statusDot, 'none', name + ': status blink must be disabled on touch-sized viewports');
                   assert.equal(mobileMotion.whatsappPulse, 'none', name + ': floating pulse must be disabled on touch-sized viewports');
-                  assert.match(mobileMotion.marqueeDuration, /^(68|[7-9][0-9])s$/, name + ': mobile marquee should use a slower cadence');
+                  assert.match(mobileMotion.marqueeDuration, /^(68|[7-9][0-9])s$/, name + ': mobile ticker should keep a slow continuous cadence');
+                  assert.match(mobileMotion.brandDuration, /^(68|[7-9][0-9])s$/, name + ': mobile brand strip should keep a slow continuous cadence');
+                  assert.equal(mobileMotion.brandFloat, 'fleetFloat', name + ': brand orbit must remain enabled on touch screens');
+                  assert.equal(mobileMotion.brandShine, 'fleetShine', name + ': brand shine must remain enabled on touch screens');
                 }
                 const result = await page.evaluate(() => {
                   const selectors = [
-                    '.top', '.brand', '.search', '.actions', '.hero',
+                    '.top', '.brand', '.search', '.actions', '.nav', '.nav button', '.hero',
                     '.feat__head', '.feat__grid', '.prod-card',
                     '.loc2__inner', '.loc2__card', '.loc2__map', 'footer', '.ft'
                   ];
@@ -231,14 +239,30 @@ jobs:
                       }
                     }
                   }
+                  const nav=document.querySelector('#nav');
+                  const navRect=nav.getBoundingClientRect();
+                  const navButtons=[...nav.querySelectorAll('button')];
+                  const navLayout={
+                    count:navButtons.length,
+                    scrollWidth:nav.scrollWidth,
+                    clientWidth:nav.clientWidth,
+                    buttonsInside:navButtons.every(button=>{
+                      const r=button.getBoundingClientRect();
+                      return r.left>=navRect.left-1 && r.right<=navRect.right+1;
+                    })
+                  };
                   return {
                     width: innerWidth,
                     documentWidth: document.documentElement.scrollWidth,
                     bodyWidth: document.body.scrollWidth,
+                    navLayout,
                     overflow
                   };
                 });
                 assert.equal(result.overflow.length, 0, name + ': key layout elements must fit at ' + width + 'px: ' + JSON.stringify(result.overflow));
+                assert.equal(result.navLayout.count, 7, name + ': all seven category links must render');
+                assert.ok(result.navLayout.scrollWidth <= result.navLayout.clientWidth + 1, name + ': category menu must not clip or scroll sideways');
+                assert.equal(result.navLayout.buttonsInside, true, name + ': every category button must remain aligned inside the menu');
                 responsive.push(result);
               }
 
