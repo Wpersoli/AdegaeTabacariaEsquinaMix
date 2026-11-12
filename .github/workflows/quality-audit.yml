@@ -135,6 +135,30 @@ jobs:
               await page.locator('#yes').click();
               await page.waitForSelector('.prod-card', { timeout: 15000 });
               await page.waitForFunction(() => document.querySelectorAll('.prod-card').length === 39, null, { timeout: 15000 });
+              await page.emulateMedia({ reducedMotion: 'reduce' });
+              const reducedMotion = await page.evaluate(() => ({
+                marquee: getComputedStyle(document.querySelector('.mq-t')).animationName,
+                brandMarquee: getComputedStyle(document.querySelector('.fleet__t')).animationName,
+                floatingPulse: getComputedStyle(document.querySelector('#waFab'), '::after').animationName,
+                smoothScroll: getComputedStyle(document.documentElement).scrollBehavior
+              }));
+              assert.equal(reducedMotion.marquee, 'none', name + ': marquee must stop for reduced motion');
+              assert.equal(reducedMotion.brandMarquee, 'none', name + ': brand marquee must stop for reduced motion');
+              assert.equal(reducedMotion.floatingPulse, 'none', name + ': WhatsApp pulse must stop for reduced motion');
+              assert.equal(reducedMotion.smoothScroll, 'auto', name + ': smooth scroll must stop for reduced motion');
+              await page.emulateMedia({ reducedMotion: 'no-preference' });
+              await page.locator('#cardapio').scrollIntoViewIfNeeded();
+              await page.waitForTimeout(250);
+              const offscreenPaused = await page.evaluate(() => ({
+                ticker: document.querySelector('.mq')?.classList.contains('is-offscreen') ?? false,
+                hero: document.querySelector('.hero')?.classList.contains('is-offscreen') ?? false
+              }));
+              assert.equal(offscreenPaused.ticker, true, name + ': ticker should pause when outside viewport');
+              assert.equal(offscreenPaused.hero, true, name + ': hero effects should pause when outside viewport');
+              await page.evaluate(() => scrollTo(0,0));
+              await page.waitForTimeout(250);
+              assert.equal(await page.locator('.hero').evaluate(el => el.classList.contains('is-offscreen')), false,
+                name + ': hero effects should resume when visible');
 
               await page.locator('img').evaluateAll(images => images.forEach(image => { image.loading = 'eager'; }));
               await page.waitForTimeout(1500);
