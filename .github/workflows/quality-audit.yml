@@ -174,7 +174,7 @@ jobs:
               }));
               assert.equal(pausedAnimationState.ticker, 'paused', name + ': offscreen ticker animation must be paused');
               assert.equal(pausedAnimationState.hero, 'paused', name + ': offscreen hero animation must be paused');
-              await page.evaluate(() => scrollTo(0,0));
+              await page.evaluate(() => { document.documentElement.style.scrollBehavior='auto'; window.scrollTo(0,0); });
               await page.waitForTimeout(250);
               assert.equal(await page.locator('.hero').evaluate(el => el.classList.contains('is-offscreen')), false,
                 name + ': hero effects should resume when visible');
@@ -191,6 +191,22 @@ jobs:
               for (const width of viewports) {
                 await page.setViewportSize({ width, height: 900 });
                 await page.waitForTimeout(100);
+                if (width <= 700) {
+                  const mobileMotion = await page.evaluate(() => ({
+                    hero: getComputedStyle(document.querySelector('.hero img')).animationName,
+                    shine: getComputedStyle(document.querySelector('.hero'), '::after').display,
+                    cta: getComputedStyle(document.querySelector('.hero-cta')).animationName,
+                    statusDot: getComputedStyle(document.querySelector('.dot')).animationName,
+                    whatsappPulse: getComputedStyle(document.querySelector('#waFab'), '::after').animationName,
+                    marqueeDuration: getComputedStyle(document.querySelector('.mq-t')).animationDuration
+                  }));
+                  assert.equal(mobileMotion.hero, 'none', name + ': hero zoom must be disabled on touch-sized viewports');
+                  assert.equal(mobileMotion.shine, 'none', name + ': hero shine overlay must be disabled on touch-sized viewports');
+                  assert.equal(mobileMotion.cta, 'none', name + ': CTA pulse must be disabled on touch-sized viewports');
+                  assert.equal(mobileMotion.statusDot, 'none', name + ': status blink must be disabled on touch-sized viewports');
+                  assert.equal(mobileMotion.whatsappPulse, 'none', name + ': floating pulse must be disabled on touch-sized viewports');
+                  assert.match(mobileMotion.marqueeDuration, /^(68|[7-9][0-9])s$/, name + ': mobile marquee should use a slower cadence');
+                }
                 const result = await page.evaluate(() => {
                   const selectors = [
                     '.top', '.brand', '.search', '.actions', '.hero',
