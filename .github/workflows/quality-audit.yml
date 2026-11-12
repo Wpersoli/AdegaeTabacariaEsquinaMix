@@ -1,6 +1,10 @@
 name: Quality audit
 
 'on':
+concurrency:
+  group: quality-audit-${{ github.ref }}
+  cancel-in-progress: true
+
   push:
     branches:
       - 'quality/**'
@@ -147,6 +151,15 @@ jobs:
               assert.equal(reducedMotion.floatingPulse, 'none', name + ': WhatsApp pulse must stop for reduced motion');
               assert.equal(reducedMotion.smoothScroll, 'auto', name + ': smooth scroll must stop for reduced motion');
               await page.emulateMedia({ reducedMotion: 'no-preference' });
+              const staticBrandLogos = await page.evaluate(() => {
+                const logo = document.querySelector('.fleet__i');
+                return {
+                  animation: getComputedStyle(logo).animationName,
+                  shine: getComputedStyle(logo, '::after').content
+                };
+              });
+              assert.equal(staticBrandLogos.animation, 'none', name + ': brand logos should not run independent motion loops');
+              assert.equal(staticBrandLogos.shine, 'none', name + ': brand logo shine overlay should be removed');
               await page.locator('#cardapio').scrollIntoViewIfNeeded();
               await page.waitForTimeout(250);
               const offscreenPaused = await page.evaluate(() => ({
@@ -155,6 +168,12 @@ jobs:
               }));
               assert.equal(offscreenPaused.ticker, true, name + ': ticker should pause when outside viewport');
               assert.equal(offscreenPaused.hero, true, name + ': hero effects should pause when outside viewport');
+              const pausedAnimationState = await page.evaluate(() => ({
+                ticker: getComputedStyle(document.querySelector('.mq-t')).animationPlayState,
+                hero: getComputedStyle(document.querySelector('.hero img')).animationPlayState
+              }));
+              assert.equal(pausedAnimationState.ticker, 'paused', name + ': offscreen ticker animation must be paused');
+              assert.equal(pausedAnimationState.hero, 'paused', name + ': offscreen hero animation must be paused');
               await page.evaluate(() => scrollTo(0,0));
               await page.waitForTimeout(250);
               assert.equal(await page.locator('.hero').evaluate(el => el.classList.contains('is-offscreen')), false,
