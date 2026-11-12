@@ -1,0 +1,186 @@
+name: Quality audit
+
+'on':
+  push:
+    branches:
+      - 'quality/**'
+
+permissions:
+  contents: read
+
+jobs:
+  browser-and-lighthouse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+
+      - name: Install browser test and Lighthouse tools
+        run: npm install --no-save playwright@1.54.2 lighthouse@12.8.2
+
+      - name: Install Chromium, Firefox and WebKit
+        run: npx playwright install --with-deps chromium firefox webkit
+
+      - name: Start local static server
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/esquina-http.log 2>&1 &
+          for attempt in $(seq 1 30); do
+            if curl --silent --fail http://127.0.0.1:4173/ > /dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/esquina-http.log
+          exit 1
+
+      - name: Run Chromium, Firefox and WebKit smoke tests
+        run: |
+          mkdir -p artifacts
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import { chromium, firefox, webkit } from 'playwright';
+
+          const engines = [
+            ['Chromium', chromium],
+            ['Firefox', firefox],
+            ['WebKit', webkit]
+          ];
+          const viewports = [320, 360, 390, 430, 768, 1024, 1365];
+          const report = [];
+
+          for (const [name, engine] of engines) {
+            const browser = await engine.launch({ headless: true });
+            try {
+              const context = await browser.newContext({ viewport: { width: 1365, height: 900 } });
+              const page = await context.newPage();
+              const pageErrors = [];
+              page.on('pageerror', error => pageErrors.push(String(error)));
+              await page.addInitScript(() => {
+                window.__esquinaOutboundUrl = null;
+                window.open = url => {
+                  window.__esquinaOutboundUrl = String(url);
+                  return { opener: null };
+                };
+              });
+
+              const response = await page.goto('http://127.0.0.1:4173/', {
+                waitUntil: 'domcontentloaded',
+                timeout: 45000
+              });
+              assert.equal(response?.status(), 200, name + ': homepage must return HTTP 200');
+              await page.waitForSelector('#yes', { timeout: 15000 });
+              await page.locator('#yes').click();
+              await page.waitForSelector('.prod-card', { timeout: 15000 });
+
+              await page.locator('img').evaluateAll(images => images.forEach(image => { image.loading = 'eager'; }));
+              await page.waitForTimeout(1500);
+              const brokenImages = await page.locator('img').evaluateAll(images =>
+                images.filter(image => image.complete && image.naturalWidth === 0)
+                  .map(image => image.currentSrc || image.src)
+              );
+              assert.equal(brokenImages.length, 0, name + ': no broken images');
+
+              const responsive = [];
+              for (const width of viewports) {
+                await page.setViewportSize({ width, height: 900 });
+                await page.waitForTimeout(100);
+                const result = await page.evaluate(() => {
+                  const selectors = [
+                    '.top', '.brand', '.search', '.actions', '.hero',
+                    '.feat__head', '.feat__grid', '.prod-card',
+                    '.loc2__inner', '.loc2__card', '.loc2__map', 'footer', '.ft'
+                  ];
+                  const overflow = [];
+                  for (const selector of selectors) {
+                    for (const element of document.querySelectorAll(selector)) {
+                      const rect = element.getBoundingClientRect();
+                      if (rect.width > 0 && (rect.left < -1 || rect.right > innerWidth + 1)) {
+                        overflow.push({ selector, left: Math.round(rect.left), right: Math.round(rect.right) });
+                      }
+                    }
+                  }
+                  return {
+                    width: innerWidth,
+                    documentWidth: document.documentElement.scrollWidth,
+                    bodyWidth: document.body.scrollWidth,
+                    overflow
+                  };
+                });
+                assert.equal(result.overflow.length, 0, name + ': key layout elements must fit at ' + width + 'px: ' + JSON.stringify(result.overflow));
+                responsive.push(result);
+              }
+
+              await page.setViewportSize({ width: 1365, height: 900 });
+              await page.locator('.prod-buy').first().click();
+              assert.equal((await page.locator('#badge').textContent()).trim(), '1', name + ': product should enter cart');
+              await page.locator('#cartBtn').click();
+              assert.equal(await page.locator('#send').isDisabled(), false, name + ': checkout should enable with cart items');
+              await page.locator('#send').click();
+              const outbound = await page.evaluate(() => window.__esquinaOutboundUrl);
+              assert.match(outbound || '', /^https:\/\/wa\.me\/5511917221039\?text=/, name + ': order should build the expected WhatsApp URL');
+
+              assert.equal(pageErrors.length, 0, name + ': no uncaught JavaScript errors: ' + pageErrors.join(' | '));
+              report.push({
+                browser: name,
+                version: browser.version(),
+                status: 'passed',
+                responsive,
+                brokenImages,
+                pageErrors,
+                whatsappUrlBuilt: true
+              });
+              await page.screenshot({ path: 'artifacts/' + name.toLowerCase() + '-mobile.png', fullPage: true });
+              await context.close();
+            } finally {
+              await browser.close();
+            }
+          }
+
+          await import('node:fs/promises').then(fs => fs.writeFile(
+            'artifacts/cross-browser-smoke.json',
+            JSON.stringify(report, null, 2)
+          ));
+          console.log(JSON.stringify(report, null, 2));
+          NODE
+
+      - name: Run Lighthouse mobile and desktop audits
+        run: |
+          mkdir -p artifacts/lighthouse
+          CHROME_PATH="$(node -e "console.log(require('playwright').chromium.executablePath())")"
+          npx lighthouse http://127.0.0.1:4173/ \
+            --chrome-path="$CHROME_PATH" \
+            --chrome-flags="--headless --no-sandbox" \
+            --only-categories=performance,accessibility,best-practices,seo \
+            --output=json --output-path=artifacts/lighthouse/mobile.json --quiet
+          npx lighthouse http://127.0.0.1:4173/ \
+            --preset=desktop \
+            --chrome-path="$CHROME_PATH" \
+            --chrome-flags="--headless --no-sandbox" \
+            --only-categories=performance,accessibility,best-practices,seo \
+            --output=json --output-path=artifacts/lighthouse/desktop.json --quiet
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          for (const device of ['mobile', 'desktop']) {
+            const report = JSON.parse(fs.readFileSync('artifacts/lighthouse/' + device + '.json', 'utf8'));
+            const scores = Object.fromEntries(
+              Object.entries(report.categories).map(([key, value]) => [key, Math.round(value.score * 100)])
+            );
+            const metrics = Object.fromEntries(
+              ['first-contentful-paint', 'largest-contentful-paint', 'total-blocking-time', 'cumulative-layout-shift', 'speed-index']
+                .map(key => [key, report.audits[key]?.displayValue ?? 'n/a'])
+            );
+            console.log(JSON.stringify({ device, scores, metrics }, null, 2));
+          }
+          NODE
+
+      - name: Upload audit reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: esquina-mix-quality-audit
+          path: artifacts/
+          if-no-files-found: warn
