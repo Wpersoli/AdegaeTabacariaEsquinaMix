@@ -55,6 +55,11 @@ function applyBusinessInfo(){
   document.querySelectorAll('[data-store-phone]').forEach(function(el){el.textContent=STORE.phoneDisplay});
   document.querySelectorAll('[data-store-whatsapp]').forEach(function(el){el.href='https://wa.me/'+String(STORE.whatsapp||'').replace(/\D/g,'')});
   var close=String(STORE.closes||'02:00'),open=String(STORE.opens||'10:00');
+  var close=String(STORE.closes||'02:00'),open=String(STORE.opens||'10:00');
+  var place=encodeURIComponent((STORE.name||'Esquina Mix')+', '+STORE.address);
+  document.querySelectorAll('[data-store-map-search]').forEach(function(el){el.href='https://www.google.com/maps/search/?api=1&query='+place});
+  document.querySelectorAll('[data-store-map-route]').forEach(function(el){el.href='https://www.google.com/maps/dir/?api=1&destination='+place});
+  document.querySelectorAll('[data-store-map-embed]').forEach(function(el){el.src='https://maps.google.com/maps?q='+encodeURIComponent(STORE.address)+'&output=embed'});
   var hourText={close:'Fecha às '+close,both:'Fecha '+close+' · abre '+open,
     'both-long':'⚡ Fecha às '+close+' · reabre às '+open};
   Object.keys(hourText).forEach(function(key){document.querySelectorAll('[data-store-hours="'+key+'"]').forEach(function(el){el.textContent=hourText[key]})});
@@ -62,9 +67,12 @@ function applyBusinessInfo(){
   if(schema){try{var data=JSON.parse(schema.textContent);data.telephone=STORE.telephone;data.address=data.address||{};
     data.address.streetAddress=STORE.streetAddress;data.address.addressLocality=STORE.city;
     data.address.addressRegion=STORE.region;data.address.postalCode=STORE.postalCode;
-    data.openingHoursSpecification=[{ '@type':'OpeningHoursSpecification',
-      dayOfWeek:['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
-      opens:STORE.opens,closes:STORE.closes}];schema.textContent=JSON.stringify(data)}catch(e){}}
+    var days=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+    data.hasMap='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(STORE.address);
+    data.openingHoursSpecification=[
+      { '@type':'OpeningHoursSpecification',dayOfWeek:days,opens:'00:00',closes:STORE.closes},
+      { '@type':'OpeningHoursSpecification',dayOfWeek:days,opens:STORE.opens,closes:'23:59'}
+    ];schema.textContent=JSON.stringify(data)}catch(e){}}
 }
 applyBusinessInfo();
 /* Fontes não bloqueiam a primeira pintura; a família final é aplicada após o download. */
@@ -349,7 +357,7 @@ var reviews=[]; /* ex.: {n:'Nome',t:'há 1 semana',x:'Texto da avaliação'} */
 /* Rota até a loja: geolocalização sob demanda (HTTPS), atualiza ao se deslocar >100 m e a cada >=30 s */
 (function(){
   var MAPS_KEY='', /* opcional: chave da Maps Embed API restrita por referrer (rota com trânsito oficial) */
-      DEST='Adega e Tabacaria Esquina Mix, R. São Francisco, 285, Vila Galvão, Guarulhos - SP',
+      DEST=(STORE.name||'Esquina Mix')+', '+STORE.address,
       btn=$('routeBtn'),st=$('routeStatus'),fr=$('mapFrame'),lnk=$('routeOpen'),modes=$('routeModes');
   if(!btn||!fr)return;
   var mode='driving',pos=null,last=null,watch=null,flg={driving:'d',walking:'w',bicycling:'b',transit:'r'};
