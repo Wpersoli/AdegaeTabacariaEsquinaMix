@@ -43,3 +43,8 @@ Projeto estatico. Basta conectar a branch `main` na Vercel; nao requer comando d
 - `assets/produtos/`: fotos padronizadas (800x800, fundo branco, WebP). No `catalog` do `app.js`, use `img:'assets/produtos/arquivo.webp'`.
 - `tools/coletar_imagens.py`: coleta e padroniza novas fotos (requer Pillow). Confirme os direitos de uso das imagens antes de publicar.
 - Os precos dos itens com foto (ids 12+) sao EXEMPLO e precisam ser substituidos pelos reais.
+
+## App instalável (PWA)
+- `manifest.webmanifest` + `sw.js` + `assets/icon-*.png`: o site pode ser instalado como app/atalho.
+- O convite aparece depois da confirmação +18 (Android/Chrome/Edge: botão nativo; iPhone/iPad: passo a passo). "Agora não" silencia por 7 dias.
+- Ao publicar mudanças grandes, aumente `VERSAO` no `sw.js` para renovar o cache dos visitantes.

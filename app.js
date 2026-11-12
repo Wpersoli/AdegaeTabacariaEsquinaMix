@@ -240,6 +240,35 @@ var qt;$('q').addEventListener('input',function(){var v=this.value;clearTimeout(
   document.addEventListener('click',function(e){if(!m.contains(e.target)&&!nav.contains(e.target))close()});
   window.addEventListener('scroll',function(){if(!m.hidden)close()},{passive:true});nav.addEventListener('scroll',close,{passive:true});window.addEventListener('resize',close);
 })();
+
+/* Convite para instalar o app: Android/Chrome/Edge usam o botao nativo; iPhone/iPad mostram o passo a passo "Adicionar a Tela de Inicio" */
+(function(){
+  var KEY='esquinaMixInstall',DIAS=7,dp=null,el=null,shown=false,tm,
+      ios=/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1),
+      standalone=window.matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+  if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'))window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})});
+  if(standalone)return;
+  var snooze=function(d){save(KEY,String(Date.now()+d*864e5))},muted=function(){var t=+load(KEY);return !!t&&Date.now()<t};
+  function hide(){if(el){el.remove();el=null}}
+  function schedule(ms){clearTimeout(tm);tm=setTimeout(maybe,ms)}
+  function node(tag,cls,txt){var n=document.createElement(tag);if(cls)n.className=cls;if(txt)n.textContent=txt;return n}
+  function maybe(){if(shown||muted()||!gate.hidden||(!dp&&!ios))return;shown=true;
+    el=node('div','pwa');el.setAttribute('role','dialog');el.setAttribute('aria-label','Instalar aplicativo');
+    var ic=node('img','pwa__ic');ic.src='assets/icon-192.png';ic.alt='';ic.width=48;ic.height=48;el.appendChild(ic);
+    var tx=node('div','pwa__tx');tx.appendChild(node('strong','','Instale o app da Esquina Mix'));tx.appendChild(node('span','',ios?'Adicione à tela inicial e peça mais rápido, sem digitar o endereço.':'Abra direto da tela inicial do seu aparelho e peça mais rápido.'));
+    var steps=null;if(ios){steps=node('ol','pwa__st');steps.hidden=true;['Toque em Compartilhar (o quadrado com a seta para cima) na barra do navegador.','Role a lista e toque em “Adicionar à Tela de Início”.','Toque em “Adicionar”. Pronto!'].forEach(function(t){steps.appendChild(node('li','',t))});tx.appendChild(steps)}
+    el.appendChild(tx);
+    var ac=node('div','pwa__ac'),go=node('button','pwa__go',ios?'Como instalar':'Instalar');go.type='button';
+    go.onclick=function(){if(ios){steps.hidden=!steps.hidden;go.textContent=steps.hidden?'Como instalar':'Entendi';if(steps.hidden){snooze(30);hide()}return}
+      if(!dp)return;dp.prompt();dp.userChoice.then(function(c){dp=null;snooze(c&&c.outcome==='accepted'?365:DIAS);hide()},function(){hide()})};
+    var no=node('button','pwa__x','Agora não');no.type='button';no.onclick=function(){snooze(DIAS);hide()};
+    ac.appendChild(go);ac.appendChild(no);el.appendChild(ac);document.body.appendChild(el)}
+  window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();dp=e;schedule(4000)});
+  window.addEventListener('appinstalled',function(){snooze(365);hide()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&el){snooze(DIAS);hide()}});
+  $('yes').addEventListener('click',function(){schedule(6000)});
+  if(gate.hidden&&ios)schedule(7000);
+})();
 document.addEventListener('keydown',function(e){if(e.key==='Escape')toggle(false)});
 
 /* Ranking, marcas e avaliações — EDITE os dados abaixo */

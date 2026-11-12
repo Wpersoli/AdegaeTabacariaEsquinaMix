@@ -1,0 +1,19 @@
+{
+  "name": "Esquina Mix | Adega e Tabacaria",
+  "short_name": "Esquina Mix",
+  "description": "Cardápio digital da Adega e Tabacaria Esquina Mix em Guarulhos. Escolha e peça pelo WhatsApp.",
+  "id": "/",
+  "start_url": "/?utm_source=app",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "lang": "pt-BR",
+  "background_color": "#07050c",
+  "theme_color": "#ec1ab5",
+  "categories": ["food", "shopping"],
+  "icons": [
+    { "src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
