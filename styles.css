@@ -36,16 +36,6 @@ button{font:inherit;cursor:pointer;border:0;color:inherit;background:none}
 @keyframes shine{40%,100%{transform:translateX(120%)}}
 .hero-cta{position:absolute;left:clamp(12px,6.5%,120px);bottom:clamp(14px,6%,60px);line-height:1;background:var(--gold);color:#1a1030;text-decoration:none;font:400 clamp(12px,1.3vw,17px) "Bowlby One",sans-serif;text-transform:uppercase;padding:14px 22px;border-radius:8px;box-shadow:0 6px 0 #a8791a;z-index:2;animation:pulse 2.4s infinite}
 @keyframes pulse{50%{transform:translateY(-3px)}}
-.menu{padding:clamp(28px,5vw,64px) clamp(10px,3vw,60px)}
-.menu h2{font:400 clamp(24px,3vw,38px) "Bowlby One",sans-serif;text-transform:uppercase;margin-bottom:22px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr));gap:18px}
-.card{background:var(--nav);border:1px solid #3a2466;border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:6px}
-.card small{color:var(--cyan);font:700 11px "Space Mono",monospace;text-transform:uppercase}
-.card h3{font:700 18px "Space Grotesk",sans-serif}
-.card .p{margin-top:auto;font:700 20px "Space Grotesk",sans-serif;color:var(--gold)}
-.card button{margin-top:8px;background:var(--pink);color:var(--cream);border-radius:8px;padding:11px;font:400 13px "Bowlby One",sans-serif;text-transform:uppercase}
-.card button:hover{background:var(--hot)}
-.empty{grid-column:1/-1;color:#bdb2d6}
 footer{text-align:center;padding:40px 16px;background:#0b0713;color:#bdb2d6;font-size:14px;display:grid;gap:8px;justify-items:center}
 .veil{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:40}
 .drawer{position:fixed;top:0;right:0;height:100%;width:min(100vw,400px);background:var(--nav);z-index:50;display:flex;flex-direction:column;padding:18px;gap:12px}
@@ -225,3 +215,17 @@ footer{background:#030708;padding:0;display:block;text-align:left;color:var(--ca
 
 /* Telas muito estreitas (320-400px): evita a bolinha da sacola vazar da tela */
 @media(max-width:400px){.top{padding-left:16px;padding-right:16px}.ico em{top:-6px;right:-6px}.brand{gap:10px}.brand img{width:64px}}
+
+
+/* ===== Revisão: acessibilidade, toque e desempenho mobile ===== */
+html{scroll-padding-top:120px}
+@media(max-width:900px){html{scroll-padding-top:165px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:8px;top:-64px;z-index:200;background:var(--gold);color:#1a1030;padding:10px 14px;border-radius:8px;font-weight:700;text-decoration:none}
+.skip:focus{top:8px}
+.drawer{height:100dvh;padding-bottom:max(18px,env(safe-area-inset-bottom,0px))}
+#items .q button{width:40px;height:40px;border-radius:8px}
+.hint{opacity:.8}
+.prod-cat,.rank-i small,.rev-card small{opacity:.85}
+@media(hover:none){.fleet__i,.fleet__i::after{animation:none!important}}

@@ -4,9 +4,8 @@ Cardapio digital responsivo, sem framework e sem dependencias de build.
 
 ## Estrutura
 - `index.html`: estrutura da pagina; `styles.css`: estilos; `app.js`: catalogo, busca, sacola e envio por WhatsApp.
-- `assets/esquina-mix-hero.webp`: banner panoramico oficial do hero (2048 x 684).
-- `assets/esquina-mix-logo.webp` + `@2x`: logo otimizada usada no cabecalho e rodape.
-- `assets/esquina-mix-logo-hd.png`: arquivo-fonte em alta resolucao da logo (nao e carregado diretamente pelo site; usar para reimpressao/novas artes).
+- `assets/hero-desktop.webp` / `hero-mobile.webp`: banners do hero. `assets/og-image.jpg`: imagem de compartilhamento (1200x630).
+- `design-src/`: artes-fonte (logo HD etc.). Fica no Git, mas NAO vai para o site (`.vercelignore`).
 - `assets/marcas/`: logos da secao "Frota oficial" (letreiro borda a borda, loop para a esquerda). Para incluir/remover marca, edite o array `brands` em `app.js` e adicione o `.webp` nessa pasta.
 - Animacao dos logos da frota: flutuacao escalonada, brilho que atravessa o bloco e destaque no hover, tudo em CSS (final do `styles.css`). Desativa sozinha com "reduzir movimento" do sistema.
 - Botoes flutuantes (canto direito): WhatsApp fixo e "voltar ao topo" logo acima (aparece apos rolar 400px). O numero do WhatsApp do botao vem da meta `esquina-whatsapp`. Os dois letreiros (barra "Retira no balcao" e "Frota oficial") correm em loop continuo para a esquerda, inclusive com "reduzir movimento" ativo.
@@ -26,3 +25,8 @@ O catalogo atual e demonstrativo; os valores e a disponibilidade devem ser confi
 
 ## Publicacao
 Projeto estatico. Basta conectar a branch `main` na Vercel; nao requer comando de build nem instalacao de pacotes.
+
+## Seguranca e deploy
+- `vercel.json`: CSP restritiva, HSTS, Permissions-Policy, COOP, nosniff. Se adicionar qualquer dominio externo (analytics, fontes, iframes), inclua-o na CSP.
+- `robots.txt` e `sitemap.xml` na raiz; ao trocar para dominio proprio, atualize canonical, og:url, sitemap e JSON-LD.
+- Horario de funcionamento: constantes `OPEN`/`CLOSE` no bloco "Status da loja" de `app.js` e no JSON-LD do `index.html`.
