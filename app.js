@@ -44,6 +44,29 @@ var catalog=[
 {id:39,cat:'bebidas',n:'Xeque Mate lata 355ml',p:6.9,img:'assets/produtos/bebida-mista-xeque-mate-lata-355ml.webp'}
 ];
 var $=function(i){return document.getElementById(i)};
+var businessMeta=document.querySelector('meta[name="esquina-business"]');
+var STORE={whatsapp:'5511917221039',phoneDisplay:'(11) 91722-1039',telephone:'+55 11 91722-1039',
+  address:'R. São Francisco, 285 – Vila Galvão, Guarulhos – SP, 07071-010',
+  streetAddress:'R. São Francisco, 285',city:'Guarulhos',region:'SP',postalCode:'07071-010',
+  opens:'10:00',closes:'02:00'};
+try{if(businessMeta)Object.assign(STORE,JSON.parse(businessMeta.content||'{}'))}catch(e){}
+function applyBusinessInfo(){
+  document.querySelectorAll('[data-store-address]').forEach(function(el){el.textContent=STORE.address});
+  document.querySelectorAll('[data-store-phone]').forEach(function(el){el.textContent=STORE.phoneDisplay});
+  document.querySelectorAll('[data-store-whatsapp]').forEach(function(el){el.href='https://wa.me/'+String(STORE.whatsapp||'').replace(/\D/g,'')});
+  var close=String(STORE.closes||'02:00'),open=String(STORE.opens||'10:00');
+  var hourText={close:'Fecha às '+close,both:'Fecha '+close+' · abre '+open,
+    'both-long':'⚡ Fecha às '+close+' · reabre às '+open};
+  Object.keys(hourText).forEach(function(key){document.querySelectorAll('[data-store-hours="'+key+'"]').forEach(function(el){el.textContent=hourText[key]})});
+  var schema=document.getElementById('storeSchema');
+  if(schema){try{var data=JSON.parse(schema.textContent);data.telephone=STORE.telephone;data.address=data.address||{};
+    data.address.streetAddress=STORE.streetAddress;data.address.addressLocality=STORE.city;
+    data.address.addressRegion=STORE.region;data.address.postalCode=STORE.postalCode;
+    data.openingHoursSpecification=[{ '@type':'OpeningHoursSpecification',
+      dayOfWeek:['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
+      opens:STORE.opens,closes:STORE.closes}];schema.textContent=JSON.stringify(data)}catch(e){}}
+}
+applyBusinessInfo();
 var save=function(k,v){try{localStorage.setItem(k,v)}catch(e){}};
 var load=function(k){try{return localStorage.getItem(k)}catch(e){return null}};
 var cat='todos',term='',cart={};
@@ -153,7 +176,7 @@ $('send').onclick=function(){
   catalog.forEach(function(x){var q=cart[x.id];if(q){l.push(q+'x '+x.n+' — '+brl(q*x.p));t+=q*x.p}});
   if(!t){if(status)status.textContent='Adicione pelo menos um produto antes de enviar.';return}
   l.push('*Total: '+brl(t)+'*');
-  var m=document.querySelector('meta[name="esquina-whatsapp"]'),num=((m&&m.content)||'').replace(/\D/g,'');
+  var num=String(STORE.whatsapp||'').replace(/\D/g,'');
   if(!/^55\d{10,11}$/.test(num)){if(status)status.textContent='O WhatsApp da loja está indisponível no momento. Entre em contato pelo telefone informado no rodapé.';return}
   var url='https://wa.me/'+num+'?text='+encodeURIComponent(l.join('\n'));
   try{var popup=window.open(url,'_blank');if(popup){popup.opener=null;if(status)status.textContent='Pedido preparado. Confira a mensagem no WhatsApp antes de enviar.'}else{if(status)status.textContent='O navegador bloqueou a nova janela. Abrindo o WhatsApp nesta aba…';window.location.assign(url)}}catch(err){if(status)status.textContent='Não foi possível abrir o WhatsApp. Verifique sua conexão e tente novamente.'}
@@ -282,9 +305,9 @@ var reviews=[]; /* ex.: {n:'Nome',t:'há 1 semana',x:'Texto da avaliação'} */
     c.innerHTML='<header><span class="av"></span><div><strong></strong><small></small></div></header><div class="st">★★★★★</div><p></p>';
     c.querySelector('.av').textContent=v.n.charAt(0);c.querySelector('strong').textContent=v.n;c.querySelector('small').textContent=v.t;c.querySelector('p').textContent=v.x;r.appendChild(c)});
 })();
-/* Botoes flutuantes: WhatsApp (numero vem da meta esquina-whatsapp) e voltar ao topo */
+/* Botoes flutuantes: WhatsApp (numero vem da configuração comercial central) e voltar ao topo */
 (function(){
-  var wa=$('waFab'),up=$('toTop'),mm=document.querySelector('meta[name="esquina-whatsapp"]'),num=((mm&&mm.content)||'').replace(/\D/g,'');
+  var wa=$('waFab'),up=$('toTop'),num=String(STORE.whatsapp||'').replace(/\D/g,'');
   if(wa&&num)wa.href='https://wa.me/'+num+'?text='+encodeURIComponent('Ol\u00e1! Vim pelo card\u00e1pio digital da Esquina Mix.');
   if(!up)return;
   var on=false,busy=false;
@@ -362,7 +385,7 @@ var reviews=[]; /* ex.: {n:'Nome',t:'há 1 semana',x:'Texto da avaliação'} */
 (function(){var b=$('bar');if(!b)return;function set(){document.documentElement.style.setProperty('--bar-h',b.offsetHeight+'px')}set();if(window.ResizeObserver)new ResizeObserver(set).observe(b);else window.addEventListener('resize',set)})();
 /* Status da loja (horário de Brasília): aberto das OPEN às CLOSE, virando a meia-noite; atualiza a cada minuto */
 (function(){
-  var OPEN=10,CLOSE=2,dot=$('shopDot'),txt=$('shopTxt'),tr=$('shopTrust');
+  var OPEN=parseInt(String(STORE.opens||'10:00').split(':')[0],10),CLOSE=parseInt(String(STORE.closes||'02:00').split(':')[0],10),dot=$('shopDot'),txt=$('shopTxt'),tr=$('shopTrust');
   if(!dot||!txt)return;
   var fmt=new Intl.DateTimeFormat('pt-BR',{hour:'numeric',hourCycle:'h23',timeZone:'America/Sao_Paulo'}),
       hh=function(n){return ('0'+n).slice(-2)+':00'};
@@ -370,7 +393,8 @@ var reviews=[]; /* ex.: {n:'Nome',t:'há 1 semana',x:'Texto da avaliação'} */
     var h=parseInt(fmt.format(new Date()),10),open=h>=OPEN||h<CLOSE;
     dot.className='dot '+(open?'is-open':'is-closed');
     txt.textContent=open?'Esquina-Mix aberta • Fecha às '+hh(CLOSE):'Esquina-Mix fechada • Abre às '+hh(OPEN);
-    if(tr)tr.textContent=open?'Esquina-Mix aberta':'Esquina-Mix fechada'}
+    if(tr)tr.textContent=open?'Esquina-Mix aberta':'Esquina-Mix fechada';
+    document.querySelectorAll('[data-store-hours="status"]').forEach(function(el){el.textContent=open?'Aberto até '+hh(CLOSE)+' · reabre às '+hh(OPEN):'Fechado agora · abre às '+hh(OPEN)})}
   paint();setInterval(paint,60000);
 })();
 render();sync();
