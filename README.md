@@ -38,3 +38,8 @@ Projeto estatico. Basta conectar a branch `main` na Vercel; nao requer comando d
 
 ## Barra do topo
 - Cabeçalho + categorias ficam num bloco `.bar` (sticky): somem ao rolar para baixo e reaparecem ao rolar para cima, no desktop e no celular. Não esconde com a sacola aberta, com a busca em foco, logo após clicar numa categoria ou adicionar um item (a barra reaparece para mostrar a sacola). Respeita "reduzir movimento".
+
+## Fotos de produtos
+- `assets/produtos/`: fotos padronizadas (800x800, fundo branco, WebP). No `catalog` do `app.js`, use `img:'assets/produtos/arquivo.webp'`.
+- `tools/coletar_imagens.py`: coleta e padroniza novas fotos (requer Pillow). Confirme os direitos de uso das imagens antes de publicar.
+- Os precos dos itens com foto (ids 12+) sao EXEMPLO e precisam ser substituidos pelos reais.

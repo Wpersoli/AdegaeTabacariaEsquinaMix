@@ -264,3 +264,5 @@ body{overflow-x:clip}
 .bar{transition:transform .28s ease,box-shadow .28s ease;will-change:transform}
 .bar.is-hidden{transform:translateY(-100%);box-shadow:none}
 @media(prefers-reduced-motion:reduce){.bar{transition:none}}
+
+.prod-img--foto{background:#fff;overflow:hidden}.prod-img--foto img{width:100%;height:100%;object-fit:contain}

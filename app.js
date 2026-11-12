@@ -2,7 +2,7 @@
 'use strict';
 /* EDITE AQUI: catálogo (preços de exemplo — substitua pelos reais) */
 var catalog=[
-{id:1,cat:'bebidas',n:'Cerveja long neck 355ml',p:7.9,promo:1},
+{id:1,cat:'bebidas',n:'Cerveja long neck 355ml',p:7.9,promo:1}, /* para usar foto: adicione img:'assets/produtos/arquivo.webp' */
 {id:2,cat:'bebidas',n:'Energético 473ml',p:9.9},
 {id:3,cat:'bebidas',n:'Whisky 1L',p:129.9},
 {id:4,cat:'bebidas',n:'Vodka 900ml',p:44.9,promo:1},
@@ -12,7 +12,36 @@ var catalog=[
 {id:8,cat:'tabacos',n:'Seda king size',p:5.5},
 {id:9,cat:'tabacos',n:'Charuto',p:29.9},
 {id:10,cat:'headshop',n:'Isqueiro',p:6.9},
-{id:11,cat:'headshop',n:'Dichavador',p:19.9}
+{id:11,cat:'headshop',n:'Dichavador',p:19.9},
+/* Produtos com foto (ids 12+). ATENCAO: precos abaixo sao EXEMPLO, substitua pelos reais */
+{id:12,cat:'bebidas',n:'Cerveja Brahma Duplo Malte lata 350ml',p:4.5,img:'assets/produtos/cerveja-brahma-duplo-malte-lata-350ml.webp'},
+{id:13,cat:'bebidas',n:'Cerveja Budweiser lata 269ml',p:3.9,promo:1,img:'assets/produtos/cerveja-budweiser-lata-269ml.webp'},
+{id:14,cat:'bebidas',n:'Cerveja Eisenbahn Pilsen lata 350ml',p:5.5,img:'assets/produtos/cerveja-eisenbahn-pilsen-lata-350ml.webp'},
+{id:15,cat:'bebidas',n:'Cerveja Império Puro Malte lata 269ml',p:3.5,img:'assets/produtos/cerveja-imperio-puro-malte-lata-269ml.webp'},
+{id:16,cat:'bebidas',n:'Cerveja Original Pilsen lata 269ml',p:4.5,img:'assets/produtos/cerveja-original-pilsen-lata-269ml.webp'},
+{id:17,cat:'bebidas',n:'Cerveja Petra Puro Malte lata 269ml',p:3.5,img:'assets/produtos/cerveja-petra-puro-malte-lata-269ml.webp'},
+{id:18,cat:'bebidas',n:'Cerveja Amstel Puro Malte lata 269ml',p:3.9,img:'assets/produtos/cerveja-amstel-puro-malte-lata-269ml.webp'},
+{id:19,cat:'bebidas',n:'Cerveja Michelob Ultra lata 350ml',p:5.9,img:'assets/produtos/cerveja-michelob-ultra-lata-350ml.webp'},
+{id:20,cat:'bebidas',n:'Cerveja Blue Moon lata 350ml',p:7.9,img:'assets/produtos/cerveja-blue-moon-lata-350ml.webp'},
+{id:21,cat:'bebidas',n:'Cerveja Lagunitas IPA lata 350ml',p:8.9,img:'assets/produtos/cerveja-lagunitas-ipa-lata-350ml.webp'},
+{id:22,cat:'bebidas',n:'Cerveja Lagunitas Day Time Session IPA lata 350ml',p:8.9,img:'assets/produtos/cerveja-lagunitas-day-time-session-ipa-lata-350ml.webp'},
+{id:23,cat:'bebidas',n:'Cerveja Dogma IPA lata 355ml',p:8.5,img:'assets/produtos/cerveja-dogma-ipa-lata-355ml.webp'},
+{id:24,cat:'bebidas',n:'Cerveja Löhn Serra do Rio do Rastro IPA long neck 355ml',p:12.9,img:'assets/produtos/cerveja-lohn-serra-do-rio-do-rastro-ipa-long-neck-355ml.webp'},
+{id:25,cat:'bebidas',n:'Cerveja 1906 Black Coupage 330ml',p:9.9,img:'assets/produtos/cerveja-1906-black-coupage-330ml.webp'},
+{id:26,cat:'bebidas',n:'Cerveja Heineken 0.0 zero álcool lata 269ml',p:4.9,img:'assets/produtos/cerveja-heineken-0-0-zero-alcool-lata-269ml.webp'},
+{id:27,cat:'bebidas',n:'Cerveja Heineken 0.0 zero álcool lata 350ml',p:5.9,img:'assets/produtos/cerveja-heineken-0-0-zero-alcool-lata-350ml.webp'},
+{id:28,cat:'bebidas',n:'Cerveja Corona Sunbrew zero álcool long neck 330ml',p:6.9,img:'assets/produtos/cerveja-corona-sunbrew-zero-alcool-long-neck-330ml.webp'},
+{id:29,cat:'bebidas',n:'Cerveja Amnésia IPA sem álcool lata 350ml',p:9.9,img:'assets/produtos/cerveja-amnesia-ipa-sem-alcool-com-tempernos-lata-350ml.webp'},
+{id:30,cat:'bebidas',n:'Barril de cerveja Heineken 5 litros',p:129.9,img:'assets/produtos/barril-de-cerveja-heineken-5-litros.webp'},
+{id:31,cat:'bebidas',n:'Aperitivo Campari 998ml',p:69.9,img:'assets/produtos/aperitivo-campari-998ml.webp'},
+{id:32,cat:'bebidas',n:'Aperitivo Aperol 750ml',p:64.9,img:'assets/produtos/aperol-aperitivo-750ml.webp'},
+{id:33,cat:'bebidas',n:'Bob Pinga 975ml',p:29.9,img:'assets/produtos/bob-pinga-975ml.webp'},
+{id:34,cat:'bebidas',n:'Busca Brisa 1L',p:24.9,img:'assets/produtos/busca-brisa-1l.webp'},
+{id:35,cat:'bebidas',n:'Cabaré Ice frutas vermelhas long neck 275ml',p:7.9,promo:1,img:'assets/produtos/bebida-mista-cabare-ice-frutas-vermelhas-long-neck-275ml.webp'},
+{id:36,cat:'bebidas',n:'Cabaré Ice limão long neck 275ml',p:7.9,promo:1,img:'assets/produtos/cabare-ice-limao-long-neck-275ml.webp'},
+{id:37,cat:'bebidas',n:'Mascate Rum com caju lata 355ml',p:6.9,img:'assets/produtos/bebida-mista-mascate-run-com-caju-lata-355ml.webp'},
+{id:38,cat:'bebidas',n:'Chá de Cana lata 355ml',p:6.9,img:'assets/produtos/bebida-mista-xa-de-cana-lata-355ml.webp'},
+{id:39,cat:'bebidas',n:'Xeque Mate lata 355ml',p:6.9,img:'assets/produtos/bebida-mista-xeque-mate-lata-355ml.webp'}
 ];
 var $=function(i){return document.getElementById(i)};
 var save=function(k,v){try{localStorage.setItem(k,v)}catch(e){}};
@@ -40,8 +69,8 @@ function render(){
   if(!list.length){g.innerHTML='<p class="feat__empty">Nada encontrado. Tente outra busca.</p>';return}
   list.forEach(function(x){
     var c=document.createElement('article');c.className='prod-card';
-    c.innerHTML='<div class="prod-filete"></div>'+(x.promo?'<span class="prod-tag">Promo</span>':'')+'<div class="prod-img"><img src="assets/logo.webp" alt="" width="120" height="123" loading="lazy"></div><p class="prod-cat"></p><h3 class="prod-name"></h3><div class="prod-price"></div><button class="prod-buy">Comprar →</button>';
-    c.querySelector('.prod-cat').textContent=names[x.cat];c.querySelector('.prod-name').textContent=x.n;c.querySelector('.prod-price').textContent=brl(x.p);
+    c.innerHTML='<div class="prod-filete"></div>'+(x.promo?'<span class="prod-tag">Promo</span>':'')+'<div class="prod-img'+(x.img?' prod-img--foto':'')+'"><img src="'+(x.img||'assets/logo.webp')+'" alt="" width="'+(x.img?800:120)+'" height="'+(x.img?800:123)+'" loading="lazy"></div><p class="prod-cat"></p><h3 class="prod-name"></h3><div class="prod-price"></div><button class="prod-buy">Comprar →</button>';
+    c.querySelector('.prod-cat').textContent=names[x.cat];c.querySelector('.prod-name').textContent=x.n;c.querySelector('img').alt=x.img?x.n:'';c.querySelector('.prod-price').textContent=brl(x.p);
     var buy=c.querySelector('.prod-buy');buy.setAttribute('aria-label','Adicionar '+x.n+' à sacola');
     buy.onclick=function(){add(x.id);buy.textContent='Adicionado ✓';clearTimeout(buy.t);buy.t=setTimeout(function(){buy.textContent='Comprar →'},1200)};
     g.appendChild(c)})}
