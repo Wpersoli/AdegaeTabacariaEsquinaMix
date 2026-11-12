@@ -329,11 +329,15 @@ var reviews=[]; /* ex.: {n:'Nome',t:'há 1 semana',x:'Texto da avaliação'} */
     var all=[].slice.call(track.children);f=document.createDocumentFragment();
     all.forEach(function(k){var c=k.cloneNode(true);c.setAttribute('aria-hidden','true');f.appendChild(c)});
     track.appendChild(f);
-    track.style.animationDuration=Math.max(12,track.getBoundingClientRect().width/2/70)+'s';
+    function setDuration(){
+      var mobile=window.matchMedia&&window.matchMedia('(max-width:700px)').matches;
+      track.style.animationDuration=mobile?'68s':Math.max(12,track.getBoundingClientRect().width/2/70)+'s';
+    }
+    setDuration();
+    window.addEventListener('resize',setDuration,{passive:true});
     box.addEventListener('touchstart',function(){track.classList.add('is-paused')},{passive:true});
     ['touchend','touchcancel'].forEach(function(ev){box.addEventListener(ev,function(){track.classList.remove('is-paused')},{passive:true})})}
   slide(document.querySelector('#mq .mq-t'));slide(bt);
-  if(window.matchMedia&&window.matchMedia('(max-width:700px)').matches){document.querySelectorAll('.mq-t,.fleet__t').forEach(function(track){track.style.animationDuration='68s'})}
   /* Economiza frames fora da viewport e quando a aba perde visibilidade. */
   (function motionLifecycle(){
     var targets=[document.querySelector('.hero'),document.querySelector('.mq'),document.querySelector('.fleet')].filter(Boolean);
