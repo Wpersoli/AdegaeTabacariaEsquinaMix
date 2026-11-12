@@ -20,7 +20,8 @@ button{font:inherit;cursor:pointer;border:0;color:inherit;background:none}
 .ico em{position:absolute;top:-8px;right:-8px;min-width:20px;height:20px;border-radius:10px;background:#d6204f;color:#fff;font:700 11px/20px "Space Mono",monospace;text-align:center;font-style:normal}
 .nav{display:flex;background:var(--nav);overflow-x:auto;scrollbar-width:none;padding:0 clamp(10px,3vw,60px)}
 .nav::-webkit-scrollbar{display:none}
-.nav button{flex:none;padding:14px clamp(14px,2vw,28px);font:400 clamp(13px,1.2vw,16px) "Bowlby One",sans-serif;text-transform:uppercase;white-space:nowrap;color:#e9e1d4}
+.nav>:first-child{margin-left:auto}.nav>:last-child{margin-right:auto}
+.nav button{flex:none;padding:12px clamp(10px,1.5vw,22px);font:400 clamp(11px,.7vw + 4px,14px) "Bowlby One",sans-serif;letter-spacing:.2px;text-transform:uppercase;white-space:nowrap;color:#e9e1d4}
 .nav button.on,.nav .pink{background:var(--pink);color:var(--cream)}
 .nav .green{background:var(--green);color:#10281f}
 .nav button:not(.on):not(.pink):not(.green):hover{color:var(--gold)}
@@ -237,7 +238,7 @@ body{overflow-x:clip}
   .top{padding-top:6px;padding-bottom:6px;row-gap:8px}
   .brand img{width:56px}.brand-t b{font-size:22px}.brand-t b+b{font-size:18px}
   .brand-t small{margin-top:3px;font-size:10px}
-  .search{height:42px}.nav button{padding:11px 14px}
+  .search{height:42px}.nav button{padding:11px clamp(9px,2.6vw,14px)}
 }
 @media(max-width:400px){.brand img{width:48px}.brand{gap:8px}}
 
@@ -290,7 +291,7 @@ body{overflow-x:clip}
 .sug__more{justify-content:center;font-weight:700;color:var(--pink)}
 .sug__empty{padding:12px;color:#555;font:500 14px "DM Sans",sans-serif}
 
-.nav button.has-sub::after{content:"▾";display:inline-block;margin-left:6px;font-size:.8em;transition:transform .2s}
+.nav button.has-sub::after{content:"▾";display:inline-block;margin-left:4px;font-size:.8em;transition:transform .2s}
 .nav button.has-sub[aria-expanded="true"]::after{transform:rotate(180deg)}
 .mega{position:fixed;z-index:90;min-width:250px;max-width:calc(100vw - 16px);overflow:auto;padding:8px;background:var(--nav);border:2px solid var(--pink);border-top-width:3px;border-radius:0 0 14px 14px;box-shadow:0 18px 40px rgba(0,0,0,.65);transform-origin:top;animation:megaIn .18s ease-out}
 .mega[hidden]{display:none}
@@ -318,3 +319,11 @@ body{overflow-x:clip}
 @keyframes pwaIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 @media(min-width:700px){.pwa{left:20px;right:auto;bottom:20px;margin:0}}
 @media(prefers-reduced-motion:reduce){.pwa{animation:none}}
+
+.nav .tag{font-size:9px;padding:2px 5px;margin-left:4px;vertical-align:1px}
+/* Menu do topo em telas estreitas: quebra em linhas centralizadas (todas as opcoes visiveis, sem rolagem lateral) */
+@media(max-width:860px){
+  .nav{flex-wrap:wrap;justify-content:center;overflow:visible;padding:2px clamp(6px,2vw,24px)}
+  .nav>:first-child{margin-left:0}.nav>:last-child{margin-right:0}
+  .nav button{padding:9px clamp(8px,2.4vw,13px);font-size:clamp(10.5px,2.5vw,12.5px)}
+}
