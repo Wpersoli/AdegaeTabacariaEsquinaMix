@@ -79,7 +79,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')toggle(false
 
 /* Ranking, marcas e avaliações — EDITE os dados abaixo */
 var topIds=[1,2,4,5,3,6,9,10];
-var brands=['Heineken','Brahma','Skol','Red Bull','Jack Daniel\u2019s','Absolut','Zomo','Ballantine\u2019s'];
+var brands=[{n:'Girls in Green',f:'girls-in-green'},{n:'Papelito',f:'papelito'},{n:'Smoking',f:'smoking'},{n:'ZGY Brasil',f:'zgy-brasil'},{n:'Zomo',f:'zomo'},{n:'OCB',f:'ocb'},{n:'Pay-Pay',f:'pay-pay'},{n:'Sadhu',f:'sadhu'}];
 var reviews=[]; /* ex.: {n:'Nome',t:'há 1 semana',x:'Texto da avaliação'} */
 (function(){
   var tr=$('rankTrack');
@@ -93,7 +93,7 @@ var reviews=[]; /* ex.: {n:'Nome',t:'há 1 semana',x:'Texto da avaliação'} */
   tr.addEventListener('pointerdown',function(e){if(e.pointerType!=='mouse')return;d=1;sx=e.clientX;sl=tr.scrollLeft;tr.classList.add('is-grabbing')});
   window.addEventListener('pointermove',function(e){if(d)tr.scrollLeft=sl-(e.clientX-sx)});
   window.addEventListener('pointerup',function(){d=0;tr.classList.remove('is-grabbing')});
-  var bt=$('brandsT');brands.forEach(function(n){var s=document.createElement('span');s.textContent=n;bt.appendChild(s)});
+  var bt=$('brandsT');brands.forEach(function(b){var s=document.createElement('span');s.className='fleet__i fleet__i--'+b.f;var im=document.createElement('img');im.src='assets/marcas/'+b.f+'.webp';im.alt=b.n;im.decoding='async';s.appendChild(im);bt.appendChild(s)});
   /* letreiros: deslizam para a esquerda em loop contínuo; pausam com mouse/toque */
   function slide(track){var box=track.parentNode,base=[].slice.call(track.children),need=Math.max(window.screen.width||0,box.offsetWidth);
     for(var i=0;i<30&&track.getBoundingClientRect().width<need;i++)base.forEach(function(k){track.appendChild(k.cloneNode(true))});

@@ -138,8 +138,6 @@ footer p:first-of-type{font:400 20px "Bungee",sans-serif;color:var(--card)}
 .rank-i small{font:400 16px/1 "VT323",monospace;text-transform:uppercase;opacity:.7}
 .rank-i strong{font:700 14px/1.25 "DM Sans",sans-serif}.rank-i em{font:400 18px "Bungee",sans-serif;font-style:normal}
 .fleet{padding:40px 0 56px}
-.fleet__row{display:flex;gap:16px;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
-.fleet__row span{flex:none;padding:18px 28px;background:var(--card);color:var(--dk);border:3px solid var(--dk);border-radius:14px;box-shadow:0 4px 0 var(--dk);font:400 18px "Bungee",sans-serif;text-transform:uppercase;white-space:nowrap;animation:mq 28s linear infinite}
 .rev{position:relative;padding:48px 0}
 .rev::before{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(to bottom,rgba(255,255,255,.05) 0,rgba(255,255,255,.05) 1px,transparent 1px,transparent 4px)}
 .rev__inner{position:relative;display:grid;grid-template-columns:300px 1fr;gap:32px;align-items:start}
@@ -184,3 +182,13 @@ footer{background:#030708;padding:0;display:block;text-align:left;color:var(--ca
 
 /* Acessibilidade: foco visível para teclado */
 :focus-visible{outline:3px solid #ffd23f;outline-offset:2px}
+
+/* Frota oficial: logos em letreiro borda a borda, deslizando para a esquerda em loop */
+.fleet__row{width:100%;max-width:none;margin:0;display:block;white-space:nowrap;overflow:hidden;-webkit-mask-image:none;mask-image:none}
+.fleet__t{display:inline-flex;align-items:center;width:max-content;animation:mq 28s linear infinite;will-change:transform}
+.fleet__i{flex:none;display:flex;align-items:center;justify-content:center;width:150px;height:116px;margin-right:16px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
+.fleet__i img{display:block;width:auto;height:auto;max-width:124px;max-height:80px;object-fit:contain;transition:transform .2s}
+.fleet__i:hover img{transform:scale(1.08)}
+.fleet__i--papelito img{filter:brightness(1.6) saturate(1.15)}
+@media(max-width:600px){.fleet__i{width:120px;height:96px;margin-right:12px}.fleet__i img{max-width:98px;max-height:64px}}
+@media(prefers-reduced-motion:reduce){.fleet__row{overflow-x:auto;scrollbar-width:thin}}

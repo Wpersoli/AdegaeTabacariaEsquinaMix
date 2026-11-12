@@ -7,6 +7,7 @@ Cardapio digital responsivo, sem framework e sem dependencias de build.
 - `assets/esquina-mix-hero.webp`: banner panoramico oficial do hero (2048 x 684).
 - `assets/esquina-mix-logo.webp` + `@2x`: logo otimizada usada no cabecalho e rodape.
 - `assets/esquina-mix-logo-hd.png`: arquivo-fonte em alta resolucao da logo (nao e carregado diretamente pelo site; usar para reimpressao/novas artes).
+- `assets/marcas/`: logos da secao "Frota oficial" (letreiro borda a borda, loop para a esquerda). Para incluir/remover marca, edite o array `brands` em `app.js` e adicione o `.webp` nessa pasta.
 - `assets/favicon.ico`, `favicon-48.png`, `apple-touch-icon.png`: icones gerados a partir da logo oficial.
 
 ## Identidade visual
