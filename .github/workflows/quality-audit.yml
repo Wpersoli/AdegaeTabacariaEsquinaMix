@@ -162,8 +162,26 @@ jobs:
               assert.equal(animatedBrandLogos.track, 'mq', name + ': brand marquee must move');
               assert.equal(animatedBrandLogos.float, 'fleetFloat', name + ': brand logos must orbit vertically');
               assert.equal(animatedBrandLogos.shine, 'fleetShine', name + ': brand logos must retain the moving highlight');
-              await page.locator('#marcas').scrollIntoViewIfNeeded();
-              await page.waitForTimeout(250);
+              await page.evaluate(() => {
+                document.documentElement.style.scrollBehavior='auto';
+                window.scrollTo({ top: document.documentElement.scrollHeight, left: 0, behavior: 'instant' });
+              });
+              await page.waitForFunction(() =>
+                document.querySelector('.mq')?.classList.contains('is-offscreen') &&
+                document.querySelector('.hero')?.classList.contains('is-offscreen'),
+                null,
+                { timeout: 3000 }
+              ).catch(async () => {
+                const state = await page.evaluate(() => ({
+                  scrollY: window.scrollY,
+                  pageHeight: document.documentElement.scrollHeight,
+                  tickerTop: document.querySelector('.mq')?.getBoundingClientRect().top,
+                  heroTop: document.querySelector('.hero')?.getBoundingClientRect().top,
+                  tickerClass: document.querySelector('.mq')?.className,
+                  heroClass: document.querySelector('.hero')?.className
+                }));
+                throw new Error(name + ': offscreen observer did not settle: ' + JSON.stringify(state));
+              });
               const offscreenPaused = await page.evaluate(() => ({
                 ticker: document.querySelector('.mq')?.classList.contains('is-offscreen') ?? false,
                 hero: document.querySelector('.hero')?.classList.contains('is-offscreen') ?? false
