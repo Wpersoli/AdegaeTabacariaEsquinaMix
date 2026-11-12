@@ -68,3 +68,51 @@ footer{text-align:center;padding:40px 16px;background:#0b0713;color:#bdb2d6;font
 @media(max-width:900px){.top{grid-template-columns:1fr auto;row-gap:10px}.search{grid-column:1/-1;order:3;height:46px}.brand img{width:72px}}
 @media(max-width:700px){.ticker{flex-direction:column;gap:2px;font-size:10px;text-align:center}.hero-cta{left:50%;transform:translateX(-50%);animation:none;bottom:14px;white-space:nowrap}.actions{gap:14px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important}}
+
+/* ===== Seções abaixo do hero — sistema tipográfico/estrutural da referência (Bungee + VT323 + DM Sans), cores Esquina Mix ===== */
+:root{--dk:#0e0820;--card:#f2e9d4;--accent:#f5b82e;--cold:#3ec8ff;--prim:#ec1ab5}
+.wrap{max-width:1320px;margin:0 auto;padding:0 24px}
+.mq{background:var(--bg);border-bottom:2px solid #2a1850;overflow:hidden;padding:14px 0;white-space:nowrap}
+.mq-t{display:inline-flex;gap:60px;padding-left:60px;animation:mq 30s linear infinite;font:400 18px "Bungee",sans-serif;text-transform:uppercase;color:var(--card)}
+.mq-t span:nth-child(3n+2){color:var(--accent)}.mq-t span:nth-child(3n){color:var(--cold)}
+@keyframes mq{to{transform:translateX(-50%)}}
+.trust{background:var(--card);color:var(--dk);padding:28px 0;border-bottom:4px solid var(--dk)}
+.trust .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.trust-item{display:flex;align-items:center;gap:14px;padding:6px 18px;border-right:2px dashed rgba(14,8,32,.2)}
+.trust-item:last-child{border-right:0}
+.trust-icon{width:54px;height:54px;flex-shrink:0;background:var(--dk);border:3px solid var(--dk);border-radius:50%;display:grid;place-items:center;color:var(--card)}
+.trust-icon svg{width:28px;height:28px}
+.trust-text strong{display:block;font:400 16px "Bungee",sans-serif;text-transform:uppercase;letter-spacing:.02em}
+.trust-text span{display:block;font:400 16px "VT323",ui-monospace,monospace;color:var(--dk);letter-spacing:.04em;text-transform:uppercase}
+.feat{padding:72px 0}
+.feat__head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:22px}
+.feat__eyebrow{font:400 22px/1 "VT323",ui-monospace,monospace;text-transform:uppercase;letter-spacing:.04em;color:var(--cold);margin:0 0 6px}
+.feat__title{font:400 clamp(36px,4vw,56px)/.98 "Bungee",sans-serif;text-transform:uppercase;color:#fff}
+.feat__title .hl{color:var(--accent)}
+.feat__cta{flex:none;text-decoration:none;white-space:nowrap;background:var(--prim);color:var(--card);font:400 13px "Bungee",sans-serif;text-transform:uppercase;padding:.7rem 1.1rem;border:3px solid var(--dk);border-radius:10px;box-shadow:0 3px 0 var(--dk);transition:transform .15s}
+.feat__cta:hover{transform:translateY(-2px)}
+.feat__chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px}
+.feat-chip{font:400 13px/1 "Bungee",sans-serif;text-transform:uppercase;letter-spacing:.04em;padding:8px 14px;border:3px solid var(--dk);border-radius:999px;background:var(--card);color:var(--dk);white-space:nowrap;transition:transform .15s}
+.feat-chip:hover{transform:translateY(-2px)}
+.feat-chip.is-active{background:var(--prim);color:#fff}
+.feat-chip.is-warn{background:#ff2fa8;color:#fff}
+.feat__grid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+.feat__empty{grid-column:1/-1;font:400 16px "VT323",monospace;color:var(--card);opacity:.6;text-align:center;padding:24px}
+.prod-card{position:relative;display:flex;flex-direction:column;background:var(--card);color:var(--dk);border:3px solid var(--dk);border-radius:10px;box-shadow:0 3px 0 var(--dk);padding:10px;transition:transform .16s,box-shadow .16s}
+.prod-card:hover{transform:translateY(-3px);box-shadow:0 6px 0 var(--dk)}
+.prod-filete{height:5px;margin:-10px -10px 0;border-bottom:2px solid var(--dk);border-radius:7px 7px 0 0}
+.prod-card:nth-child(4n+1) .prod-filete{background:var(--prim)}.prod-card:nth-child(4n+2) .prod-filete{background:var(--accent)}
+.prod-card:nth-child(4n+3) .prod-filete{background:var(--cold)}.prod-card:nth-child(4n+4) .prod-filete{background:var(--green)}
+.prod-tag{position:absolute;top:14px;left:14px;z-index:2;font:400 10px/1 "Bungee",sans-serif;text-transform:uppercase;letter-spacing:.04em;padding:5px 8px;border:2px solid var(--dk);border-radius:999px;background:#ff2fa8;color:#fff}
+.prod-img{aspect-ratio:1;margin:10px 0;display:grid;place-items:center;background:#e4d8bb;border-radius:6px}
+.prod-img img{width:58%;height:auto}
+.prod-cat{font:400 16px/1 "VT323",monospace;text-transform:uppercase;letter-spacing:.04em;opacity:.7}
+.prod-name{font:700 14px/1.25 "DM Sans",sans-serif;margin:4px 0 8px;min-height:2.5em}
+.prod-price{margin-top:auto;font:400 20px "Bungee",sans-serif}
+.prod-buy{margin-top:10px;background:var(--prim);color:var(--card);border:3px solid var(--dk);border-radius:8px;padding:9px;font:400 12px "Bungee",sans-serif;text-transform:uppercase;box-shadow:0 3px 0 var(--dk)}
+.prod-buy:hover{background:var(--hot)}
+footer{border-top:4px solid var(--prim);font-family:"DM Sans",sans-serif}
+footer p:first-of-type{font:400 20px "Bungee",sans-serif;color:var(--card)}
+@media(max-width:1200px){.feat__grid{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:900px){.feat__grid{grid-template-columns:repeat(3,1fr)}.trust .wrap{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:0;scrollbar-width:none}.trust-item{flex:0 0 auto;scroll-snap-align:start}.feat{padding:48px 0}}
+@media(max-width:600px){.feat__grid{grid-template-columns:repeat(2,1fr);gap:10px}.feat__head{flex-direction:column;align-items:flex-start}.wrap{padding:0 14px}}

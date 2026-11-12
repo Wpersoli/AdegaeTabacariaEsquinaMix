@@ -34,14 +34,13 @@ function render(){
   var list=catalog.filter(function(x){
     var okCat=cat==='todos'||(cat==='promo'?x.promo:x.cat===cat);
     return okCat&&norm(x.n).indexOf(norm(term))>-1});
-  $('title').textContent=names[cat];
   var g=$('grid');g.textContent='';
-  if(!list.length){g.innerHTML='<p class="empty">Nada encontrado. Tente outra busca.</p>';return}
+  if(!list.length){g.innerHTML='<p class="feat__empty">Nada encontrado. Tente outra busca.</p>';return}
   list.forEach(function(x){
-    var c=document.createElement('article');c.className='card';
-    c.innerHTML='<small></small><h3></h3><div class="p"></div><button>Adicionar</button>';
-    c.children[0].textContent=names[x.cat];c.children[1].textContent=x.n;c.children[2].textContent=brl(x.p);
-    c.children[3].onclick=function(){cart[x.id]=(cart[x.id]||0)+1;sync(true)};
+    var c=document.createElement('article');c.className='prod-card';
+    c.innerHTML='<div class="prod-filete"></div>'+(x.promo?'<span class="prod-tag">Promo</span>':'')+'<div class="prod-img"><img src="assets/logo.webp" alt="" width="120" height="123" loading="lazy"></div><p class="prod-cat"></p><h3 class="prod-name"></h3><div class="prod-price"></div><button class="prod-buy">Comprar →</button>';
+    c.querySelector('.prod-cat').textContent=names[x.cat];c.querySelector('.prod-name').textContent=x.n;c.querySelector('.prod-price').textContent=brl(x.p);
+    c.querySelector('.prod-buy').onclick=function(){cart[x.id]=(cart[x.id]||0)+1;sync(true)};
     g.appendChild(c)})}
 
 /* Sacola */
@@ -69,11 +68,12 @@ $('send').onclick=function(){
   window.open('https://wa.me/'+num+'?text='+encodeURIComponent(l.join('\n')),'_blank','noopener')};
 
 /* Navegação e busca */
-$('nav').addEventListener('click',function(e){
-  var b=e.target.closest('button');if(!b)return;
-  cat=b.dataset.cat;
-  [].forEach.call($('nav').children,function(x){x.classList.toggle('on',x===b)});
-  render();document.getElementById('cardapio').scrollIntoView()});
+function setCat(c){cat=c;
+  [].forEach.call(document.querySelectorAll('#nav button'),function(x){x.classList.toggle('on',x.dataset.cat===c&&c!=='todos'?true:(c==='todos'&&x.textContent.trim()==='Início'))});
+  [].forEach.call($('chips').children,function(x){x.classList.toggle('is-active',x.dataset.cat===c)});
+  render()}
+$('nav').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;setCat(b.dataset.cat);document.getElementById('cardapio').scrollIntoView()});
+$('chips').addEventListener('click',function(e){var b=e.target.closest('button');if(b)setCat(b.dataset.cat)});
 $('q').addEventListener('input',function(){term=this.value;render()});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')toggle(false)});
 render();sync();
