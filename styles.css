@@ -67,7 +67,7 @@ footer{text-align:center;padding:40px 16px;background:#0b0713;color:#bdb2d6;font
 .gate .yes{background:var(--gold);color:#1a1030}.gate .no{background:#33244f}
 @media(max-width:900px){.top{grid-template-columns:1fr auto;row-gap:10px}.search{grid-column:1/-1;order:3;height:46px}.brand img{width:72px}}
 @media(max-width:700px){.ticker{flex-direction:column;gap:2px;font-size:10px;text-align:center}.hero-cta{left:50%;transform:translateX(-50%);animation:none;bottom:14px;white-space:nowrap}.actions{gap:14px}}
-@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+@media(prefers-reduced-motion:reduce){*:not(.mq-t):not(.fleet__t){animation:none!important}}
 
 /* ===== Seções abaixo do hero — sistema tipográfico/estrutural da referência (Bungee + VT323 + DM Sans), cores Esquina Mix ===== */
 :root{--dk:#0e0820;--card:#f2e9d4;--accent:#f5b82e;--cold:#3ec8ff;--prim:#ec1ab5}
@@ -190,7 +190,6 @@ footer{background:#030708;padding:0;display:block;text-align:left;color:var(--ca
 .fleet__i img{display:block;width:auto;height:auto;max-width:124px;max-height:80px;object-fit:contain;transition:transform .2s}
 .fleet__i--papelito img{filter:brightness(1.6) saturate(1.15)}
 @media(max-width:600px){.fleet__i{width:120px;height:96px;margin-right:12px}.fleet__i img{max-width:98px;max-height:64px}}
-@media(prefers-reduced-motion:reduce){.fleet__row{overflow-x:auto;scrollbar-width:thin}}
 
 /* Frota oficial: animacao dos logos (flutuar "em orbita", brilho que atravessa e destaque no hover) */
 @keyframes fleetFloat{0%{transform:translateY(-6px)}100%{transform:translateY(6px)}}
@@ -206,3 +205,23 @@ footer{background:#030708;padding:0;display:block;text-align:left;color:var(--ca
 .fleet__i:nth-child(8n+1)::after{animation-delay:0s}.fleet__i:nth-child(8n+2)::after{animation-delay:-.7s}.fleet__i:nth-child(8n+3)::after{animation-delay:-1.4s}.fleet__i:nth-child(8n+4)::after{animation-delay:-2.1s}
 .fleet__i:nth-child(8n+5)::after{animation-delay:-2.8s}.fleet__i:nth-child(8n+6)::after{animation-delay:-3.5s}.fleet__i:nth-child(8n+7)::after{animation-delay:-4.2s}.fleet__i:nth-child(8n+8)::after{animation-delay:-4.9s}
 @media(max-width:600px){.fleet__row{padding:12px 0}@keyframes fleetFloat{0%{transform:translateY(-4px)}100%{transform:translateY(4px)}}}
+
+/* Letreiros continuam correndo mesmo com "reduzir movimento"; so os efeitos decorativos sao desligados */
+@media(prefers-reduced-motion:reduce){.fleet__i::after,.fab--wa::after{animation:none!important}}
+
+/* Botoes flutuantes (canto direito): WhatsApp embaixo, voltar ao topo logo acima */
+.fab{position:fixed;z-index:30;display:grid;place-items:center;border-radius:50%;text-decoration:none;color:#fff;-webkit-tap-highlight-color:transparent}
+.fab--wa{right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));width:58px;height:58px;background:#25d366;box-shadow:0 6px 18px rgba(0,0,0,.45),0 0 0 3px rgba(7,5,12,.55);transition:transform .2s,background .2s}
+.fab--wa::after{content:"";position:absolute;inset:0;border-radius:50%;border:3px solid #25d366;animation:fabPulse 2.4s ease-out infinite;pointer-events:none}
+@keyframes fabPulse{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.55);opacity:0}}
+.fab--wa:hover{transform:scale(1.08);background:#1ebe5b}
+.fab--top{right:calc(max(16px,env(safe-area-inset-right,0px)) + 6px);bottom:calc(max(16px,env(safe-area-inset-bottom,0px)) + 70px);width:46px;height:46px;background:var(--pink);box-shadow:0 5px 14px rgba(0,0,0,.45),0 0 0 3px rgba(7,5,12,.55);opacity:0;visibility:hidden;transform:translateY(10px);transition:opacity .25s,transform .25s,visibility .25s,background .2s}
+.fab--top.is-on{opacity:1;visibility:visible;transform:none}
+.fab--top:hover{background:var(--hot);transform:translateY(-2px)}
+.fab:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.ft-bot{padding-bottom:100px}
+@media(max-width:600px){.fab--wa{width:54px;height:54px;right:max(14px,env(safe-area-inset-right,0px));bottom:max(14px,env(safe-area-inset-bottom,0px))}.fab--top{width:44px;height:44px;right:calc(max(14px,env(safe-area-inset-right,0px)) + 5px);bottom:calc(max(14px,env(safe-area-inset-bottom,0px)) + 66px)}}
+@media print{.fab{display:none}}
+
+/* Telas muito estreitas (320-400px): evita a bolinha da sacola vazar da tela */
+@media(max-width:400px){.top{padding-left:16px;padding-right:16px}.ico em{top:-6px;right:-6px}.brand{gap:10px}.brand img{width:64px}}
