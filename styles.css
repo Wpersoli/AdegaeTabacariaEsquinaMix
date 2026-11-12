@@ -4,7 +4,7 @@ html{scroll-behavior:smooth;scroll-padding-top:70px}
 body{background:var(--bg);color:var(--ink);font:16px/1.5 "DM Sans",system-ui,sans-serif;overflow-x:hidden}
 button{font:inherit;cursor:pointer;border:0;color:inherit;background:none}
 .ticker{background:var(--pink);color:#07050c;display:flex;justify-content:space-between;gap:12px;padding:8px clamp(10px,3vw,60px);font:700 12px "DM Sans",monospace;text-transform:uppercase;letter-spacing:.04em}
-.dot{display:inline-block;width:11px;height:11px;border-radius:50%;background:#e8173a;border:2px solid #07050c;margin-right:8px;vertical-align:-1px;animation:blink 1.6s infinite}
+.dot{display:inline-block;width:11px;height:11px;border-radius:50%;background:#e8173a;border:2px solid #07050c;margin-right:8px;vertical-align:-1px;animation:blink 2.8s ease-in-out infinite}
 @keyframes blink{50%{opacity:.35}}
 .top{display:grid;grid-template-columns:auto minmax(200px,1fr) auto;align-items:center;gap:clamp(12px,3vw,48px);padding:8px clamp(10px,3vw,60px);background:var(--bg);position:sticky;top:0;z-index:20}
 .brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:inherit}
@@ -32,12 +32,12 @@ button{font:inherit;cursor:pointer;border:0;color:inherit;background:none}
 .hero{position:relative;overflow:hidden;background:#12082a;line-height:0}
 .hero picture{display:block;width:100%;aspect-ratio:3/1}
 .hero img{display:block;width:100%;height:100%;object-fit:cover}
-.hero img{width:100%;height:auto;transform-origin:70% 50%;animation:kb 16s ease-in-out infinite alternate}
-@keyframes kb{to{transform:scale(1.045)}}
-.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.14) 50%,transparent 60%);transform:translateX(-120%);animation:shine 7s 1.5s infinite;pointer-events:none}
-@keyframes shine{40%,100%{transform:translateX(120%)}}
-.hero-cta{position:absolute;left:clamp(12px,6.5%,120px);bottom:clamp(14px,6%,60px);line-height:1;background:var(--gold);color:#1a1030;text-decoration:none;font:400 clamp(12px,1.3vw,17px) "Bungee",sans-serif;text-transform:uppercase;padding:14px 22px;border-radius:8px;box-shadow:0 6px 0 #a8791a;z-index:2;animation:pulse 2.4s infinite}
-@keyframes pulse{50%{transform:translateY(-3px)}}
+.hero img{width:100%;height:auto;transform-origin:70% 50%;animation:kb 26s ease-in-out infinite alternate}
+@keyframes kb{to{transform:scale(1.025)}}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.12) 50%,transparent 60%);transform:translateX(-120%);opacity:0;animation:shine 12s 1.5s ease-in-out infinite;pointer-events:none}
+@keyframes shine{0%,78%{transform:translateX(-120%);opacity:0}82%{opacity:.55}100%{transform:translateX(120%);opacity:0}}
+.hero-cta{position:absolute;left:clamp(12px,6.5%,120px);bottom:clamp(14px,6%,60px);line-height:1;background:var(--gold);color:#1a1030;text-decoration:none;font:400 clamp(12px,1.3vw,17px) "Bungee",sans-serif;text-transform:uppercase;padding:14px 22px;border-radius:8px;box-shadow:0 6px 0 #a8791a;z-index:2;animation:pulse 3.8s ease-in-out infinite}
+@keyframes pulse{0%,74%,100%{transform:translateY(0)}86%{transform:translateY(-2px)}}
 footer{text-align:center;padding:40px 16px;background:#0b0713;color:#bdb2d6;font-size:14px;display:grid;gap:8px;justify-items:center}
 .veil{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:40}
 .drawer{position:fixed;top:0;right:0;height:100%;width:min(100vw,400px);background:var(--nav);z-index:50;display:flex;flex-direction:column;padding:18px;gap:12px}
@@ -65,7 +65,7 @@ footer{text-align:center;padding:40px 16px;background:#0b0713;color:#bdb2d6;font
 :root{--dk:#0e0820;--card:#f2e9d4;--accent:#f5b82e;--cold:#3ec8ff;--prim:#ec1ab5}
 .wrap{max-width:1320px;margin:0 auto;padding:0 24px}
 .mq{background:var(--bg);border-bottom:2px solid #2a1850;overflow:hidden;padding:14px 0;white-space:nowrap}
-.mq-t{display:inline-flex;animation:mq 30s linear infinite;font:400 18px "Bungee",sans-serif;text-transform:uppercase;color:var(--card)}
+.mq-t{display:inline-flex;animation:mq 38s linear infinite;font:400 18px "Bungee",sans-serif;text-transform:uppercase;color:var(--card)}
 .mq-t span:nth-child(3n+2){color:var(--accent)}.mq-t span:nth-child(3n){color:var(--cold)}
 @keyframes mq{to{transform:translateX(-50%)}}
 .trust{background:var(--card);color:var(--dk);padding:28px 0;border-bottom:4px solid var(--dk)}
@@ -167,7 +167,7 @@ footer{background:#030708;padding:0;display:block;text-align:left;color:var(--ca
 /* Letreiros em loop (esquerda) — pausam ao passar o mouse */
 .mq-t span,.fleet__t span{flex:none}
 .mq-t span{margin-right:60px}
-.fleet__t{display:inline-flex;animation:mq 28s linear infinite;will-change:transform}
+.fleet__t{display:inline-flex;animation:mq 36s linear infinite;will-change:transform}
 .fleet__t span{margin-right:16px}
 .mq:hover .mq-t,.fleet__row:hover .fleet__t,.mq-t.is-paused,.fleet__t.is-paused{animation-play-state:paused}
 .fleet__row{display:block;white-space:nowrap;overflow:hidden}
@@ -177,25 +177,18 @@ footer{background:#030708;padding:0;display:block;text-align:left;color:var(--ca
 
 /* Frota oficial: logos em letreiro borda a borda, deslizando para a esquerda em loop */
 .fleet__row{width:100%;max-width:none;margin:0;padding:16px 0;display:block;white-space:nowrap;overflow:hidden;-webkit-mask-image:none;mask-image:none}
-.fleet__t{display:inline-flex;align-items:center;width:max-content;animation:mq 28s linear infinite;will-change:transform}
+.fleet__t{display:inline-flex;align-items:center;width:max-content;animation:mq 36s linear infinite;will-change:transform}
 .fleet__i{flex:none;display:flex;align-items:center;justify-content:center;width:150px;height:116px;margin-right:16px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
 .fleet__i img{display:block;width:auto;height:auto;max-width:124px;max-height:80px;object-fit:contain;transition:transform .2s}
 .fleet__i--papelito img{filter:brightness(1.6) saturate(1.15)}
 @media(max-width:600px){.fleet__i{width:120px;height:96px;margin-right:12px}.fleet__i img{max-width:98px;max-height:64px}}
 
 /* Frota oficial: animacao dos logos (flutuar "em orbita", brilho que atravessa e destaque no hover) */
-@keyframes fleetFloat{0%{transform:translateY(-6px)}100%{transform:translateY(6px)}}
-@keyframes fleetShine{0%,70%{transform:translateX(-140%) skewX(-18deg)}100%{transform:translateX(260%) skewX(-18deg)}}
-.fleet__i{position:relative;overflow:hidden;animation:fleetFloat 3.6s ease-in-out infinite alternate;transition:border-color .25s,box-shadow .25s,background .25s}
-.fleet__i::after{content:"";position:absolute;top:0;bottom:0;left:0;width:45%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.22),transparent);transform:translateX(-140%) skewX(-18deg);animation:fleetShine 5.6s ease-in-out infinite;pointer-events:none}
-.fleet__i img{position:relative;z-index:1;transition:transform .3s cubic-bezier(.2,.9,.3,1.4),filter .3s}
-.fleet__i:hover{border-color:var(--accent,#ffd23f);background:rgba(255,255,255,.09);box-shadow:0 0 22px rgba(236,26,181,.45)}
-.fleet__i:hover img{transform:scale(1.14) rotate(-3deg)}
-/* fases escalonadas (ciclo de 8 = nº de marcas; clones do loop ficam em fase, sem salto na emenda) */
-.fleet__i:nth-child(8n+1){animation-delay:0s}.fleet__i:nth-child(8n+2){animation-delay:-.45s}.fleet__i:nth-child(8n+3){animation-delay:-.9s}.fleet__i:nth-child(8n+4){animation-delay:-1.35s}
-.fleet__i:nth-child(8n+5){animation-delay:-1.8s}.fleet__i:nth-child(8n+6){animation-delay:-2.25s}.fleet__i:nth-child(8n+7){animation-delay:-2.7s}.fleet__i:nth-child(8n+8){animation-delay:-3.15s}
-.fleet__i:nth-child(8n+1)::after{animation-delay:0s}.fleet__i:nth-child(8n+2)::after{animation-delay:-.7s}.fleet__i:nth-child(8n+3)::after{animation-delay:-1.4s}.fleet__i:nth-child(8n+4)::after{animation-delay:-2.1s}
-.fleet__i:nth-child(8n+5)::after{animation-delay:-2.8s}.fleet__i:nth-child(8n+6)::after{animation-delay:-3.5s}.fleet__i:nth-child(8n+7)::after{animation-delay:-4.2s}.fleet__i:nth-child(8n+8)::after{animation-delay:-4.9s}
+/* Logos estáticos e nítidos: movimento contínuo fica somente no letreiro. */
+.fleet__i{position:relative;overflow:hidden;transition:border-color .2s ease,background-color .2s ease,box-shadow .2s ease}
+.fleet__i:hover{border-color:var(--accent,#ffd23f);background:rgba(255,255,255,.08);box-shadow:0 5px 14px rgba(236,26,181,.18)}
+.fleet__i img{position:relative;z-index:1;transition:transform .2s ease,filter .2s ease}
+.fleet__i:hover img{transform:scale(1.04)}
 @media(max-width:600px){.fleet__row{padding:12px 0}@keyframes fleetFloat{0%{transform:translateY(-4px)}100%{transform:translateY(4px)}}}
 
 /* Letreiros continuam correndo mesmo com "reduzir movimento"; so os efeitos decorativos sao desligados */
@@ -204,8 +197,8 @@ footer{background:#030708;padding:0;display:block;text-align:left;color:var(--ca
 /* Botoes flutuantes (canto direito): WhatsApp embaixo, voltar ao topo logo acima */
 .fab{position:fixed;z-index:30;display:grid;place-items:center;border-radius:50%;text-decoration:none;color:#fff;-webkit-tap-highlight-color:transparent}
 .fab--wa{right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));width:58px;height:58px;background:#25d366;box-shadow:0 6px 18px rgba(0,0,0,.45),0 0 0 3px rgba(7,5,12,.55);transition:transform .2s,background .2s}
-.fab--wa::after{content:"";position:absolute;inset:0;border-radius:50%;border:3px solid #25d366;animation:fabPulse 2.4s ease-out infinite;pointer-events:none}
-@keyframes fabPulse{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.55);opacity:0}}
+.fab--wa::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid #25d366;animation:fabPulse 3.4s ease-out infinite;pointer-events:none}
+@keyframes fabPulse{0%{transform:scale(1);opacity:.48}100%{transform:scale(1.42);opacity:0}}
 .fab--wa:hover{transform:scale(1.08);background:#1ebe5b}
 .fab--top{right:calc(max(16px,env(safe-area-inset-right,0px)) + 6px);bottom:calc(max(16px,env(safe-area-inset-bottom,0px)) + 70px);width:46px;height:46px;background:var(--pink);box-shadow:0 5px 14px rgba(0,0,0,.45),0 0 0 3px rgba(7,5,12,.55);opacity:0;visibility:hidden;transform:translateY(10px);transition:opacity .25s,transform .25s,visibility .25s,background .2s}
 .fab--top.is-on{opacity:1;visibility:visible;transform:none}
@@ -321,8 +314,8 @@ body{overflow-x:clip}
   .hero::after{display:none}
   .hero-cta{animation:none!important}
   .dot{animation:none!important}
-  .mq-t,.fleet__t{animation-duration:55s}
-  .fleet__i,.fleet__i::after,.fab--wa::after{animation:none!important}
+  .mq-t,.fleet__t{animation-duration:68s}
+  .fab--wa::after{animation-duration:4.2s}
 }
 @media(hover:none){.fleet__i:hover{box-shadow:none}.fleet__i:hover img{transform:none}}
 @media(prefers-reduced-motion:reduce){.mq-t,.fleet__t,.fab--wa::after{animation:none!important}.mq,.fleet__row{overflow-x:auto;scrollbar-width:none}.mq::-webkit-scrollbar,.fleet__row::-webkit-scrollbar{display:none}}
@@ -333,3 +326,26 @@ body{overflow-x:clip}
   .gate-box{box-shadow:0 8px 24px rgba(0,0,0,.28)}
 }
 @media(max-width:700px){.hero picture{aspect-ratio:2/3}}
+
+/* Pause loops decorativos quando a seção sai da viewport. */
+.hero.is-offscreen img,.hero.is-offscreen::after,
+.mq.is-offscreen .mq-t,.fleet.is-offscreen .fleet__t{
+  animation-play-state:paused!important;
+}
+html.is-document-hidden .hero img,
+html.is-document-hidden .hero::after,
+html.is-document-hidden .mq-t,
+html.is-document-hidden .fleet__t,
+html.is-document-hidden .fab--wa::after{
+  animation-play-state:paused!important;
+}
+/* Respeita a preferência de movimento reduzido em todo o site. */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation:none!important;
+    transition:none!important;
+    scroll-behavior:auto!important;
+  }
+  .mq,.fleet__row{overflow-x:auto;scrollbar-width:none}
+  .mq::-webkit-scrollbar,.fleet__row::-webkit-scrollbar{display:none}
+}
