@@ -142,7 +142,9 @@ function facets(base,q){
   (SUBS[cat]||[]).forEach(function(sb,i){var on=!!(subF&&subF.label===sb[0]),b=document.createElement('button');b.type='button';
     b.className='feat-chip'+(on?' is-active':'');b.dataset.i=i;b.setAttribute('aria-pressed',on?'true':'false');b.textContent=sb[0];box.appendChild(b)});
   if(q.mx!=null||q.mn!=null){var n=document.createElement('span');n.className='facet-note';n.textContent='Preço '+(q.mn!=null?'a partir de '+brl(q.mn)+' ':'')+(q.mx!=null?'até '+brl(q.mx):'');box.appendChild(n)}}
+var renderGeneration=0;
 function render(){
+  var generation=++renderGeneration;
   var q=parseTerm();
   var base=catalog.filter(function(x){
     var okCat=cat==='todos'||(cat==='promo'?x.promo:x.cat===cat);
@@ -151,14 +153,30 @@ function render(){
   var list=base.filter(matchSel);
   if(sortBy==='asc')list.sort(function(a,b){return a.p-b.p});else if(sortBy==='desc')list.sort(function(a,b){return b.p-a.p});else if(sortBy==='az')list.sort(function(a,b){return a.n.localeCompare(b.n,'pt-BR')});
   var g=$('grid');g.textContent='';
-  if(!list.length){g.innerHTML='<p class="feat__empty">'+(subF?'Ainda não temos itens em “'+subF.label+'” no cardápio digital. Pergunte pelo WhatsApp!':'Nada encontrado. Tente outra busca.')+'</p>';return}
-  list.forEach(function(x){
+  if(!list.length){g.setAttribute('aria-busy','false');g.innerHTML='<p class="feat__empty">'+(subF?'Ainda não temos itens em “'+subF.label+'” no cardápio digital. Pergunte pelo WhatsApp!':'Nada encontrado. Tente outra busca.')+'</p>';return}
+  g.setAttribute('aria-busy','true');
+  var cursor=0;
+  function createCard(x){
     var c=document.createElement('article');c.className='prod-card';
-    c.innerHTML='<div class="prod-filete"></div>'+(x.promo?'<span class="prod-tag">Promo</span>':'')+'<div class="prod-img'+(x.img?' prod-img--foto':'')+'"><img src="'+(x.img||'assets/logo.webp')+'" alt="" width="'+(x.img?800:120)+'" height="'+(x.img?800:123)+'" loading="lazy"></div><p class="prod-cat"></p><h3 class="prod-name"></h3><div class="prod-price"></div><button class="prod-buy">Comprar →</button>';
-    c.querySelector('.prod-cat').textContent=names[x.cat];c.querySelector('.prod-name').textContent=x.n;c.querySelector('img').alt=x.img?x.n:'';c.querySelector('.prod-price').textContent=brl(x.p);var productImage=c.querySelector('.prod-img img');productImage.decoding='async';productImage.onerror=function(){this.onerror=null;this.src='assets/logo.webp';this.closest('.prod-img').classList.remove('prod-img--foto')};
+    c.innerHTML='<div class="prod-filete"></div>'+(x.promo?'<span class="prod-tag">Promo</span>':'')+'<div class="prod-img'+(x.img?' prod-img--foto':'')+'"><img src="'+(x.img||'assets/logo.webp')+'" alt="" width="'+(x.img?800:120)+'" height="'+(x.img?800:123)+'" loading="lazy" decoding="async"></div><p class="prod-cat"></p><h3 class="prod-name"></h3><div class="prod-price"></div><button class="prod-buy">Comprar →</button>';
+    c.querySelector('.prod-cat').textContent=names[x.cat];c.querySelector('.prod-name').textContent=x.n;c.querySelector('img').alt=x.img?x.n:'';c.querySelector('.prod-price').textContent=brl(x.p);
+    var productImage=c.querySelector('.prod-img img');productImage.decoding='async';productImage.onerror=function(){this.onerror=null;this.src='assets/logo.webp';this.closest('.prod-img').classList.remove('prod-img--foto')};
     var buy=c.querySelector('.prod-buy');buy.setAttribute('aria-label','Adicionar '+x.n+' à sacola');
     buy.onclick=function(){add(x.id);buy.textContent='Adicionado ✓';clearTimeout(buy.t);buy.t=setTimeout(function(){buy.textContent='Comprar →'},1200)};
-    g.appendChild(c)})}
+    return c;
+  }
+  function appendBatch(){
+    if(generation!==renderGeneration)return;
+    var fragment=document.createDocumentFragment(),limit=Math.min(cursor+12,list.length);
+    while(cursor<limit)fragment.appendChild(createCard(list[cursor++]));
+    g.appendChild(fragment);
+    if(cursor<list.length){
+      if('requestIdleCallback' in window)requestIdleCallback(appendBatch,{timeout:120});
+      else setTimeout(appendBatch,32);
+    }else g.setAttribute('aria-busy','false');
+  }
+  appendBatch();
+}
 
 /* Sacola */
 function add(id){cart[id]=Math.min((cart[id]||0)+1,99);sync();document.dispatchEvent(new Event('cart:add'));if($('badge').animate)$('badge').animate([{transform:'scale(1.5)'},{transform:'scale(1)'}],{duration:250})}
