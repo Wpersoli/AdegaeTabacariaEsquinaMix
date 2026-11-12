@@ -47,7 +47,7 @@ function render(){
     g.appendChild(c)})}
 
 /* Sacola */
-function add(id){cart[id]=Math.min((cart[id]||0)+1,99);sync();if($('badge').animate)$('badge').animate([{transform:'scale(1.5)'},{transform:'scale(1)'}],{duration:250})}
+function add(id){cart[id]=Math.min((cart[id]||0)+1,99);sync();document.dispatchEvent(new Event('cart:add'));if($('badge').animate)$('badge').animate([{transform:'scale(1.5)'},{transform:'scale(1)'}],{duration:250})}
 function sync(open){
   var n=0,t=0,ul=$('items');ul.textContent='';
   catalog.forEach(function(x){var q=cart[x.id];if(!q)return;n+=q;t+=q*x.p;
@@ -176,15 +176,40 @@ var reviews=[]; /* ex.: {n:'Nome',t:'há 1 semana',x:'Texto da avaliação'} */
     [].forEach.call(modes.children,function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});if(pos)draw()});
   window.addEventListener('pagehide',function(){if(watch!==null)navigator.geolocation.clearWatch(watch)});
 })();
+/* Barra do topo: some ao rolar para baixo e volta ao rolar para cima (também no celular) */
+(function(){
+  var bar=$('bar');if(!bar)return;
+  var lastY=window.pageYOffset||0,ticking=false,hold=0,hidden=false;
+  function show(){if(hidden){hidden=false;bar.classList.remove('is-hidden')}}
+  function hide(){if(!hidden){hidden=true;bar.classList.add('is-hidden')}}
+  /* não esconde: logo após clicar no menu/adicionar item, com sacola ou gate abertos, ou com a busca em foco */
+  function blocked(){return Date.now()<hold||document.body.style.overflow==='hidden'||document.activeElement===$('q')}
+  function update(){
+    ticking=false;
+    var y=Math.max(0,window.pageYOffset||0),d=y-lastY;
+    if(y<=bar.offsetHeight){show();lastY=y;return}
+    if(Math.abs(d)<8)return;
+    lastY=y;
+    if(d<0)show();else if(!blocked())hide()}
+  window.addEventListener('scroll',function(){if(!ticking){ticking=true;requestAnimationFrame(update)}},{passive:true});
+  bar.addEventListener('focusin',show);
+  $('nav').addEventListener('click',function(){hold=Date.now()+900;show()});
+  document.addEventListener('cart:add',function(){hold=Date.now()+1500;show()});
+})();
 /* Altura da barra fixa -> offset de rolagem das âncoras */
 (function(){var b=$('bar');if(!b)return;function set(){document.documentElement.style.setProperty('--bar-h',b.offsetHeight+'px')}set();if(window.ResizeObserver)new ResizeObserver(set).observe(b);else window.addEventListener('resize',set)})();
-/* Status da loja (horário de Brasília): aberto das OPEN às CLOSE, virando a meia-noite */
+/* Status da loja (horário de Brasília): aberto das OPEN às CLOSE, virando a meia-noite; atualiza a cada minuto */
 (function(){
-  var OPEN=10,CLOSE=2,h=parseInt(new Intl.DateTimeFormat('pt-BR',{hour:'numeric',hourCycle:'h23',timeZone:'America/Sao_Paulo'}).format(new Date()),10);
-  if(h>=OPEN||h<CLOSE)return;
-  var t=document.querySelector('.ticker span'),s=document.querySelector('.trust-item:nth-child(2) strong');
-  if(t){t.lastChild.textContent='Fechado agora • Abre às 10:00';t.querySelector('.dot').style.background='#8a8a8a'}
-  if(s)s.textContent='Fechado agora';
+  var OPEN=10,CLOSE=2,dot=$('shopDot'),txt=$('shopTxt'),tr=$('shopTrust');
+  if(!dot||!txt)return;
+  var fmt=new Intl.DateTimeFormat('pt-BR',{hour:'numeric',hourCycle:'h23',timeZone:'America/Sao_Paulo'}),
+      hh=function(n){return ('0'+n).slice(-2)+':00'};
+  function paint(){
+    var h=parseInt(fmt.format(new Date()),10),open=h>=OPEN||h<CLOSE;
+    dot.className='dot '+(open?'is-open':'is-closed');
+    txt.textContent=open?'Esquina-Mix aberta • Fecha às '+hh(CLOSE):'Esquina-Mix fechada • Abre às '+hh(OPEN);
+    if(tr)tr.textContent=open?'Esquina-Mix aberta':'Esquina-Mix fechada'}
+  paint();setInterval(paint,60000);
 })();
 render();sync();
 })();

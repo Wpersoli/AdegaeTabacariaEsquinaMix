@@ -253,3 +253,14 @@ body{overflow-x:clip}
 .route__st{font-size:14px;line-height:1.4}
 .route__open{justify-self:start;color:var(--dk);font-weight:700}
 .route__open[hidden]{display:none}
+
+/* ===== Faixa de avisos: texto branco e status da loja (bolinha verde/vermelha) ===== */
+.ticker{color:#fff;text-shadow:0 1px 1px rgba(0,0,0,.35)}
+.dot{background:#8a8a8a}
+.dot.is-open{background:#22c55e;box-shadow:0 0 6px rgba(34,197,94,.9)}
+.dot.is-closed{background:#e8173a;box-shadow:0 0 6px rgba(232,23,58,.9)}
+
+/* ===== Barra: esconde ao rolar para baixo, reaparece ao rolar para cima (inclusive no celular) ===== */
+.bar{transition:transform .28s ease,box-shadow .28s ease;will-change:transform}
+.bar.is-hidden{transform:translateY(-100%);box-shadow:none}
+@media(prefers-reduced-motion:reduce){.bar{transition:none}}

@@ -35,3 +35,6 @@ Projeto estatico. Basta conectar a branch `main` na Vercel; nao requer comando d
 - Ao rolar até a seção do mapa, a localização do visitante é solicitada automaticamente (o botão "Traçar/Atualizar rota" fica como alternativa); ao permitir, o site traça o trajeto no mapa com o tempo de viagem e atualiza ao se deslocar. Modos: carro, a pé, bike, ônibus.
 - Sem chave, usa o embed do Google sem API key. Para a rota oficial com trânsito, crie uma chave da **Maps Embed API** no Google Cloud, restrinja por referrer (seu domínio) e cole em `MAPS_KEY` no bloco "Rota até a loja" de `app.js`.
 - A CSP já permite os iframes do Google; `geolocation=(self)` está liberado no `vercel.json`.
+
+## Barra do topo
+- Cabeçalho + categorias ficam num bloco `.bar` (sticky): somem ao rolar para baixo e reaparecem ao rolar para cima, no desktop e no celular. Não esconde com a sacola aberta, com a busca em foco, logo após clicar numa categoria ou adicionar um item (a barra reaparece para mostrar a sacola). Respeita "reduzir movimento".
