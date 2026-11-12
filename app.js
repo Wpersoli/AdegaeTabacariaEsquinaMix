@@ -123,7 +123,7 @@ function render(){
   list.forEach(function(x){
     var c=document.createElement('article');c.className='prod-card';
     c.innerHTML='<div class="prod-filete"></div>'+(x.promo?'<span class="prod-tag">Promo</span>':'')+'<div class="prod-img'+(x.img?' prod-img--foto':'')+'"><img src="'+(x.img||'assets/logo.webp')+'" alt="" width="'+(x.img?800:120)+'" height="'+(x.img?800:123)+'" loading="lazy"></div><p class="prod-cat"></p><h3 class="prod-name"></h3><div class="prod-price"></div><button class="prod-buy">Comprar →</button>';
-    c.querySelector('.prod-cat').textContent=names[x.cat];c.querySelector('.prod-name').textContent=x.n;c.querySelector('img').alt=x.img?x.n:'';c.querySelector('.prod-price').textContent=brl(x.p);
+    c.querySelector('.prod-cat').textContent=names[x.cat];c.querySelector('.prod-name').textContent=x.n;c.querySelector('img').alt=x.img?x.n:'';c.querySelector('.prod-price').textContent=brl(x.p);var productImage=c.querySelector('.prod-img img');productImage.decoding='async';productImage.onerror=function(){this.onerror=null;this.src='assets/logo.webp';this.closest('.prod-img').classList.remove('prod-img--foto')};
     var buy=c.querySelector('.prod-buy');buy.setAttribute('aria-label','Adicionar '+x.n+' à sacola');
     buy.onclick=function(){add(x.id);buy.textContent='Adicionado ✓';clearTimeout(buy.t);buy.t=setTimeout(function(){buy.textContent='Comprar →'},1200)};
     g.appendChild(c)})}
@@ -149,11 +149,15 @@ function toggle(o){var d=$('drawer');if(o===!d.hidden)return;d.hidden=!o;$('veil
 $('cartBtn').onclick=function(){toggle(true)};
 $('closeCart').onclick=$('veil').onclick=function(){toggle(false)};
 $('send').onclick=function(){
-  var l=['*Pedido — Esquina Mix*'],t=0;
+  var status=$('sendStatus'),l=['*Pedido — Esquina Mix*'],t=0;
   catalog.forEach(function(x){var q=cart[x.id];if(q){l.push(q+'x '+x.n+' — '+brl(q*x.p));t+=q*x.p}});
+  if(!t){if(status)status.textContent='Adicione pelo menos um produto antes de enviar.';return}
   l.push('*Total: '+brl(t)+'*');
   var m=document.querySelector('meta[name="esquina-whatsapp"]'),num=((m&&m.content)||'').replace(/\D/g,'');
-  if(!num)return;window.open('https://wa.me/'+num+'?text='+encodeURIComponent(l.join('\n')),'_blank','noopener')};
+  if(!/^55\d{10,11}$/.test(num)){if(status)status.textContent='O WhatsApp da loja está indisponível no momento. Entre em contato pelo telefone informado no rodapé.';return}
+  var url='https://wa.me/'+num+'?text='+encodeURIComponent(l.join('\n'));
+  try{var popup=window.open(url,'_blank');if(popup){popup.opener=null;if(status)status.textContent='Pedido preparado. Confira a mensagem no WhatsApp antes de enviar.'}else{if(status)status.textContent='O navegador bloqueou a nova janela. Abrindo o WhatsApp nesta aba…';window.location.assign(url)}}catch(err){if(status)status.textContent='Não foi possível abrir o WhatsApp. Verifique sua conexão e tente novamente.'}
+};
 
 /* Navegação e busca */
 function setCat(c,keep){cat=c;if(!keep)subF=null;
