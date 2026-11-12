@@ -298,7 +298,8 @@ var reviews=[]; /* ex.: {n:'Nome',t:'há 1 semana',x:'Texto da avaliação'} */
     track.style.animationDuration=Math.max(12,track.getBoundingClientRect().width/2/70)+'s';
     box.addEventListener('touchstart',function(){track.classList.add('is-paused')},{passive:true});
     ['touchend','touchcancel'].forEach(function(ev){box.addEventListener(ev,function(){track.classList.remove('is-paused')},{passive:true})})}
-  slide(document.querySelector('#mq .mq-t'));slide(bt);\n  if(window.matchMedia&&window.matchMedia('(max-width:700px)').matches){document.querySelectorAll('.mq-t,.fleet__t').forEach(function(track){track.style.animationDuration='55s'})}
+  slide(document.querySelector('#mq .mq-t'));slide(bt);
+  if(window.matchMedia&&window.matchMedia('(max-width:700px)').matches){document.querySelectorAll('.mq-t,.fleet__t').forEach(function(track){track.style.animationDuration='55s'})}
   var r=$('revList');
   if(!reviews.length){r.innerHTML='<article class="rev-card"><p>Já pediu na Esquina Mix? Conte como foi a sua experiência no Google.</p></article>'}
   reviews.forEach(function(v){var c=document.createElement('article');c.className='rev-card';
