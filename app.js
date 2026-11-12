@@ -104,14 +104,12 @@ function parseTerm(v){var s=norm(v==null?term:v),mx=null,mn=null,m,num=function(
 function has(x,k){if(k.slice(0,2)==='p:'){var r=PR[+k.slice(2)];return x.p>r[1]&&x.p<=r[2]}return tagsOf(x).indexOf(k)>-1}
 function matchSel(x){var ks=Object.keys(sel),cs=ks.filter(function(k){return k.slice(0,2)!=='p:'}),pk=ks.filter(function(k){return k.slice(0,2)==='p:'})[0];
   return(!cs.length||cs.some(function(k){return has(x,k)}))&&(!pk||has(x,pk))}
+/* Subcategorias do cardapio = exatamente os itens do menu suspenso do topo (SUBS) */
 function facets(base,q){
   var box=$('facets');if(!box)return;box.textContent='';
-  if(subF){var sb=document.createElement('button');sb.type='button';sb.className='feat-chip is-active';sb.dataset.k='__sub';sb.textContent=subF.label+' ✕';box.appendChild(sb)}
-  var mk=function(k,label){var n=base.filter(function(x){return has(x,k)}).length,b=document.createElement('button');b.type='button';
-    b.className='feat-chip'+(sel[k]?' is-active':'')+(n?'':' is-empty');b.dataset.k=k;b.setAttribute('aria-pressed',sel[k]?'true':'false');b.textContent=label+' ('+n+')';box.appendChild(b)};
-  CH.forEach(function(c){mk(c[0],c[0])});PR.forEach(function(r,i){mk('p:'+i,r[0])});
-  if(q.mx!=null||q.mn!=null){var i=document.createElement('span');i.className='facet-note';i.textContent='Preço '+(q.mn!=null?'a partir de '+brl(q.mn)+' ':'')+(q.mx!=null?'até '+brl(q.mx):'');box.appendChild(i)}
-  if(Object.keys(sel).length){var c=document.createElement('button');c.type='button';c.className='feat-chip facet-clear';c.dataset.k='';c.textContent='Limpar filtros ✕';box.appendChild(c)}}
+  (SUBS[cat]||[]).forEach(function(sb,i){var on=!!(subF&&subF.label===sb[0]),b=document.createElement('button');b.type='button';
+    b.className='feat-chip'+(on?' is-active':'');b.dataset.i=i;b.setAttribute('aria-pressed',on?'true':'false');b.textContent=sb[0];box.appendChild(b)});
+  if(q.mx!=null||q.mn!=null){var n=document.createElement('span');n.className='facet-note';n.textContent='Preço '+(q.mn!=null?'a partir de '+brl(q.mn)+' ':'')+(q.mx!=null?'até '+brl(q.mx):'');box.appendChild(n)}}
 function render(){
   var q=parseTerm();
   var base=catalog.filter(function(x){
@@ -165,7 +163,7 @@ function setCat(c,keep){cat=c;if(!keep)subF=null;
   render()}
 $('nav').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;setCat(b.dataset.cat);document.getElementById('cardapio').scrollIntoView()});
 $('chips').addEventListener('click',function(e){var b=e.target.closest('button');if(b)setCat(b.dataset.cat)});
-$('facets').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;var k=b.dataset.k;if(k==='__sub')subF=null;else if(!k)sel={};else if(sel[k])delete sel[k];else{if(k.slice(0,2)==='p:')Object.keys(sel).forEach(function(o){if(o.slice(0,2)==='p:')delete sel[o]});sel[k]=1}render()});
+$('facets').addEventListener('click',function(e){var b=e.target.closest('button');if(!b||b.dataset.i==null)return;var sb=(SUBS[cat]||[])[+b.dataset.i];if(!sb)return;subF=(subF&&subF.label===sb[0])?null:{label:sb[0],t:sb[1]};render()});
 $('sort').addEventListener('change',function(){sortBy=this.value;render()});
 var qt;$('q').addEventListener('input',function(){var v=this.value;clearTimeout(qt);qt=setTimeout(function(){term=v;render()},120)});
 
