@@ -315,7 +315,7 @@ body{overflow-x:clip}
   .hero-cta{animation:none!important}
   .dot{animation:none!important}
   .mq-t,.fleet__t{animation-duration:68s}
-  .fab--wa::after{animation-duration:4.2s}
+  .fab--wa::after{animation:none!important}
 }
 @media(hover:none){.fleet__i:hover{box-shadow:none}.fleet__i:hover img{transform:none}}
 @media(prefers-reduced-motion:reduce){.mq-t,.fleet__t,.fab--wa::after{animation:none!important}.mq,.fleet__row{overflow-x:auto;scrollbar-width:none}.mq::-webkit-scrollbar,.fleet__row::-webkit-scrollbar{display:none}}
