@@ -24,6 +24,9 @@ jobs:
       - name: Install browser test and Lighthouse tools
         run: npm install --no-save playwright@1.54.2 lighthouse@12.8.2
 
+      - name: Validate application JavaScript syntax
+        run: node --check app.js
+
       - name: Install Chromium, Firefox and WebKit
         run: npx playwright install --with-deps chromium firefox webkit
 
