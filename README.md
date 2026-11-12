@@ -32,6 +32,6 @@ Projeto estatico. Basta conectar a branch `main` na Vercel; nao requer comando d
 - Horario de funcionamento: constantes `OPEN`/`CLOSE` no bloco "Status da loja" de `app.js` e no JSON-LD do `index.html`.
 
 ## Mapa e rota
-- Botão "Traçar rota até a loja" pede a localização do visitante (só após o clique), traça o trajeto no mapa com o tempo de viagem e atualiza ao se deslocar. Modos: carro, a pé, bike, ônibus.
+- Ao rolar até a seção do mapa, a localização do visitante é solicitada automaticamente (o botão "Traçar/Atualizar rota" fica como alternativa); ao permitir, o site traça o trajeto no mapa com o tempo de viagem e atualiza ao se deslocar. Modos: carro, a pé, bike, ônibus.
 - Sem chave, usa o embed do Google sem API key. Para a rota oficial com trânsito, crie uma chave da **Maps Embed API** no Google Cloud, restrinja por referrer (seu domínio) e cole em `MAPS_KEY` no bloco "Rota até a loja" de `app.js`.
 - A CSP já permite os iframes do Google; `geolocation=(self)` está liberado no `vercel.json`.

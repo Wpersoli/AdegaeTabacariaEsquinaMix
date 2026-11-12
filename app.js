@@ -153,13 +153,25 @@ var reviews=[]; /* ex.: {n:'Nome',t:'há 1 semana',x:'Texto da avaliação'} */
       st.textContent='Rota traçada a partir da sua posição (precisão ≈ '+Math.round(p.coords.accuracy)+' m). O tempo de viagem aparece no mapa e é atualizado conforme você se desloca.'}}
   function onErr(e){btn.disabled=false;st.textContent=e.code===1?'Permissão de localização negada. Libere no cadeado do navegador e tente de novo.'
     :e.code===3?'Tempo esgotado ao obter a localização. Tente novamente.':'Não foi possível determinar sua posição. Verifique o GPS e a internet.'}
-  btn.onclick=function(){
+  var busy=false;
+  function start(){
+    if(busy)return;
     if(!navigator.geolocation){st.textContent='Seu navegador não oferece localização.';return}
-    st.textContent='Obtendo a sua localização…';btn.disabled=true;
+    busy=true;st.textContent='Obtendo a sua localização…';btn.disabled=true;
     navigator.geolocation.getCurrentPosition(function(p){
-      btn.disabled=false;btn.textContent='Atualizar rota';last=null;onPos(p);
+      busy=false;btn.disabled=false;btn.textContent='Atualizar rota';last=null;onPos(p);
       if(watch===null)watch=navigator.geolocation.watchPosition(onPos,function(){},{enableHighAccuracy:true,maximumAge:10000,timeout:20000})
-    },onErr,{enableHighAccuracy:true,timeout:15000,maximumAge:0})};
+    },function(e){busy=false;onErr(e)},{enableHighAccuracy:true,timeout:15000,maximumAge:0})}
+  btn.onclick=start;
+  /* Automático: ao chegar perto do mapa pede/usa a localização; se o usuário permitir depois (pelo cadeado), traça na hora */
+  var sec=$('encontre'),armed=false;
+  function arm(){if(armed)return;armed=true;start()}
+  if(navigator.permissions&&navigator.permissions.query){
+    navigator.permissions.query({name:'geolocation'}).then(function(perm){
+      perm.onchange=function(){if(perm.state==='granted'&&armed)start()}}).catch(function(){})}
+  if('IntersectionObserver' in window&&sec){
+    var io=new IntersectionObserver(function(es){if(es[0].isIntersecting){io.disconnect();arm()}},{rootMargin:'200px'});io.observe(sec)}
+  else arm();
   modes.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;mode=b.dataset.mode;
     [].forEach.call(modes.children,function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});if(pos)draw()});
   window.addEventListener('pagehide',function(){if(watch!==null)navigator.geolocation.clearWatch(watch)});
