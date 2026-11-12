@@ -181,3 +181,6 @@ footer{background:#030708;padding:0;display:block;text-align:left;color:var(--ca
 .fleet__t span{margin-right:16px;animation:none!important}
 .mq:hover .mq-t,.fleet__row:hover .fleet__t,.mq-t.is-paused,.fleet__t.is-paused{animation-play-state:paused}
 .fleet__row{display:block;white-space:nowrap;overflow:hidden}
+
+/* Acessibilidade: foco visível para teclado */
+:focus-visible{outline:3px solid #ffd23f;outline-offset:2px}
