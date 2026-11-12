@@ -189,7 +189,7 @@ footer{background:#030708;padding:0;display:block;text-align:left;color:var(--ca
 .fleet__i:hover{border-color:var(--accent,#ffd23f);background:rgba(255,255,255,.08);box-shadow:0 5px 14px rgba(236,26,181,.18)}
 .fleet__i img{position:relative;z-index:1;transition:transform .2s ease,filter .2s ease}
 .fleet__i:hover img{transform:scale(1.04)}
-@media(max-width:600px){.fleet__row{padding:12px 0}@keyframes fleetFloat{0%{transform:translateY(-4px)}100%{transform:translateY(4px)}}}
+@media(max-width:600px){.fleet__row{padding:12px 0}}
 
 /* Letreiros continuam correndo mesmo com "reduzir movimento"; so os efeitos decorativos sao desligados */
 @media(prefers-reduced-motion:reduce){.fleet__i::after,.fab--wa::after{animation:none!important}}
