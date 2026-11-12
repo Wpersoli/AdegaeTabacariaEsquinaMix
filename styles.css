@@ -176,7 +176,7 @@ footer{background:#030708;padding:0;display:block;text-align:left;color:var(--ca
 .mq-t span,.fleet__t span{flex:none}
 .mq-t span{margin-right:60px}
 .fleet__t{display:inline-flex;animation:mq 28s linear infinite;will-change:transform}
-.fleet__t span{margin-right:16px;animation:none!important}
+.fleet__t span{margin-right:16px}
 .mq:hover .mq-t,.fleet__row:hover .fleet__t,.mq-t.is-paused,.fleet__t.is-paused{animation-play-state:paused}
 .fleet__row{display:block;white-space:nowrap;overflow:hidden}
 
@@ -184,11 +184,25 @@ footer{background:#030708;padding:0;display:block;text-align:left;color:var(--ca
 :focus-visible{outline:3px solid #ffd23f;outline-offset:2px}
 
 /* Frota oficial: logos em letreiro borda a borda, deslizando para a esquerda em loop */
-.fleet__row{width:100%;max-width:none;margin:0;display:block;white-space:nowrap;overflow:hidden;-webkit-mask-image:none;mask-image:none}
+.fleet__row{width:100%;max-width:none;margin:0;padding:16px 0;display:block;white-space:nowrap;overflow:hidden;-webkit-mask-image:none;mask-image:none}
 .fleet__t{display:inline-flex;align-items:center;width:max-content;animation:mq 28s linear infinite;will-change:transform}
 .fleet__i{flex:none;display:flex;align-items:center;justify-content:center;width:150px;height:116px;margin-right:16px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
 .fleet__i img{display:block;width:auto;height:auto;max-width:124px;max-height:80px;object-fit:contain;transition:transform .2s}
-.fleet__i:hover img{transform:scale(1.08)}
 .fleet__i--papelito img{filter:brightness(1.6) saturate(1.15)}
 @media(max-width:600px){.fleet__i{width:120px;height:96px;margin-right:12px}.fleet__i img{max-width:98px;max-height:64px}}
 @media(prefers-reduced-motion:reduce){.fleet__row{overflow-x:auto;scrollbar-width:thin}}
+
+/* Frota oficial: animacao dos logos (flutuar "em orbita", brilho que atravessa e destaque no hover) */
+@keyframes fleetFloat{0%{transform:translateY(-6px)}100%{transform:translateY(6px)}}
+@keyframes fleetShine{0%,70%{transform:translateX(-140%) skewX(-18deg)}100%{transform:translateX(260%) skewX(-18deg)}}
+.fleet__i{position:relative;overflow:hidden;animation:fleetFloat 3.6s ease-in-out infinite alternate;transition:border-color .25s,box-shadow .25s,background .25s}
+.fleet__i::after{content:"";position:absolute;top:0;bottom:0;left:0;width:45%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.22),transparent);transform:translateX(-140%) skewX(-18deg);animation:fleetShine 5.6s ease-in-out infinite;pointer-events:none}
+.fleet__i img{position:relative;z-index:1;transition:transform .3s cubic-bezier(.2,.9,.3,1.4),filter .3s}
+.fleet__i:hover{border-color:var(--accent,#ffd23f);background:rgba(255,255,255,.09);box-shadow:0 0 22px rgba(236,26,181,.45)}
+.fleet__i:hover img{transform:scale(1.14) rotate(-3deg)}
+/* fases escalonadas (ciclo de 8 = nº de marcas; clones do loop ficam em fase, sem salto na emenda) */
+.fleet__i:nth-child(8n+1){animation-delay:0s}.fleet__i:nth-child(8n+2){animation-delay:-.45s}.fleet__i:nth-child(8n+3){animation-delay:-.9s}.fleet__i:nth-child(8n+4){animation-delay:-1.35s}
+.fleet__i:nth-child(8n+5){animation-delay:-1.8s}.fleet__i:nth-child(8n+6){animation-delay:-2.25s}.fleet__i:nth-child(8n+7){animation-delay:-2.7s}.fleet__i:nth-child(8n+8){animation-delay:-3.15s}
+.fleet__i:nth-child(8n+1)::after{animation-delay:0s}.fleet__i:nth-child(8n+2)::after{animation-delay:-.7s}.fleet__i:nth-child(8n+3)::after{animation-delay:-1.4s}.fleet__i:nth-child(8n+4)::after{animation-delay:-2.1s}
+.fleet__i:nth-child(8n+5)::after{animation-delay:-2.8s}.fleet__i:nth-child(8n+6)::after{animation-delay:-3.5s}.fleet__i:nth-child(8n+7)::after{animation-delay:-4.2s}.fleet__i:nth-child(8n+8)::after{animation-delay:-4.9s}
+@media(max-width:600px){.fleet__row{padding:12px 0}@keyframes fleetFloat{0%{transform:translateY(-4px)}100%{transform:translateY(4px)}}}
