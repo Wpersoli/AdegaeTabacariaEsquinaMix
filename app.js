@@ -471,3 +471,30 @@ render();sync();
   document.addEventListener('focusout',function(){setTimeout(function(){var a=document.activeElement;if(!a||!/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName))bar.classList.remove('is-kb')},60)});
   paint();
 })();
+
+/* Hero: carrossel automático (slide cardápio + slide promo), troca a cada 5s */
+(function(){
+  var root=document.getElementById('heroSlider');if(!root)return;
+  var slides=[].slice.call(root.querySelectorAll('.hero-slide'));
+  var dots=[].slice.call(root.querySelectorAll('.hero-dot'));
+  if(slides.length<2)return;
+  var INTERVAL=5000,i=0,timer=0;
+  function go(n){
+    if(n===i)return;
+    slides[i].classList.remove('is-active');slides[i].setAttribute('aria-hidden','true');
+    if(dots[i]){dots[i].classList.remove('is-active');dots[i].setAttribute('aria-selected','false')}
+    i=n;
+    slides[i].classList.add('is-active');slides[i].removeAttribute('aria-hidden');
+    if(dots[i]){dots[i].classList.add('is-active');dots[i].setAttribute('aria-selected','true')}
+  }
+  function next(){go((i+1)%slides.length)}
+  function start(){stop();timer=setInterval(next,INTERVAL)}
+  function stop(){if(timer){clearInterval(timer);timer=0}}
+  dots.forEach(function(d){d.addEventListener('click',function(){
+    var n=parseInt(d.dataset.goto,10);if(!isNaN(n)){go(n);start()}
+  })});
+  document.addEventListener('visibilitychange',function(){
+    if(document.hidden)stop();else start()
+  });
+  start();
+})();

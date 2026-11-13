@@ -73,12 +73,29 @@
 
 <main id="inicio">
   <h1 class="sr">Esquina Mix — Adega e Tabacaria em Guarulhos</h1>
-  <section class="hero" aria-label="Cardápio Digital Esquina Mix">
-    <picture>
-      <source media="(max-width:700px)" srcset="assets/hero-mobile.webp" width="800" height="1200">
-      <img src="assets/hero-desktop.webp" width="2048" height="684" alt="Cardápio Digital Esquina Mix — escolha sua bebida, combo e essências favoritas" fetchpriority="high">
-    </picture>
+  <section class="hero" aria-label="Cardápio Digital Esquina Mix" id="heroSlider">
+    <div class="hero-track" id="heroTrack">
+      <div class="hero-slide is-active" data-slide="0">
+        <picture>
+          <source media="(max-width:700px)" srcset="assets/hero-mobile.webp" width="800" height="1200">
+          <img src="assets/hero-desktop.webp" width="2048" height="684" alt="Cardápio Digital Esquina Mix — escolha sua bebida, combo e essências favoritas" fetchpriority="high">
+        </picture>
+        <a class="hero-hotspot hero-hotspot--cardapio" href="#cardapio" aria-label="Ver cardápio digital"></a>
+      </div>
+      <div class="hero-slide hero-slide--promo" data-slide="1" aria-hidden="true">
+        <span class="hero-slide__bg" aria-hidden="true"></span>
+        <picture>
+          <source media="(max-width:700px)" srcset="assets/hero-promo-mobile.webp" width="960" height="320">
+          <img src="assets/hero-promo-desktop.webp" width="2048" height="684" alt="Drinks gelados para curtir com os amigos — faça seu pedido pelo WhatsApp" loading="lazy">
+        </picture>
+        <a class="hero-hotspot hero-hotspot--whats" href="https://wa.me/5511917221039?text=Ol%C3%A1!%20Vim%20pelo%20card%C3%A1pio%20digital%20da%20Esquina%20Mix.%20Quero%20fazer%20um%20pedido!" target="_blank" rel="noopener" aria-label="Fazer pedido pelo WhatsApp"></a>
+      </div>
+    </div>
     <a class="hero-cta" href="#cardapio">Ver cardápio ↓</a>
+    <div class="hero-dots" id="heroDots" role="tablist" aria-label="Slides do banner">
+      <button type="button" class="hero-dot is-active" data-goto="0" role="tab" aria-selected="true" aria-label="Slide 1 de 2"></button>
+      <button type="button" class="hero-dot" data-goto="1" role="tab" aria-selected="false" aria-label="Slide 2 de 2"></button>
+    </div>
   </section>
 
 <div class="mq" id="mq" aria-label="Destaques"><div class="mq-t"><span>↯ Retira no balcão em Guarulhos</span><span>⚡ Fecha às 02:00 · reabre às 10:00</span><span>★ Peça pelo WhatsApp</span></div></div>
