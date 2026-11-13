@@ -1,6 +1,6 @@
 /* Service worker do Esquina Mix: deixa o site instalavel e abre mesmo com internet ruim.
    Aumente VERSAO a cada publicacao grande para renovar o cache. */
-var VERSAO='esquina-mix-v2',BASE=['./','index.html','styles.css','app.js','manifest.webmanifest','assets/logo.webp','assets/icon-192.png'];
+var VERSAO='esquina-mix-v3',BASE=['./','index.html','styles.css','app.js','manifest.webmanifest','assets/logo.webp','assets/icon-192.png'];
 self.addEventListener('install',function(e){e.waitUntil(caches.open(VERSAO).then(function(c){return c.addAll(BASE)}).then(function(){return self.skipWaiting()}))});
 self.addEventListener('activate',function(e){e.waitUntil(caches.keys().then(function(ks){return Promise.all(ks.filter(function(k){return k!==VERSAO}).map(function(k){return caches.delete(k)}))}).then(function(){return self.clients.claim()}))});
 self.addEventListener('fetch',function(e){
