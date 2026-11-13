@@ -75,12 +75,28 @@ footer{text-align:center;padding:40px 16px;background:#0b0713;color:#bdb2d6;font
 .gate .yes,.gate .no{padding:13px 20px;border-radius:10px;font:400 14px "Bowlby One",sans-serif;text-transform:uppercase}
 .gate .yes{background:var(--gold);color:#1a1030}.gate .no{background:#33244f}
 @media(max-width:900px){.top{grid-template-columns:1fr auto;row-gap:10px}.search{grid-column:1/-1;order:3;height:46px}.brand img{width:72px}}
-@media(max-width:700px){.hero-slide--drinks .hero-slide__bg{background-image:url(assets/hero-drinks-mobile.webp)}.ticker{flex-direction:column;gap:2px;font-size:10px;text-align:center}.hero-cta{left:50%;transform:translateX(-50%);animation:none;bottom:14px;white-space:nowrap}.actions{gap:14px}
+@media(max-width:700px){
+.ticker{flex-direction:column;gap:2px;font-size:10px;text-align:center}
+.hero-cta{left:50%;transform:translateX(-50%);animation:none;bottom:14px;white-space:nowrap}
+.actions{gap:14px}
 .hero{aspect-ratio:800/1200}
-.hero-slide--promo .hero-slide__bg{background-image:url(assets/hero-promo-mobile.webp)}
+
+/* Mobile: mantém somente a imagem original do primeiro slide. */
+#heroSlider .hero-slide[data-slide="1"],
+#heroSlider .hero-slide[data-slide="2"]{
+  display:none !important;
+}
+#heroSlider .hero-slide[data-slide="0"]{
+  display:block !important;
+  opacity:1 !important;
+  visibility:visible !important;
+  z-index:2 !important;
+}
+#heroSlider .hero-dots{
+  display:none !important;
+}
+
 .hero-hotspot--cardapio{left:6.25%;top:42.92%;width:90.625%;height:15%}
-.hero-hotspot--whats{left:66.07%;top:53.32%;width:30.62%;height:6.2%}
-.hero-dots{right:auto;left:50%;top:12px;bottom:auto;transform:translateX(-50%)}
 }
 @media(prefers-reduced-motion:reduce){*:not(.mq-t):not(.fleet__t){animation:none!important}}
 
